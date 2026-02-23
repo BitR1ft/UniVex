@@ -18,7 +18,18 @@ interface ProjectWizardProps {
   error?: string;
 }
 
-const STEPS = [
+const WIZARD_DEFAULTS: Partial<ProjectFormData> = {
+  enable_subdomain_enum: true,
+  enable_port_scan: true,
+  enable_web_crawl: true,
+  enable_tech_detection: true,
+  enable_vuln_scan: true,
+  enable_nuclei: true,
+  enable_auto_exploit: false,
+  port_scan_type: 'quick',
+  max_crawl_depth: 3,
+  concurrent_scans: 5,
+};
   { id: 1, title: 'Basic Info', description: 'Project name and target' },
   { id: 2, title: 'Target Config', description: 'Scanning modules' },
   { id: 3, title: 'Tool Selection', description: 'Advanced tool settings' },
@@ -303,7 +314,7 @@ function Step4({ data }: { data: ProjectFormData }) {
         )}
         <div className="flex justify-between">
           <span className="text-gray-400 text-sm">Concurrent Scans</span>
-          <span className="text-white text-sm">{data.concurrent_scans ?? 5}</span>
+          <span className="text-white text-sm">{data.concurrent_scans ?? WIZARD_DEFAULTS.concurrent_scans}</span>
         </div>
       </div>
 
@@ -337,18 +348,7 @@ export function ProjectWizard({ onSubmit, isLoading, error }: ProjectWizardProps
 
   const methods = useForm<ProjectFormData>({
     resolver: zodResolver(projectSchema),
-    defaultValues: {
-      enable_subdomain_enum: true,
-      enable_port_scan: true,
-      enable_web_crawl: true,
-      enable_tech_detection: true,
-      enable_vuln_scan: true,
-      enable_nuclei: true,
-      enable_auto_exploit: false,
-      port_scan_type: 'quick',
-      max_crawl_depth: 3,
-      concurrent_scans: 5,
-    },
+    defaultValues: WIZARD_DEFAULTS,
     mode: 'onTouched',
   });
 

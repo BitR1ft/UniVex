@@ -11,6 +11,15 @@ interface StrengthResult {
   checks: { label: string; passed: boolean }[];
 }
 
+const STRENGTH_LEVELS: Record<number, { label: string; color: string; textColor: string }> = {
+  0: { label: 'Very Weak',   color: 'bg-red-500',    textColor: 'text-red-400' },
+  1: { label: 'Very Weak',   color: 'bg-red-500',    textColor: 'text-red-400' },
+  2: { label: 'Weak',        color: 'bg-orange-500', textColor: 'text-orange-400' },
+  3: { label: 'Fair',        color: 'bg-yellow-500', textColor: 'text-yellow-400' },
+  4: { label: 'Strong',      color: 'bg-blue-500',   textColor: 'text-blue-400' },
+  5: { label: 'Very Strong', color: 'bg-green-500',  textColor: 'text-green-400' },
+};
+
 function getStrength(password: string): StrengthResult {
   const checks = [
     { label: 'At least 8 characters', passed: password.length >= 8 },
@@ -21,14 +30,7 @@ function getStrength(password: string): StrengthResult {
   ];
 
   const score = checks.filter((c) => c.passed).length;
-
-  let label = 'Very Weak';
-  let color = 'bg-red-500';
-
-  if (score === 2) { label = 'Weak'; color = 'bg-orange-500'; }
-  else if (score === 3) { label = 'Fair'; color = 'bg-yellow-500'; }
-  else if (score === 4) { label = 'Strong'; color = 'bg-blue-500'; }
-  else if (score === 5) { label = 'Very Strong'; color = 'bg-green-500'; }
+  const { label, color } = STRENGTH_LEVELS[score];
 
   return { score, label, color, checks };
 }
@@ -37,6 +39,7 @@ export function PasswordStrengthMeter({ password }: PasswordStrengthMeterProps) 
   if (!password) return null;
 
   const { score, label, color, checks } = getStrength(password);
+  const { textColor } = STRENGTH_LEVELS[score];
   const segments = 5;
 
   return (
@@ -56,20 +59,7 @@ export function PasswordStrengthMeter({ password }: PasswordStrengthMeterProps) 
       {/* Label */}
       <div className="flex justify-between items-center">
         <span className="text-xs text-gray-400">Password strength</span>
-        <span
-          className={`text-xs font-medium ${
-            score <= 1
-              ? 'text-red-400'
-              : score === 2
-              ? 'text-orange-400'
-              : score === 3
-              ? 'text-yellow-400'
-              : score === 4
-              ? 'text-blue-400'
-              : 'text-green-400'
-          }`}
-          aria-live="polite"
-        >
+        <span className={`text-xs font-medium ${textColor}`} aria-live="polite">
           {label}
         </span>
       </div>

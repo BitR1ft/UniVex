@@ -60,7 +60,10 @@ apiClient.interceptors.response.use(
         refreshQueue = [];
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return apiClient(originalRequest);
-      } catch {
+      } catch (refreshError) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn('[API] Token refresh failed, redirecting to login', refreshError);
+        }
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         if (typeof window !== 'undefined') {
