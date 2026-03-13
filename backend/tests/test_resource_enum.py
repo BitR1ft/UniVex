@@ -9,7 +9,7 @@ Project: UniVex - Month 6
 """
 
 import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch, MagicMock, AsyncMock
 import asyncio
 
 from app.recon.resource_enum.schemas import (
@@ -286,17 +286,15 @@ class TestGAUWrapper:
             method="GET"
         )
         
-        # Mock httpx client
-        mock_client = Mock()
+        # Mock async httpx client
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.headers = {'content-length': '1234'}
-        mock_client.head = Mock(return_value=mock_response)
+        mock_client = AsyncMock()
+        mock_client.head = AsyncMock(return_value=mock_response)
         
-        # This would normally be async, but we're mocking
-        with patch.object(mock_client, 'head', return_value=mock_response):
-            result = await gau._check_endpoint(mock_client, endpoint)
-            assert result.status_code == 200 or result.is_live is None  # Depending on mock
+        result = await gau._check_endpoint(mock_client, endpoint)
+        assert result.status_code == 200 or result.is_live is None  # Depending on mock
 
 
 # ============================================================================

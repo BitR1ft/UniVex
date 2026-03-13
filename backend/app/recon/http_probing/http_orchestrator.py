@@ -247,3 +247,6 @@ class HttpProbeOrchestrator:
             avg_response_time_ms=avg_response_time,
             duration_seconds=duration
         )
+
+# Backward-compatible alias
+HttpOrchestrator = HttpProbeOrchestrator

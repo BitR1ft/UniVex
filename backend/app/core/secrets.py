@@ -38,12 +38,12 @@ def validate_secrets(environment: str = "development") -> None:
     if not secret_key:
         errors.append("SECRET_KEY is not set")
     elif len(secret_key) < _MIN_SECRET_KEY_LEN:
-        errors.append(f"SECRET_KEY is too short (min {_MIN_SECRET_KEY_LEN} chars)")
+        errors.append(f"SECRET_KEY does not meet the minimum length requirement ({_MIN_SECRET_KEY_LEN} characters)")
 
     for var in ("POSTGRES_PASSWORD", "NEO4J_PASSWORD"):
         val = os.getenv(var, "")
         if is_prod and len(val) < _MIN_PASSWORD_LEN:
-            errors.append(f"{var} is too short for production (min {_MIN_PASSWORD_LEN} chars)")
+            errors.append(f"{var} does not meet the minimum length requirement for production ({_MIN_PASSWORD_LEN} characters)")
 
     if errors:
         msg = "Secrets validation failed: " + "; ".join(errors)

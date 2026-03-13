@@ -831,7 +831,7 @@ class TestDay119PhaseRestriction:
             await server.execute_tool("execute_module", {})
 
         with pytest.raises(PermissionError):
-            asyncio.get_event_loop().run_until_complete(call_blocked())
+            asyncio.run(call_blocked())
 
     def test_phase_restriction_middleware_allows_permitted(self):
         import asyncio
@@ -846,7 +846,7 @@ class TestDay119PhaseRestriction:
         async def call_allowed():
             return await server.execute_tool("execute_naabu", {"target": "127.0.0.1"})
 
-        result = asyncio.get_event_loop().run_until_complete(call_allowed())
+        result = asyncio.run(call_allowed())
         assert result["success"] is True
 
     def test_phase_restriction_middleware_unwrap(self):
@@ -863,7 +863,7 @@ class TestDay119PhaseRestriction:
         async def call_after_unwrap():
             return await server.execute_tool("execute_module", {})
 
-        result = asyncio.get_event_loop().run_until_complete(call_after_unwrap())
+        result = asyncio.run(call_after_unwrap())
         assert result["success"] is True
 
 

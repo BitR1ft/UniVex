@@ -34,9 +34,9 @@ class SlidingWindowRateLimiter:
         self._buckets: dict[str, deque[float]] = defaultdict(deque)
         self._lock = Lock()
 
-    def is_allowed(self, key: str) -> tuple[bool, int]:
+    def _check_with_remaining(self, key: str) -> tuple[bool, int]:
         """
-        Check whether ``key`` is within the rate limit.
+        Internal helper: check whether ``key`` is within the rate limit.
 
         Returns:
             (allowed, remaining): allowed is True if the call should proceed;
@@ -57,6 +57,16 @@ class SlidingWindowRateLimiter:
             bucket.append(now)
             return True, self.max_calls - len(bucket)
 
+    def is_allowed(self, key: str) -> bool:
+        """
+        Check whether ``key`` is within the rate limit.
+
+        Returns:
+            True if the call should proceed, False if the rate limit is exceeded.
+        """
+        allowed, _ = self._check_with_remaining(key)
+        return allowed
+
     def check(self, key: str, *, correlation_id: Optional[str] = None) -> None:
         """
         Like :meth:`is_allowed` but raises HTTP 429 on limit exceeded.
@@ -65,7 +75,7 @@ class SlidingWindowRateLimiter:
             key: Unique identifier (e.g. user_id or project_id).
             correlation_id: Request ID for audit logging.
         """
-        allowed, remaining = self.is_allowed(key)
+        allowed, remaining = self._check_with_remaining(key)
         if not allowed:
             logger.warning(
                 "Rate limit exceeded for key=%s limiter=%s correlation_id=%s",
