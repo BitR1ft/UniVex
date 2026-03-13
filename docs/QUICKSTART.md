@@ -1,263 +1,266 @@
-# Quick Start Guide - AutoPenTest AI
+# AutoPenTest AI — Quick Start Guide
 
-## Prerequisites
-
-- Docker Desktop (or Docker + Docker Compose)
-- Python 3.11+ (for local development)
-- Node.js 20+ (for local development)
-- Git
-
-## Quick Setup (5 minutes)
-
-### 1. Clone and Navigate
-```bash
-git clone https://github.com/BitR1ft/FYP.git
-cd FYP
-```
-
-### 2. Set Up Environment Variables
-```bash
-cp .env.example .env
-# Edit .env if needed (defaults work for development)
-```
-
-### 3. Start Databases
-```bash
-docker-compose up -d
-```
-
-This starts:
-- PostgreSQL on port 5432
-- Neo4j on ports 7474 (HTTP) and 7687 (Bolt)
-
-### 4. Start Backend (Terminal 1)
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the backend
-uvicorn app.main:app --reload
-```
-
-Backend will be available at: http://localhost:8000
-API docs at: http://localhost:8000/docs
-
-### 5. Start Frontend (Terminal 2)
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend will be available at: http://localhost:3000
-
-## First Steps
-
-### 1. Create an Account
-1. Open http://localhost:3000
-2. Click "Sign Up"
-3. Fill in the registration form
-4. You'll be redirected to login
-
-### 2. Login
-1. Enter your credentials
-2. You'll be taken to the dashboard
-
-### 3. Create Your First Project
-1. Click "Create Your First Project" or "New Project"
-2. Fill in:
-   - **Project Name**: e.g., "Test Scan"
-   - **Target**: e.g., "example.com"
-   - **Description**: Optional
-3. Configure settings (all enabled by default except auto-exploit)
-4. Click "Create Project"
-
-### 4. View Your Projects
-- Click "View Projects" to see all your projects
-- You can view, edit, or delete projects
-
-## API Testing
-
-### Using the Interactive Docs
-Visit http://localhost:8000/docs for Swagger UI
-
-### Using curl
-
-**Register:**
-```bash
-curl -X POST http://localhost:8000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@example.com",
-    "username": "testuser",
-    "password": "password123"
-  }'
-```
-
-**Login:**
-```bash
-curl -X POST http://localhost:8000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "testuser",
-    "password": "password123"
-  }'
-```
-
-Save the `access_token` from the response.
-
-**Create Project:**
-```bash
-curl -X POST http://localhost:8000/api/projects \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -d '{
-    "name": "My Project",
-    "target": "example.com",
-    "description": "Test project"
-  }'
-```
-
-**List Projects:**
-```bash
-curl -X GET http://localhost:8000/api/projects \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
-```
-
-## Running Tests
-
-### Backend Tests
-```bash
-cd backend
-source venv/bin/activate
-pytest tests/ -v
-```
-
-Expected output: 4/4 tests passing
-
-## Troubleshooting
-
-### Port Already in Use
-If ports 3000, 5432, 7474, or 8000 are in use:
-1. Stop the conflicting services
-2. Or modify ports in `docker-compose.yml` and `.env`
-
-### Database Connection Issues
-```bash
-# Check if databases are running
-docker-compose ps
-
-# View database logs
-docker-compose logs postgres
-docker-compose logs neo4j
-
-# Restart databases
-docker-compose restart
-```
-
-### Frontend Build Errors
-```bash
-cd frontend
-rm -rf node_modules .next
-npm install
-npm run dev
-```
-
-### Backend Import Errors
-```bash
-cd backend
-source venv/bin/activate
-pip install --upgrade -r requirements.txt
-```
-
-## Development Workflow
-
-### Backend Development
-```bash
-# The backend runs with auto-reload
-# Any changes to .py files will automatically restart the server
-cd backend
-source venv/bin/activate
-uvicorn app.main:app --reload
-```
-
-### Frontend Development
-```bash
-# Next.js has hot-reload by default
-# Changes will appear instantly in the browser
-cd frontend
-npm run dev
-```
-
-### Database Management
-
-**PostgreSQL:**
-```bash
-# Connect to PostgreSQL
-docker exec -it autopentestai-postgres psql -U autopentestai
-
-# Inside psql:
-\dt        # List tables (once migrations run)
-\q         # Quit
-```
-
-**Neo4j:**
-- Open http://localhost:7474 in browser
-- Username: `neo4j`
-- Password: (from .env, default: `autopentestai_dev_password`)
-
-## Next Steps
-
-1. ✅ You've completed Month 1 setup!
-2. **Month 2** will add:
-   - Real database integration (Prisma migrations)
-   - Neo4j graph database setup
-   - Reconnaissance pipeline
-   - Tool integrations
-
-## Useful Commands
-
-```bash
-# Stop all services
-docker-compose down
-
-# Stop and remove volumes (clean slate)
-docker-compose down -v
-
-# View all logs
-docker-compose logs -f
-
-# Backend tests with coverage
-cd backend && pytest --cov=app tests/
-
-# Frontend type check
-cd frontend && npm run type-check
-
-# Frontend linting
-cd frontend && npm run lint
-```
-
-## Documentation
-
-- **API Reference**: http://localhost:8000/docs
-- **Project README**: [README.md](../README.md)
-- **Architecture**: [docs/ARCHITECTURE.md](ARCHITECTURE.md)
-- **Contributing**: [CONTRIBUTING.md](../CONTRIBUTING.md)
-- **Month 1 Summary**: [docs/MONTH_1_SUMMARY.md](MONTH_1_SUMMARY.md)
-
-## Support
-
-For issues or questions:
-1. Check the [CONTRIBUTING.md](../CONTRIBUTING.md) guide
-2. Review the [API documentation](http://localhost:8000/docs)
-3. Check Docker logs: `docker-compose logs`
+> **v1.2.0** | Get up and running in 5 minutes with Docker
 
 ---
 
-**Happy Testing! 🚀**
+## Prerequisites
 
-**Remember**: This is a penetration testing framework. Only use it on systems you own or have explicit permission to test.
+| Requirement | Minimum | Notes |
+|-------------|---------|-------|
+| Docker Engine | 24.0+ | |
+| Docker Compose | v2.20+ | Compose V2 plugin (`docker compose`, not `docker-compose`) |
+| OpenAI **or** Anthropic API key | — | Required for AI agent |
+| Git | any | |
+
+Hardware: 8 GB RAM, 20 GB free disk space.
+
+---
+
+## 1 — Clone & Configure
+
+```bash
+git clone https://github.com/BitR1ft/UnderProgress.git autopentestai
+cd autopentestai
+cp .env.example .env
+```
+
+Open `.env` and set **at minimum** these values:
+
+```dotenv
+# Generate with: openssl rand -hex 32
+SECRET_KEY=<your-32-byte-hex-string>
+
+# At least one LLM provider
+OPENAI_API_KEY=sk-...
+# ANTHROPIC_API_KEY=sk-ant-...
+
+# Database passwords (change all defaults)
+POSTGRES_PASSWORD=changeme
+NEO4J_PASSWORD=changeme
+
+# Grafana dashboard password
+GRAFANA_PASSWORD=changeme
+
+# Auto-approval level for AutoChain
+# none=all need approval | high=auto-approve low/med/high | critical=fully-autonomous
+AUTO_APPROVE_RISK_LEVEL=none
+```
+
+---
+
+## 2 — Start the Stack
+
+```bash
+docker compose up -d
+```
+
+This starts all 8 services. First run pulls images (~2-3 GB) — allow 2-3 minutes.
+
+```bash
+# Watch startup progress
+docker compose logs -f --tail=50
+
+# Check all services are healthy (wait ~60s)
+docker compose ps
+```
+
+All services should show `healthy` or `running`:
+
+```
+NAME                          STATUS        PORTS
+autopentestai-backend         healthy       0.0.0.0:8000->8000/tcp
+autopentestai-frontend        healthy       0.0.0.0:3000->3000/tcp
+autopentestai-postgres        healthy       0.0.0.0:5432->5432/tcp
+autopentestai-neo4j           healthy       0.0.0.0:7474->7474/tcp
+autopentestai-kali-tools      running       0.0.0.0:8000-8007->8000-8007/tcp
+autopentestai-prometheus      running       0.0.0.0:9090->9090/tcp
+autopentestai-grafana         running       0.0.0.0:3001->3000/tcp
+```
+
+---
+
+## 3 — Verify Health
+
+```bash
+curl -s http://localhost:8000/health | python3 -m json.tool
+```
+
+Expected:
+```json
+{
+  "status": "healthy",
+  "services": {
+    "api": "operational",
+    "database": "healthy",
+    "neo4j": "healthy"
+  }
+}
+```
+
+---
+
+## 4 — Access the Services
+
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| **Web App** | http://localhost:3000 | Register on first visit |
+| **API Docs (Swagger)** | http://localhost:8000/docs | — |
+| **API Docs (ReDoc)** | http://localhost:8000/redoc | — |
+| **Neo4j Browser** | http://localhost:7474 | `neo4j` / `$NEO4J_PASSWORD` |
+| **Grafana Dashboards** | http://localhost:3001 | `admin` / `$GRAFANA_PASSWORD` |
+| **Prometheus** | http://localhost:9090 | — |
+
+---
+
+## 5 — First Scan (Web UI)
+
+1. Open http://localhost:3000 and **Register** an account
+2. Click **New Project**
+3. Enter target: `10.10.10.3` (or any authorised host)
+4. Click **Create Project**
+5. Click **Start Scan** — watch real-time progress in the Scan Progress panel
+6. Open the **Attack Graph** tab to see discovered assets in Neo4j
+7. Open the **AI Agent** tab and ask: *"What did you find?"*
+
+---
+
+## 6 — First AutoChain Run (API)
+
+```bash
+# Save your token
+TOKEN=$(curl -s -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"YOUR_USER","password":"YOUR_PASS"}' \
+  | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+
+# Launch automated chain (htb_easy template)
+CHAIN=$(curl -s -X POST http://localhost:8000/api/autochain/start/template \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"template_id":"htb_easy","target":"10.10.10.3"}')
+
+echo $CHAIN | python3 -m json.tool
+
+# Extract chain_id and stream progress
+CHAIN_ID=$(echo $CHAIN | python3 -c "import sys,json; print(json.load(sys.stdin)['chain_id'])")
+curl -N http://localhost:8000/api/autochain/$CHAIN_ID/stream
+
+# View captured flags when done
+curl -s http://localhost:8000/api/autochain/$CHAIN_ID/flags | python3 -m json.tool
+```
+
+---
+
+## 7 — Local Development Setup
+
+If you want to develop without Docker:
+
+**Databases only via Docker:**
+```bash
+docker compose up -d postgres neo4j
+```
+
+**Backend:**
+```bash
+cd backend
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+prisma generate && prisma db push
+uvicorn app.main:app --reload --port 8000
+```
+
+**Frontend:**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+**Run tests:**
+```bash
+# Backend
+cd backend && pytest -v
+
+# Frontend
+cd frontend && npm test
+```
+
+---
+
+## 8 — Useful Commands
+
+```bash
+# Stop all services
+docker compose down
+
+# Stop and remove all volumes (clean slate)
+docker compose down -v
+
+# Tail all logs
+docker compose logs -f
+
+# Restart a single service
+docker compose restart backend
+
+# View backend logs only
+docker compose logs -f backend
+
+# Open a shell in the Kali container
+docker exec -it autopentestai-kali-tools bash
+
+# Connect to PostgreSQL
+docker exec -it autopentestai-postgres psql -U autopentestai
+
+# Open Neo4j shell
+docker exec -it autopentestai-neo4j cypher-shell -u neo4j -p "$NEO4J_PASSWORD"
+```
+
+---
+
+## Troubleshooting
+
+**Port already in use:**
+```bash
+# Find what's using port 8000
+lsof -i :8000       # macOS / Linux
+netstat -ano | findstr :8000   # Windows
+
+# Change port in .env and docker-compose.yml if needed
+```
+
+**Service not healthy:**
+```bash
+docker compose logs postgres    # Check DB startup errors
+docker compose logs backend     # Check API startup errors
+docker compose logs neo4j       # Check graph DB errors
+```
+
+**Frontend can't connect to backend:**
+```bash
+# Ensure NEXT_PUBLIC_API_URL is correct in .env
+echo $NEXT_PUBLIC_API_URL     # Should be http://localhost:8000
+```
+
+**OpenAI / Anthropic API errors:**
+- Verify your API key is set correctly in `.env`
+- Ensure you have sufficient credits
+- Check model availability in your region
+
+**Neo4j authentication failure:**
+- Ensure `NEO4J_PASSWORD` in `.env` matches `NEO4J_AUTH` format in docker-compose.yml
+- Default format: `NEO4J_AUTH=neo4j/<password>`
+
+---
+
+## Next Steps
+
+- 📖 **Full usage guide**: [docs/USER_MANUAL.md](USER_MANUAL.md)
+- 🔌 **API reference**: [docs/API_REFERENCE.md](API_REFERENCE.md)
+- 🏗️ **Architecture**: [docs/ARCHITECTURE.md](ARCHITECTURE.md)
+- ⚙️ **All config options**: [docs/CONFIGURATION_GUIDE.md](CONFIGURATION_GUIDE.md)
+- 🔒 **Production deployment**: [README.md — Section 5.2](../README.md#52-production-deployment)
+
+---
+
+> **⚠️ Legal**: Only test systems you own or have explicit written permission to test.
