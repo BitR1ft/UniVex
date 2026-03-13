@@ -491,6 +491,23 @@
 - LangGraph ReAct agent design and streaming
 - Neo4j Cypher query optimization and multi-tenancy
 - MCP protocol implementation and tool orchestration
+- AutoChain HTB template design and session upgrade logic (Week 11-12)
+
+---
+
+## 🏆 Betterment Plan Summary (Weeks 1-12)
+
+| Week | Focus | Status |
+|------|-------|--------|
+| 1-2  | ffuf MCP server + agent adapters | ✅ Complete |
+| 3    | SQLMap MCP server + agent adapters | ✅ Complete |
+| 4    | LinPEAS/WinPEAS + Hash Cracker + credential reuse | ✅ Complete |
+| 5    | QueryGraphTool multi-tenancy + AUTO_APPROVE env | ✅ Complete |
+| 6    | SearchSploit + Nikto + WPScan + CMS detection | ✅ Complete |
+| 7    | SSH/FTP/SNMP tools + reverse shell | ✅ Complete |
+| 8    | Active Directory tools (Kerbrute, Impacket, PtH, LDAP, CME) | ✅ Complete |
+| 9-10 | ML intent classifier (Keyword/ML/LLM/Hybrid) | ✅ Complete |
+| 11-12 | HTB templates (htb_easy/htb_medium), `from_template()`, session upgrade, flag MD5 | ✅ Complete |
 
 ---
 

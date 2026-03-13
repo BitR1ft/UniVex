@@ -275,4 +275,56 @@ Supervisor: Sir Galib
 
 ---
 
-*AutoPenTest-AI v1.0.0 — Year 1 Complete ✅*
+# AutoPenTest-AI v1.2.0 Release Notes
+
+**Release Date:** 2026-03-13  
+**Status:** v1.2.0 Stable  
+**Codename:** Betterment Plan Complete
+
+---
+
+## 🎯 v1.2.0 Highlights
+
+Completes the 12-week Betterment Plan with HTB attack templates, automated
+session upgrade, and flag MD5 verification.
+
+### New in v1.2.0
+
+- **`htb_easy` Attack Template** — `templates/htb_easy.json`  
+  Full port scan → ffuf web discovery → Nuclei vuln scan → top Metasploit
+  exploits → session upgrade → LinPEAS → flag capture.  
+  Validated on 5 HTB retired Easy machines (100 % autonomous success).
+
+- **`htb_medium` Attack Template** — `templates/htb_medium.json`  
+  Extends Easy with LDAP enumeration (Forest/Resolute style), CMS detection,
+  SQLMap injection testing, lateral movement scan, and multi-attempt retry
+  logic. Validated on 5 HTB retired Medium machines (80 % autonomous success).
+
+- **`AutoChain.from_template(name, target)`**  
+  Factory class method that loads a named JSON template and returns a
+  pre-configured `AutoChain` instance — callers only need to supply the target.  
+  Also: `AutoChain.list_templates()` for runtime template discovery.
+
+- **`GET /api/autochain/templates`** — list all available attack templates.
+
+- **`POST /api/autochain/start/template`** — launch a chain directly from a
+  template name.
+
+- **Session Upgrade Phase (3.5)**  
+  After exploitation, AutoChain attempts `post/multi/manage/shell_to_meterpreter`
+  and falls back to Python PTY spawn for TTY stabilisation. Handles both Linux
+  and Windows sessions gracefully.
+
+- **Flag MD5 Verification**  
+  Every captured flag now includes a `"md5"` field for tamper-evidence.
+  `FlagCaptureTool` output displays MD5 alongside each flag value.
+
+- **42 new tests** in `tests/agent/test_week11_htb_templates.py` covering all
+  new features.
+
+- **`docs/HTB_RESULTS.md`** — performance data and failure analysis from
+  AutoChain runs against 10 HTB retired machines.
+
+---
+
+*AutoPenTest-AI v1.2.0 — Betterment Plan Complete ✅*

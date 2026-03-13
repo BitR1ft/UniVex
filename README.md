@@ -1,6 +1,7 @@
-# AutoPenTest AI v1.1
+# AutoPenTest AI v1.2
 
-> **Version 1.1.0** — Betterment Plan Weeks 1-10 Complete ✅
+> **Version 1.2.0** — Betterment Plan Weeks 1-12 Complete ✅  
+> HTB Attack Templates • Session Upgrade • Flag MD5 Verification
 
 An agentic, fully-automated penetration testing framework that autonomously executes the entire penetration testing kill chain — from reconnaissance to exploitation to reporting.
 
@@ -162,7 +163,7 @@ npm test
 
 ## 📋 Project Status
 
-**Current Phase**: v1.1.0 Release — Betterment Plan Weeks 1-10 Complete ✅
+**Current Phase**: v1.2.0 Release — Betterment Plan Weeks 1-12 Complete ✅
 
 **All 12 Development Months Complete**:
 - ✅ Month 1: Foundation & Environment Setup
@@ -178,7 +179,7 @@ npm test
 - ✅ Month 11: MCP Tool Servers (Naabu, Curl, Nuclei, Metasploit, Query Graph, Web Search)
 - ✅ Month 12: AI Agent Exploitation (Attack Paths, Payload Delivery, Session Management)
 
-**Betterment Plan v1.1 Enhancements**:
+**Betterment Plan v1.2 Enhancements**:
 - ✅ Week 1-2: ffuf web fuzzing MCP server (port 8004) + agent adapters
 - ✅ Week 3: SQLMap MCP server (port 8005) + agent adapters (detect/dump/tables/columns)
 - ✅ Week 4: LinPEAS/WinPEAS tools + Hash Cracker MCP server (port 8006) + credential reuse pipeline
@@ -187,28 +188,31 @@ npm test
 - ✅ Week 7: SSH key extraction + SSH login + reverse shell generation + FTP + SNMP tools
 - ✅ Week 8: Active Directory tools (Kerbrute, enum4linux-ng, Impacket, PtH, LDAP, CrackMapExec)
 - ✅ Week 9-10: ML-based intent classifier (KeywordClassifier, MLClassifier, LLMClassifier, HybridClassifier)
+- ✅ Week 11-12: HTB attack templates (`htb_easy` / `htb_medium`), `AutoChain.from_template()`, session upgrade, flag MD5 verification
 
-### v1.1 Statistics
+### v1.2 Statistics
 
 | Metric | Value |
 |--------|-------|
 | Development Duration | 12 months + betterment |
-| Total Files | 130+ |
-| Lines of Code | 20,000+ |
-| Backend (Python) | 12,000+ |
+| Total Files | 135+ |
+| Lines of Code | 21,000+ |
+| Backend (Python) | 12,500+ |
 | Frontend (TypeScript) | 5,000+ |
-| Documentation | 3,000+ |
-| Backend Test Cases | 850+ |
+| Documentation | 3,500+ |
+| Backend Test Cases | 892+ |
 | Frontend Test Cases | 87 |
 | MCP Servers | 7 |
-| Agent Tools | 35+ |
+| Agent Tools | 37+ |
+| Attack Templates | 2 (htb_easy, htb_medium) |
 | Neo4j Node Types | 17+ |
-| API Endpoints | 15+ |
+| API Endpoints | 17+ |
 | Docker Services | 6 |
 
-See [Release Notes](RELEASE_NOTES.md) for detailed v1.0.0 changelog.
+See [Release Notes](RELEASE_NOTES.md) for detailed changelog.
 See [User Manual](docs/USER_MANUAL.md) for usage instructions.
 See [Betterment Plan](BETTERMENT_PLAN.md) for the full improvement roadmap.
+See [HTB Results](docs/HTB_RESULTS.md) for AutoChain HTB machine performance data.
 
 ## 🔒 Security & Ethics
 
@@ -228,8 +232,8 @@ MIT License — See [LICENSE](LICENSE) for details.
 
 | Quarter | Focus |
 |---------|-------|
-| Betterment Weeks 11-12 | HTB-specific attack templates (Easy/Medium), flag capture automation |
-| Betterment Weeks 13-16 | AutoChain autonomous workflow, self-healing, timeout/retry logic |
+| ~~Betterment Weeks 11-12~~ | ✅ HTB-specific attack templates (Easy/Medium), flag capture automation |
+| Betterment Weeks 13-16 | Report generation (PDF/Markdown), performance tuning, security hardening |
 | Q1 (Months 13–15) | API auth hardening, rate limiting, dynamic payload generation |
 | Q2 (Months 16–18) | Multi-target campaigns, automated report generation (PDF/HTML) |
 | Q3 (Months 19–21) | Compliance mapping (PCI-DSS, HIPAA, NIST), horizontal scaling |

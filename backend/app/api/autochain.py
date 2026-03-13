@@ -120,6 +120,35 @@ class AutoChainStepsResponse(BaseModel):
 # ---------------------------------------------------------------------------
 
 
+class AutoChainTemplateStartRequest(BaseModel):
+    """Parameters for launching an AutoChain run from a named template."""
+
+    template: str = Field(
+        ...,
+        description="Template name (e.g. 'htb_easy', 'htb_medium')",
+        examples=["htb_easy"],
+    )
+    target: str = Field(
+        ...,
+        description="Target IP address, hostname, or URL",
+        examples=["10.10.10.3"],
+    )
+    project_id: Optional[str] = Field(None)
+    auto_approve_risk_level: Optional[str] = Field(
+        None,
+        description=(
+            "Override template's auto-approve level. "
+            "Values: none | low | medium | high | critical"
+        ),
+    )
+    naabu_url: str = Field("http://kali-tools:8000")
+    nuclei_url: str = Field("http://kali-tools:8002")
+    msf_url: str = Field("http://kali-tools:8003")
+
+
+# ---------------------------------------------------------------------------
+
+
 async def _run_chain(chain_id: str, orchestrator: AutoChain) -> None:
     """Background task that drives the AutoChain pipeline."""
     try:
@@ -185,6 +214,78 @@ async def start_chain(
         message=(
             f"AutoChain started. Poll GET /api/autochain/{chain_id} for status "
             f"or subscribe to GET /api/autochain/{chain_id}/stream for live updates."
+        ),
+    )
+
+
+@router.get("/templates", response_model=List[Dict[str, Any]])
+async def list_templates() -> List[Dict[str, Any]]:
+    """
+    Return metadata for all available attack templates.
+
+    Templates are JSON files in ``backend/app/autochain/templates/``.
+    Built-in templates:
+
+    * ``htb_easy``   — standard HackTheBox Easy attack sequence
+    * ``htb_medium`` — extended HackTheBox Medium attack sequence
+    """
+    return AutoChain.list_templates()
+
+
+@router.post("/start/template", response_model=AutoChainStartResponse, status_code=201)
+async def start_chain_from_template(
+    request: AutoChainTemplateStartRequest,
+    background_tasks: BackgroundTasks,
+) -> AutoChainStartResponse:
+    """
+    Create and launch an AutoChain run using a pre-defined attack template.
+
+    Templates define the full attack sequence (tools, parameters, retry logic,
+    auto-approve level) so callers only need to supply the target.
+
+    Example::
+
+        POST /api/autochain/start/template
+        {"template": "htb_easy", "target": "10.10.10.3"}
+    """
+    try:
+        orchestrator = AutoChain.from_template(
+            request.template,
+            target=request.target,
+            project_id=request.project_id,
+            auto_approve_risk_level=request.auto_approve_risk_level,
+            naabu_url=request.naabu_url,
+            nuclei_url=request.nuclei_url,
+            msf_url=request.msf_url,
+        )
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    chain_id = str(uuid.uuid4())
+    _chains[chain_id] = orchestrator.result
+    _orchestrators[chain_id] = orchestrator
+
+    background_tasks.add_task(_run_chain, chain_id, orchestrator)
+
+    logger.info(
+        "Started template-based AutoChain %s (template=%s, target=%s)",
+        chain_id,
+        request.template,
+        request.target,
+    )
+
+    return AutoChainStartResponse(
+        chain_id=chain_id,
+        plan_id=orchestrator.plan.plan_id,
+        target=request.target,
+        status=ChainStatus.RUNNING.value,
+        started_at=orchestrator.result.started_at,
+        message=(
+            f"AutoChain started from template '{request.template}'. "
+            f"Poll GET /api/autochain/{chain_id} for status or subscribe to "
+            f"GET /api/autochain/{chain_id}/stream for live updates."
         ),
     )
 
