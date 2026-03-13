@@ -31,7 +31,7 @@ the full penetration testing kill chain against a given target.
 - `ChatWindow` — auto-scrolling conversation view
 - `MessageBubble` — type-specific styling (user / agent / thought / tool / error)
 - `ChatInput` — send, stop, and clear controls
-- `PhaseIndicator` — colour-coded operational phase display
+- `PhaseIndicator` — color-coded operational phase display
 
 ---
 
