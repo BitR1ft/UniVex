@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-Month 11 successfully implements the Model Context Protocol (MCP) infrastructure for the AutoPenTest AI framework, enabling the AI agent to interact with security tools through a standardized interface. This is a critical milestone that transforms the agent from a simple chatbot into a functional security testing system.
+Month 11 successfully implements the Model Context Protocol (MCP) infrastructure for the UniVex framework, enabling the AI agent to interact with security tools through a standardized interface. This is a critical milestone that transforms the agent from a simple chatbot into a functional security testing system.
 
 ## ✅ Completed Deliverables
 
@@ -223,7 +223,7 @@ Based on Month 11 foundation, Month 12 will implement:
 
 ## ✨ Conclusion
 
-Month 11 successfully transforms the AutoPenTest AI agent from a basic chatbot into a functional security testing system. The MCP infrastructure provides a scalable, secure, and maintainable foundation for tool integration. With 4 MCP servers, 6 agent tools, and a sophisticated tool registry system, the framework is ready for Month 12's exploitation capabilities.
+Month 11 successfully transforms the UniVex agent from a basic chatbot into a functional security testing system. The MCP infrastructure provides a scalable, secure, and maintainable foundation for tool integration. With 4 MCP servers, 6 agent tools, and a sophisticated tool registry system, the framework is ready for Month 12's exploitation capabilities.
 
 The implementation follows software engineering best practices with:
 - Clean architecture and separation of concerns
@@ -236,7 +236,7 @@ The implementation follows software engineering best practices with:
 
 ---
 
-**Muhammad Adeel Haider**  
-BSCYS-F24 A  
-Supervisor: Sir Galib  
+**BitR1FT**  
+BitR1FT  
+Supervisor: BitR1FT  
 Date: February 2026

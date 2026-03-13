@@ -33,7 +33,7 @@ from typing import Any, Callable, List, Optional
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_DB_PATH = str(Path.home() / ".autopentestai" / "cve_cache.db")
+_DEFAULT_DB_PATH = str(Path.home() / ".univex" / "cve_cache.db")
 
 
 # ---------------------------------------------------------------------------
@@ -48,7 +48,7 @@ class CVECache:
     Args:
         ttl_days:  How many days before a cached entry is considered stale.
         db_path:   Path to the SQLite database file.  Defaults to
-                   ``~/.autopentestai/cve_cache.db``.
+                   ``~/.univex/cve_cache.db``.
     """
 
     def __init__(

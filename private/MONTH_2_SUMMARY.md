@@ -1,8 +1,8 @@
-# Month 2 Completion Summary - AutoPenTest AI
+# Month 2 Completion Summary - UniVex
 
-**Project**: AutoPenTest AI - Professional FYP  
-**Student**: Muhammad Adeel Haider (BSCYS-F24 A)  
-**Supervisor**: Sir Galib  
+**Project**: UniVex - open-source startup project  
+**Student**: BitR1FT (BitR1FT)  
+**Supervisor**: BitR1FT  
 **Period**: Month 2 - Core Infrastructure  
 **Status**: ✅ **SUCCESSFULLY COMPLETED**
 
@@ -465,7 +465,7 @@ The foundation is now enterprise-grade and ready for:
 
 ## 🏆 MONTH 2: SUCCESSFULLY COMPLETED
 
-All 30 days of Month 2 tasks completed professionally and thoroughly. The AutoPenTest AI framework now has a robust, production-ready infrastructure ready for the reconnaissance and exploitation phases in Month 3.
+All 30 days of Month 2 tasks completed professionally and thoroughly. The UniVex framework now has a robust, production-ready infrastructure ready for the reconnaissance and exploitation phases in Month 3.
 
 **Status**: ✅ **MONTH 2 COMPLETE - READY FOR MONTH 3**
 

@@ -1,6 +1,6 @@
 # Month 7 Summary: Vulnerability Scanning (Nuclei Integration & CVE/MITRE Enrichment)
 
-**Project:** AutoPenTest AI  
+**Project:** UniVex  
 **Period:** Month 7 (Days 181-210)  
 **Status:** ✅ **COMPLETE**  
 **Date:** February 16, 2026
@@ -287,6 +287,6 @@ Month 8 focuses on:
 
 ---
 
-**Author**: Muhammad Adeel Haider (BSCYS-F24 A)  
-**Supervisor**: Sir Galib  
-**FYP**: AutoPenTest AI
+**Author**: BitR1FT (BitR1FT)  
+**Supervisor**: BitR1FT  
+**FYP**: UniVex

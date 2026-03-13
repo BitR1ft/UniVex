@@ -9,7 +9,7 @@ documentation.
 
 | File | Description |
 |------|-------------|
-| `FYP - Proposal.md` | Original final-year project proposal |
+| `FYP - Proposal.md` | Original project proposal |
 | `FYP - YEAR 01.md` | Year 1 development plan |
 | `GAP.md` | Gap analysis document (pre-gap-coverage phase) |
 | `GAP_COVERAGE_QUICK_REFERENCE.md` | Quick reference for gap coverage tasks |

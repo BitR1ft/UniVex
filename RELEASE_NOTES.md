@@ -1,4 +1,4 @@
-# AutoPenTest-AI v1.0.0 Release Notes
+# UniVex v1.0.0 Release Notes
 
 **Release Date:** February 17, 2026  
 **Status:** v1.0.0 Release Candidate  
@@ -8,7 +8,7 @@
 
 ## 🎯 Highlights
 
-AutoPenTest-AI is an agentic, fully-automated penetration testing framework that autonomously executes the entire penetration testing kill chain. Given a single target, the AI agent performs reconnaissance, exploitation, privilege escalation, post-exploitation, and report generation — all with human-in-the-loop safety controls.
+UniVex is an agentic, fully-automated penetration testing framework that autonomously executes the entire penetration testing kill chain. Given a single target, the AI agent performs reconnaissance, exploitation, privilege escalation, post-exploitation, and report generation — all with human-in-the-loop safety controls.
 
 **Target Success Rates:**
 - HTB Easy: 100%
@@ -112,12 +112,12 @@ AutoPenTest-AI is an agentic, fully-automated penetration testing framework that
 
 | Container | Image / Build | Purpose |
 |-----------|--------------|---------|
-| `autopentestai-postgres` | `postgres:16-alpine` | Relational data (users, projects, config) |
-| `autopentestai-neo4j` | `neo4j:5.15-community` | Attack surface graph database |
-| `autopentestai-backend` | Custom (Python 3.11) | FastAPI REST API + AI Agent |
-| `autopentestai-frontend` | Custom (Node 20) | Next.js 14 web dashboard |
-| `autopentestai-kali-tools` | Custom (Kali) | Security tools + MCP servers |
-| `autopentestai-recon` | Custom | Dedicated reconnaissance tools |
+| `univex-postgres` | `postgres:16-alpine` | Relational data (users, projects, config) |
+| `univex-neo4j` | `neo4j:5.15-community` | Attack surface graph database |
+| `univex-backend` | Custom (Python 3.11) | FastAPI REST API + AI Agent |
+| `univex-frontend` | Custom (Node 20) | Next.js 14 web dashboard |
+| `univex-kali-tools` | Custom (Kali) | Security tools + MCP servers |
+| `univex-recon` | Custom | Dedicated reconnaissance tools |
 
 ### Network Segmentation
 
@@ -153,8 +153,8 @@ AutoPenTest-AI is an agentic, fully-automated penetration testing framework that
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/BitR1ft/FYP.git
-cd FYP
+git clone https://github.com/BitR1ft/UnderProgress.git univex
+cd univex
 
 # 2. Configure environment
 cp .env.example .env
@@ -246,9 +246,9 @@ Month 12 completes Year 1 by delivering the full exploitation subsystem:
 
 ## 👥 Contributors
 
-**Muhammad Adeel Haider**  
-Program: BSCYS-F24 A  
-Supervisor: Sir Galib
+**BitR1FT**  
+Project: UniVex (open-source)  
+Developed by: BitR1FT
 
 ### Acknowledgments
 
@@ -275,7 +275,7 @@ Supervisor: Sir Galib
 
 ---
 
-# AutoPenTest-AI v1.2.0 Release Notes
+# UniVex v1.2.0 Release Notes
 
 **Release Date:** 2026-03-13  
 **Status:** v1.2.0 Stable  
@@ -327,4 +327,4 @@ session upgrade, and flag MD5 verification.
 
 ---
 
-*AutoPenTest-AI v1.2.0 — Betterment Plan Complete ✅*
+*UniVex v1.2.0 — Betterment Plan Complete ✅*

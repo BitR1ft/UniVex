@@ -3,9 +3,9 @@ Resource Enumeration Tests
 
 Comprehensive tests for resource enumeration module.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 6
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 6
 """
 
 import pytest

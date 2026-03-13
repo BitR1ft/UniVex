@@ -38,8 +38,8 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io
-  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/autopentestai-backend
-  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/autopentestai-frontend
+  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/univex-backend
+  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/univex-frontend
 
 # =============================================================================
 # JOB 1: Determine Deployment Context
@@ -138,7 +138,7 @@ jobs:
           echo "  Frontend: ${{ env.FRONTEND_IMAGE }}:${{ needs.context.outputs.image_tag }}"
           # Example: SSH-based deployment
           # ssh -i ${{ secrets.STAGING_SSH_KEY }} deploy@${{ secrets.STAGING_HOST }} \
-          #   "cd /opt/autopentestai && \
+          #   "cd /opt/univex && \
           #    export IMAGE_TAG=${{ needs.context.outputs.image_tag }} && \
           #    docker compose -f docker-compose.staging.yml pull && \
           #    docker compose -f docker-compose.staging.yml up -d --no-build"

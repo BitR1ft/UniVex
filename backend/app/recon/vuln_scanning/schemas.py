@@ -4,9 +4,9 @@ Vulnerability Scanning Schemas
 Pydantic models for vulnerability scanning requests, responses, and data structures.
 Supports Nuclei integration, CVE enrichment, and MITRE mapping.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 7
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 7
 """
 
 from enum import Enum

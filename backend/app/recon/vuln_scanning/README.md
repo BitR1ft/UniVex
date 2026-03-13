@@ -1,6 +1,6 @@
 # Vulnerability Scanning Module
 
-**Month 7 Implementation - AutoPenTest AI**
+**Month 7 Implementation - UniVex**
 
 Comprehensive vulnerability scanning with Nuclei integration, CVE enrichment, and MITRE ATT&CK mapping.
 
@@ -354,7 +354,7 @@ Canonical BaseOrchestrator extension for Nuclei:
 Template lifecycle management:
 - `update()` – async `nuclei -update-templates` execution
 - Version detection via `nuclei -version`
-- Persistent audit history in `~/.autopentestai/nuclei_templates_state.json`
+- Persistent audit history in `~/.univex/nuclei_templates_state.json`
 - Optional APScheduler-based scheduled refresh (`start_scheduler()`)
 
 ### InteractshClient (`interactsh_client.py`)
@@ -374,11 +374,10 @@ OOB interaction detection for blind vulnerabilities:
 
 ## 👨‍💻 Author
 
-**Muhammad Adeel Haider**
-- Program: BSCYS-F24 A
-- Supervisor: Sir Galib
-- FYP: AutoPenTest AI - Month 7
+**BitR1FT** — Founder & Lead Developer  
+- Project: UniVex (open-source)
+- GitHub: [@BitR1ft](https://github.com/BitR1ft)
 
 ## 📄 License
 
-Part of AutoPenTest AI FYP project
+Part of UniVex project

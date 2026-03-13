@@ -57,7 +57,7 @@ export default function RegisterPage() {
             Create Account
           </h2>
           <p className="text-gray-400 text-center mb-8">
-            Join AutoPenTest AI
+            Join UniVex
           </p>
 
           {error && (

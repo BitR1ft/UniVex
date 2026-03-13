@@ -1,4 +1,4 @@
-# AutoPenTest AI — Complete Project Analysis & Betterment Plan
+# UniVex — Complete Project Analysis & Betterment Plan
 
 > **Author**: Copilot Analysis — March 2026  
 > **Based on**: Full codebase review of Year 1 (v1.0.0)
@@ -215,7 +215,7 @@ The current system is better described as a **semi-autonomous recon-to-exploitat
 
 ## 5. Betterment Plan — Day-by-Day Tasks
 
-> **Goal**: Make AutoPenTest-AI capable of autonomously solving **HTB Easy** (100%) and **HTB Medium** (70%+) boxes with zero or minimal human approval clicks.
+> **Goal**: Make UniVex capable of autonomously solving **HTB Easy** (100%) and **HTB Medium** (70%+) boxes with zero or minimal human approval clicks.
 > **Duration**: 90 days (Months 13-15 of Year 2)
 > **Priority order**: Fix critical gaps first, add missing tools second, optimize third.
 
@@ -712,4 +712,4 @@ The current system is better described as a **semi-autonomous recon-to-exploitat
 
 ---
 
-*Analysis completed: March 2026 | AutoPenTest-AI v1.0.0 → v1.1.0 Betterment Plan*
+*Analysis completed: March 2026 | UniVex v1.0.0 → v1.1.0 Betterment Plan*

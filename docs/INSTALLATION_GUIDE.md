@@ -1,4 +1,4 @@
-# AutoPenTest AI — Installation Guide
+# UniVex — Installation Guide
 
 > **Day 203 · Phase K: Documentation**
 > Comprehensive setup guide for development, staging and production environments.
@@ -60,8 +60,8 @@ docker pull kalilinux/kali-rolling
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/BitR1ft/UnderProgress.git autopentestai
-cd autopentestai
+git clone https://github.com/BitR1ft/UnderProgress.git univex
+cd univex
 ```
 
 ### 2. Create your environment file
@@ -75,7 +75,7 @@ Edit `.env` and set **at minimum**:
 ```dotenv
 # Required — change all of these
 SECRET_KEY=<run: openssl rand -hex 32>
-DATABASE_URL=postgresql://autopentestai:changeme@postgres:5432/autopentestai
+DATABASE_URL=postgresql://univex:changeme@postgres:5432/univex
 NEO4J_URI=bolt://neo4j:7687
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=changeme
@@ -163,7 +163,7 @@ docker compose up -d postgres neo4j
 #### d. Set environment variables
 
 ```bash
-export DATABASE_URL="postgresql://autopentestai:changeme@localhost:5432/autopentestai"
+export DATABASE_URL="postgresql://univex:changeme@localhost:5432/univex"
 export NEO4J_URI="bolt://localhost:7687"
 export NEO4J_USER="neo4j"
 export NEO4J_PASSWORD="changeme"
@@ -345,14 +345,14 @@ docker compose down -v
 ### Remove images
 
 ```bash
-docker image prune -a --filter "label=com.autopentestai=true"
+docker image prune -a --filter "label=com.univex=true"
 ```
 
 ### Remove the repository
 
 ```bash
 cd ..
-rm -rf autopentestai
+rm -rf univex
 ```
 
 ---

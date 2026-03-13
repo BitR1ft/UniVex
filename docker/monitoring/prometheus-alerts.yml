@@ -1,5 +1,5 @@
 groups:
-  - name: autopentestai_api
+  - name: univex_api
     rules:
       - alert: HighErrorRate
         expr: |

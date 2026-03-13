@@ -1,8 +1,8 @@
-# AutoPenTest AI: An Agentic, Fully-Automated Penetration Testing Framework
+# UniVex: An Agentic, Fully-Automated Penetration Testing Framework
 
-Student: Muhammad Adeel Haider
-Program: BSCYS-F24 A
-Supervisor: Sir Galib
+Developer: BitR1FT
+Project Type: Open-Source Startup
+Repository: BitR1ft/UnderProgress
 Duration: 700 days (18–24 months)  
 Start Date: [YYYY-MM-DD]  
 Proposed Repository: BitR1ft/redamon (forked, inspiration only)
@@ -10,7 +10,7 @@ Proposed Repository: BitR1ft/redamon (forked, inspiration only)
 ---
 
 ## 1. Executive Summary
-AutoPenTest AI is a Linux-based, agentic, fully-automated offensive security framework that, given a single target, autonomously executes the entire penetration testing kill chain: reconnaissance, exploitation, privilege escalation (user and root flags), lateral movement (where applicable), post-exploitation, and professional report generation. The system leverages an AI agent (LangGraph/ReAct + Tree-of-Thought) that orchestrates 30+ industry tools (e.g., Nmap, Naabu, SQLMap, Metasploit, LinPEAS/WinPEAS) through a controlled sandbox, documenting every step with timestamps, commands, outputs, evidence, and remediation advice.
+UniVex is a Linux-based, agentic, fully-automated offensive security framework that, given a single target, autonomously executes the entire penetration testing kill chain: reconnaissance, exploitation, privilege escalation (user and root flags), lateral movement (where applicable), post-exploitation, and professional report generation. The system leverages an AI agent (LangGraph/ReAct + Tree-of-Thought) that orchestrates 30+ industry tools (e.g., Nmap, Naabu, SQLMap, Metasploit, LinPEAS/WinPEAS) through a controlled sandbox, documenting every step with timestamps, commands, outputs, evidence, and remediation advice.
 
 Target outcome: Achieve a 90–95% autonomous success rate on “Hard” difficulty HackTheBox (HTB) machines, with 100% on Easy and 95%+ on Medium, and produce professional PDF/HTML reports suitable for client delivery.
 
@@ -166,6 +166,6 @@ Qualitative:
 ---
 
 ## 15. Conclusion
-This project aims to transform penetration testing by automating the end-to-end workflow with an agentic AI that reliably executes multi-path exploit strategies, obtains user and root flags, and produces professional-grade reports. With rigorous engineering, ethical safeguards, and quantitative validation on HTB, AutoPenTest AI advances both academic research and practical offensive security.
+This project aims to transform penetration testing by automating the end-to-end workflow with an agentic AI that reliably executes multi-path exploit strategies, obtains user and root flags, and produces professional-grade reports. With rigorous engineering, ethical safeguards, and quantitative validation on HTB, UniVex advances both academic research and practical offensive security.
 
 ---

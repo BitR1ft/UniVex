@@ -72,19 +72,19 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: autopentestai
+          POSTGRES_USER: univex
           POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: autopentestai_test
+          POSTGRES_DB: univex_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U autopentestai -d autopentestai_test"
+          --health-cmd "pg_isready -U univex -d univex_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
     env:
-      DATABASE_URL: postgresql://autopentestai:testpassword@localhost:5432/autopentestai_test
+      DATABASE_URL: postgresql://univex:testpassword@localhost:5432/univex_test
       SECRET_KEY: ci-test-secret-key-that-is-long-enough-for-testing
       ENVIRONMENT: testing
       PYTHONPATH: .
@@ -280,13 +280,13 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: autopentestai
+          POSTGRES_USER: univex
           POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: autopentestai_test
+          POSTGRES_DB: univex_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U autopentestai -d autopentestai_test"
+          --health-cmd "pg_isready -U univex -d univex_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -307,7 +307,7 @@ jobs:
           --health-start-period 30s
 
     env:
-      DATABASE_URL: postgresql://autopentestai:testpassword@localhost:5432/autopentestai_test
+      DATABASE_URL: postgresql://univex:testpassword@localhost:5432/univex_test
       NEO4J_URI: bolt://localhost:7687
       NEO4J_USER: neo4j
       NEO4J_PASSWORD: testpassword

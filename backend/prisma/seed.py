@@ -39,10 +39,10 @@ async def seed() -> None:
         # Admin user
         # ----------------------------------------------------------------
         admin = await db.user.upsert(
-            where={"email": "admin@autopentestai.local"},
+            where={"email": "admin@univex.local"},
             data={
                 "create": {
-                    "email": "admin@autopentestai.local",
+                    "email": "admin@univex.local",
                     "username": "admin",
                     "hashed_password": get_password_hash("Admin@12345"),
                     "full_name": "System Administrator",
@@ -57,10 +57,10 @@ async def seed() -> None:
         # Sample regular user
         # ----------------------------------------------------------------
         demo_user = await db.user.upsert(
-            where={"email": "demo@autopentestai.local"},
+            where={"email": "demo@univex.local"},
             data={
                 "create": {
-                    "email": "demo@autopentestai.local",
+                    "email": "demo@univex.local",
                     "username": "demo",
                     "hashed_password": get_password_hash("Demo@12345"),
                     "full_name": "Demo User",

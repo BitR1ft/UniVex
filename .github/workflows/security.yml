@@ -190,12 +190,12 @@ jobs:
 
       - name: Build backend image for scanning
         run: |
-          docker build -t autopentestai-backend:scan ./backend
+          docker build -t univex-backend:scan ./backend
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: autopentestai-backend:scan
+          image-ref: univex-backend:scan
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
@@ -210,12 +210,12 @@ jobs:
 
       - name: Build frontend image for scanning
         run: |
-          docker build -t autopentestai-frontend:scan ./frontend
+          docker build -t univex-frontend:scan ./frontend
 
       - name: Run Trivy on frontend image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: autopentestai-frontend:scan
+          image-ref: univex-frontend:scan
           format: table
           severity: CRITICAL,HIGH
           exit-code: '0'

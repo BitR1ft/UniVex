@@ -1,6 +1,6 @@
 # AI-Powered Penetration Testing Framework - 365 Day Development Plan
 
-> **Project Name:** AutoPenTest-AI (Your Similar Framework)
+> **Project Name:** UniVex — Universal Vulnerability Execution Platform
 > **Start Date:** [Fill in your start date]
 > **Target Completion:** [Start date + 365 days]
 

@@ -1,4 +1,4 @@
-# AutoPenTest AI — Agent Architecture Documentation
+# UniVex — Agent Architecture Documentation
 
 > **Day 200: Agent Documentation — AI Agent Architecture & Flow**
 >
@@ -9,7 +9,7 @@
 
 ## 🤖 Overview
 
-AutoPenTest AI uses a **LLM-powered AI agent** that orchestrates all
+UniVex uses a **LLM-powered AI agent** that orchestrates all
 reconnaissance and vulnerability assessment tools. The agent can:
 
 1. **Plan** attack surface assessment strategies

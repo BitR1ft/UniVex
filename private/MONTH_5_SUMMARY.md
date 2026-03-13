@@ -2,7 +2,7 @@
 
 ## Overview
 
-Month 5 successfully delivered a comprehensive HTTP probing and web technology detection module that integrates seamlessly with the AutoPenTest AI reconnaissance pipeline. The module provides advanced HTTP/HTTPS analysis, TLS certificate inspection, technology fingerprinting, and security assessment capabilities.
+Month 5 successfully delivered a comprehensive HTTP probing and web technology detection module that integrates seamlessly with the UniVex reconnaissance pipeline. The module provides advanced HTTP/HTTPS analysis, TLS certificate inspection, technology fingerprinting, and security assessment capabilities.
 
 ## Objectives Achieved
 
@@ -203,12 +203,12 @@ This will complete the reconnaissance pipeline before moving to vulnerability sc
 
 **COMPLETE** ✅
 
-All Month 5 objectives achieved. The HTTP probing module is production-ready and fully integrated with the AutoPenTest AI framework.
+All Month 5 objectives achieved. The HTTP probing module is production-ready and fully integrated with the UniVex framework.
 
 ---
 
-**Author**: Muhammad Adeel Haider  
-**Program**: BSCYS-F24 A  
-**Supervisor**: Sir Galib  
+**Author**: BitR1FT  
+**Program**: BitR1FT  
+**Supervisor**: BitR1FT  
 **Date**: February 15, 2026  
 **Version**: 1.0

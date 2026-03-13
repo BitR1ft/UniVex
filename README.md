@@ -1,4 +1,4 @@
-# AutoPenTest AI
+# UniVex
 
 <p align="center">
   <img alt="Version" src="https://img.shields.io/badge/version-1.2.0-blue?style=flat-square">
@@ -19,7 +19,7 @@
 
 ## Table of Contents
 
-1. [What Is AutoPenTest AI?](#1-what-is-autopentest-ai)
+1. [What Is UniVex?](#1-what-is-univex)
 2. [Key Features](#2-key-features)
 3. [System Requirements](#3-system-requirements)
 4. [Quick Start — 5 Minutes with Docker](#4-quick-start--5-minutes-with-docker)
@@ -54,9 +54,9 @@
 
 ---
 
-## 1. What Is AutoPenTest AI?
+## 1. What Is UniVex?
 
-AutoPenTest AI is a **full-stack, agentic penetration testing platform** built as a Final Year Project for BSCYS. Given a single target IP or domain, the platform autonomously executes the complete offensive security kill chain without manual intervention:
+UniVex is a **full-stack, agentic penetration testing platform** — a professional open-source project developed by BitR1FT. Given a single target IP or domain, the platform autonomously executes the complete offensive security kill chain without manual intervention:
 
 ```
 Target IP / Domain
@@ -191,8 +191,8 @@ The AI agent uses the **ReAct (Reasoning + Acting)** pattern powered by GPT-4 / 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/BitR1ft/UnderProgress.git autopentestai
-cd autopentestai
+git clone https://github.com/BitR1ft/UnderProgress.git univex
+cd univex
 
 # 2. Create your environment file
 cp .env.example .env
@@ -239,8 +239,8 @@ Expected output:
 
 **Clone and configure:**
 ```bash
-git clone https://github.com/BitR1ft/UnderProgress.git autopentestai
-cd autopentestai
+git clone https://github.com/BitR1ft/UnderProgress.git univex
+cd univex
 cp .env.example .env
 # edit .env — see Section 6 for full reference
 ```
@@ -288,7 +288,7 @@ The UI is available at http://localhost:3000
 docker compose --profile tools up -d kali-tools recon-container
 
 # Verify MCP servers are running inside the Kali container
-docker exec autopentestai-kali-tools python /app/mcp/servers/naabu_server.py &
+docker exec univex-kali-tools python /app/mcp/servers/naabu_server.py &
 # (All 8 MCP servers are started via start-mcp-servers.sh in the container)
 ```
 
@@ -315,7 +315,7 @@ docker compose \
   up -d --build
 
 # 4. Run database migrations
-docker exec autopentestai-prod-backend prisma migrate deploy
+docker exec univex-prod-backend prisma migrate deploy
 
 # 5. Verify readiness probe
 curl -s http://localhost:8000/readiness | python3 -m json.tool
@@ -351,9 +351,9 @@ Copy `.env.example` to `.env` and set the following variables:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DATABASE_URL` | `postgresql://...` | Full PostgreSQL connection URL |
-| `POSTGRES_USER` | `autopentestai` | PostgreSQL username |
+| `POSTGRES_USER` | `univex` | PostgreSQL username |
 | `POSTGRES_PASSWORD` | *(must change)* | PostgreSQL password |
-| `POSTGRES_DB` | `autopentestai` | Database name |
+| `POSTGRES_DB` | `univex` | Database name |
 | `NEO4J_URI` | `bolt://neo4j:7687` | Neo4j Bolt connection URI |
 | `NEO4J_USER` | `neo4j` | Neo4j username |
 | `NEO4J_PASSWORD` | *(must change)* | Neo4j password |
@@ -1223,7 +1223,7 @@ Custom metrics exposed on `/metrics`:
 Login: `admin` / `$GRAFANA_PASSWORD`
 
 Pre-configured dashboards:
-- **AutoPenTest AI Overview** — scan rate, tool call rate, flags
+- **UniVex Overview** — scan rate, tool call rate, flags
 - **FastAPI Performance** — latency, error rate, throughput
 - **Container Resources** — CPU, memory, network per service
 - **Database Health** — PostgreSQL connections, Neo4j page cache
@@ -1380,8 +1380,9 @@ code style, commit message format, and review process.
 
 ## 18. Author & Acknowledgments
 
-**Muhammad Adeel Haider**  
-BSCYS-F24 A | Supervisor: Sir Galib
+**BitR1FT** — Founder & Lead Developer  
+GitHub: [@BitR1ft](https://github.com/BitR1ft)  
+Project: [UniVex](https://github.com/BitR1ft/UnderProgress) — open-source, professional offensive security platform
 
 **Acknowledgments:**
 - Inspired by the RedAmon offensive security framework

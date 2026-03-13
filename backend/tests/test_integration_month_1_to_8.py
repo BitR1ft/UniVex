@@ -1,6 +1,6 @@
 """
 End-to-End Integration Test: Month 1 to Month 8
-Tests the complete AutoPenTest AI pipeline including all reconnaissance phases and graph database.
+Tests the complete UniVex pipeline including all reconnaissance phases and graph database.
 """
 
 import pytest
@@ -29,8 +29,8 @@ class TestEndToEndIntegration:
         - Basic authentication
         """
         # Check project structure
-        backend_path = Path('/home/runner/work/FYP/FYP/backend')
-        frontend_path = Path('/home/runner/work/FYP/FYP/frontend')
+        backend_path = Path('/home/runner/work/UnderProgress/UnderProgress/backend')
+        frontend_path = Path('/home/runner/work/UnderProgress/UnderProgress/frontend')
         
         assert backend_path.exists(), "Backend directory exists"
         assert frontend_path.exists(), "Frontend directory exists"
@@ -56,7 +56,7 @@ class TestEndToEndIntegration:
         
         # Check FastAPI app
         assert app is not None, "FastAPI app initialized"
-        assert app.title == "AutoPenTest AI", "App title correct"
+        assert app.title == "UniVex", "App title correct"
         
         # Check routers are registered
         routes = [route.path for route in app.routes]
@@ -388,13 +388,13 @@ class TestEndToEndIntegration:
         """
         Test that all documentation is complete.
         """
-        docs_path = Path('/home/runner/work/FYP/FYP/docs')
+        docs_path = Path('/home/runner/work/UnderProgress/UnderProgress/docs')
         
         # Check key documentation files
         assert (docs_path / 'GRAPH_SCHEMA.md').exists(), "Graph schema documentation exists"
         
         # Check project files
-        root_path = Path('/home/runner/work/FYP/FYP')
+        root_path = Path('/home/runner/work/UnderProgress/UnderProgress')
         assert (root_path / 'README.md').exists(), "README exists"
         assert (root_path / 'CONTRIBUTING.md').exists(), "Contributing guide exists"
         
@@ -405,7 +405,7 @@ class TestEndToEndIntegration:
         Verify test coverage meets requirements.
         """
         # This test confirms tests exist for all major modules
-        tests_path = Path('/home/runner/work/FYP/FYP/backend/tests')
+        tests_path = Path('/home/runner/work/UnderProgress/UnderProgress/backend/tests')
         
         # Check test directories exist
         assert (tests_path / 'graph').exists(), "Graph tests exist"

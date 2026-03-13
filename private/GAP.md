@@ -1,4 +1,4 @@
-# AutoPenTest AI — Year 1 Gap Coverage Plan
+# UniVex — Year 1 Gap Coverage Plan
 Professional, end-to-end plan to fully cover identified gaps, deliver production-grade capabilities, and meet/exceed Year 1 goals. No strict time constraints; sequence is designed for safe, incremental, testable progress.
 
 ## 0) Overview

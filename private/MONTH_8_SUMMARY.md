@@ -1,6 +1,6 @@
 # Month 8 Summary: Neo4j Graph Database Implementation
 
-**Project:** AutoPenTest AI  
+**Project:** UniVex  
 **Period:** Month 8 (Days 211-240)  
 **Status:** ✅ **COMPLETE**  
 **Date:** February 16, 2026
@@ -415,6 +415,6 @@ See `docs/GRAPH_SCHEMA.md` for comprehensive query examples.
 
 ---
 
-**Report Prepared By:** AutoPenTest AI Development Team  
+**Report Prepared By:** UniVex Development Team  
 **Date:** February 16, 2026  
 **Version:** 1.0

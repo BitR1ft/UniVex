@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def configure_tracing(
     app=None,
-    service_name: str = "autopentestai-api",
+    service_name: str = "univex-api",
     service_version: str = "0.1.0",
 ) -> trace.Tracer:
     """

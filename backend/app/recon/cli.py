@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Command-Line Interface for AutoPenTest AI Reconnaissance Module
+Command-Line Interface for UniVex Reconnaissance Module
 
 Usage:
     python -m app.recon.cli discover example.com
@@ -118,7 +118,7 @@ async def run_discovery(
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="AutoPenTest AI Reconnaissance CLI",
+        description="UniVex Reconnaissance CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

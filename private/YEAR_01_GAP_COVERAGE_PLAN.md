@@ -1,4 +1,4 @@
-# AutoPenTest AI — Year 1 Gap Coverage: Day-by-Day Implementation Plan
+# UniVex — Year 1 Gap Coverage: Day-by-Day Implementation Plan
 
 > **Purpose**: Fill all identified gaps from GAP.md with a structured, day-by-day approach
 > **Duration**: Flexible (time is not a constraint)

@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Month 4 of the AutoPenTest AI Final Year Project has been successfully completed, delivering a comprehensive port scanning module that integrates seamlessly with the reconnaissance pipeline. This implementation provides active scanning via Naabu, passive intelligence gathering through Shodan, and intelligent service detection combining Nmap and IANA registries.
+Month 4 of the UniVex open-source startup project has been successfully completed, delivering a comprehensive port scanning module that integrates seamlessly with the reconnaissance pipeline. This implementation provides active scanning via Naabu, passive intelligence gathering through Shodan, and intelligent service detection combining Nmap and IANA registries.
 
 ### Key Achievements
 ✅ **9 Production Modules** - Fully functional and tested  
@@ -464,7 +464,7 @@ While the Month 4 objectives are complete, potential future enhancements include
 
 ## 🏆 Month 4: COMPLETION CERTIFICATE
 
-**Project**: AutoPenTest AI  
+**Project**: UniVex  
 **Phase**: Month 4 - Reconnaissance Pipeline Phase 2  
 **Status**: ✅ **COMPLETE**  
 **Date**: February 2024  
@@ -503,5 +503,5 @@ For questions or issues related to the port scanning module:
 
 **Document Version**: 1.0  
 **Last Updated**: February 15, 2024  
-**Author**: Muhammad Adeel Haider (BSCYS-F24 A)  
-**Supervisor**: Sir Galib
+**Author**: BitR1FT (BitR1FT)  
+**Supervisor**: BitR1FT

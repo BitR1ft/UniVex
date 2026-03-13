@@ -4,9 +4,9 @@ Resource Enumeration Orchestrator
 Coordinates Katana, GAU, and Kiterunner for comprehensive endpoint discovery.
 Handles parallel execution, URL merging, deduplication, and classification.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 6
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 6
 """
 
 import logging

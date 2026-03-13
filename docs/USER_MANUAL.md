@@ -1,4 +1,4 @@
-# AutoPenTest AI — User Manual
+# UniVex — User Manual
 
 > **Version 1.2.0** | Last Updated: March 2026
 
@@ -31,7 +31,7 @@
 
 ## 1. Introduction
 
-AutoPenTest AI is an AI-powered penetration testing framework that automates the complete penetration testing lifecycle. The AI agent uses the ReAct (Reasoning + Acting) pattern to autonomously:
+UniVex is an AI-powered penetration testing framework that automates the complete penetration testing lifecycle. The AI agent uses the ReAct (Reasoning + Acting) pattern to autonomously:
 
 - Discover and enumerate targets
 - Identify vulnerabilities
@@ -87,8 +87,8 @@ This is the quickest way to get all services running.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/BitR1ft/FYP.git
-cd FYP
+git clone https://github.com/BitR1ft/UniVex.git
+cd UniVex
 
 # 2. Copy and configure environment variables
 cp .env.example .env
@@ -326,7 +326,7 @@ The agent transitions between phases based on progress. You can also guide phase
 
 ## 9. Reconnaissance Pipeline
 
-AutoPenTest AI includes a 5-phase reconnaissance pipeline:
+UniVex includes a 5-phase reconnaissance pipeline:
 
 ### Phase 1: Domain Discovery
 - Subdomain enumeration
@@ -682,7 +682,7 @@ lsof -i :3000
 
 - Check the [API Documentation](http://localhost:8000/docs) for endpoint details
 - Review the [Architecture Guide](ARCHITECTURE.md) for system design
-- Open an issue on [GitHub](https://github.com/BitR1ft/FYP/issues)
+- Open an issue on [GitHub](https://github.com/BitR1ft/UniVex/issues)
 
 ---
 
@@ -694,7 +694,7 @@ lsof -i :3000
 
 ### Safety Controls
 
-AutoPenTest AI includes multiple safety mechanisms:
+UniVex includes multiple safety mechanisms:
 
 | Control | Description |
 |---------|-------------|
@@ -893,6 +893,6 @@ reduce visual clutter. Tap the **Filters** button to expand.
 
 ---
 
-*AutoPenTest AI v1.2.0 — User Manual*
+*UniVex v1.2.0 — User Manual*
 *Last updated: March 2026 — Betterment Plan Weeks 1-12 Complete*
-*© 2026 Muhammad Adeel Haider. All rights reserved.*
+*© 2026 BitR1FT. All rights reserved.*

@@ -1,4 +1,4 @@
-# AutoPenTest AI — Database Schema Documentation
+# UniVex — Database Schema Documentation
 
 > **Day 198: Database Documentation — PostgreSQL Schema Reference**
 >
@@ -9,7 +9,7 @@
 
 ## 📊 Overview
 
-AutoPenTest AI uses **PostgreSQL 16** with **Prisma ORM** (Python async client).
+UniVex uses **PostgreSQL 16** with **Prisma ORM** (Python async client).
 
 | Table | Records | Description |
 |-------|---------|-------------|

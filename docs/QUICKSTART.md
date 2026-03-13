@@ -1,4 +1,4 @@
-# AutoPenTest AI — Quick Start Guide
+# UniVex — Quick Start Guide
 
 > **v1.2.0** | Get up and running in 5 minutes with Docker
 
@@ -20,8 +20,8 @@ Hardware: 8 GB RAM, 20 GB free disk space.
 ## 1 — Clone & Configure
 
 ```bash
-git clone https://github.com/BitR1ft/UnderProgress.git autopentestai
-cd autopentestai
+git clone https://github.com/BitR1ft/UnderProgress.git univex
+cd univex
 cp .env.example .env
 ```
 
@@ -69,13 +69,13 @@ All services should show `healthy` or `running`:
 
 ```
 NAME                          STATUS        PORTS
-autopentestai-backend         healthy       0.0.0.0:8000->8000/tcp
-autopentestai-frontend        healthy       0.0.0.0:3000->3000/tcp
-autopentestai-postgres        healthy       0.0.0.0:5432->5432/tcp
-autopentestai-neo4j           healthy       0.0.0.0:7474->7474/tcp
-autopentestai-kali-tools      running       0.0.0.0:8000-8007->8000-8007/tcp
-autopentestai-prometheus      running       0.0.0.0:9090->9090/tcp
-autopentestai-grafana         running       0.0.0.0:3001->3000/tcp
+univex-backend         healthy       0.0.0.0:8000->8000/tcp
+univex-frontend        healthy       0.0.0.0:3000->3000/tcp
+univex-postgres        healthy       0.0.0.0:5432->5432/tcp
+univex-neo4j           healthy       0.0.0.0:7474->7474/tcp
+univex-kali-tools      running       0.0.0.0:8000-8007->8000-8007/tcp
+univex-prometheus      running       0.0.0.0:9090->9090/tcp
+univex-grafana         running       0.0.0.0:3001->3000/tcp
 ```
 
 ---
@@ -207,13 +207,13 @@ docker compose restart backend
 docker compose logs -f backend
 
 # Open a shell in the Kali container
-docker exec -it autopentestai-kali-tools bash
+docker exec -it univex-kali-tools bash
 
 # Connect to PostgreSQL
-docker exec -it autopentestai-postgres psql -U autopentestai
+docker exec -it univex-postgres psql -U univex
 
 # Open Neo4j shell
-docker exec -it autopentestai-neo4j cypher-shell -u neo4j -p "$NEO4J_PASSWORD"
+docker exec -it univex-neo4j cypher-shell -u neo4j -p "$NEO4J_PASSWORD"
 ```
 
 ---

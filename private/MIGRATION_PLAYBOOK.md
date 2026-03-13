@@ -1,4 +1,4 @@
-# AutoPenTest AI — Migration Playbook
+# UniVex — Migration Playbook
 
 > **Day 206 · Phase K: Documentation**
 > Database migrations, version upgrade procedures, rollback instructions, and
@@ -31,7 +31,7 @@
 
 ## Database Migrations (Prisma)
 
-AutoPenTest AI uses **Prisma Migrate** to manage the PostgreSQL schema.
+UniVex uses **Prisma Migrate** to manage the PostgreSQL schema.
 
 ### View pending migrations
 
@@ -101,7 +101,7 @@ or renamed columns.
 
 ```bash
 # 1. Back up the database
-docker compose exec postgres pg_dump -U autopentestai autopentestai > backup_pre_1.1.0.sql
+docker compose exec postgres pg_dump -U univex univex > backup_pre_1.1.0.sql
 
 # 2. Pull the new images
 docker compose pull
@@ -124,7 +124,7 @@ cat RELEASE_NOTES.md | grep -A 50 "BREAKING"
 
 # 2. Schedule a maintenance window
 # 3. Full backup
-docker compose exec postgres pg_dump -U autopentestai autopentestai \
+docker compose exec postgres pg_dump -U univex univex \
   | gzip > backup_pre_v2.0.0_$(date +%Y%m%d_%H%M%S).sql.gz
 
 # 4. Apply migrations
@@ -152,12 +152,12 @@ Use when a migration has already been applied and data is potentially corrupt.
 docker compose stop backend
 
 # 2. Drop and recreate the database
-docker compose exec postgres psql -U autopentestai -c "DROP DATABASE autopentestai;"
-docker compose exec postgres psql -U autopentestai -c "CREATE DATABASE autopentestai;"
+docker compose exec postgres psql -U univex -c "DROP DATABASE univex;"
+docker compose exec postgres psql -U univex -c "CREATE DATABASE univex;"
 
 # 3. Restore backup
 gunzip -c backup_pre_vX.Y.Z_20260101_120000.sql.gz \
-  | docker compose exec -T postgres psql -U autopentestai autopentestai
+  | docker compose exec -T postgres psql -U univex univex
 
 # 4. Roll back the container image
 docker compose up -d --no-deps backend frontend  # uses previous image tag
@@ -247,7 +247,7 @@ WHERE config ? 'enable_auto_exploit';
 Run with:
 
 ```bash
-docker compose exec postgres psql -U autopentestai autopentestai \
+docker compose exec postgres psql -U univex univex \
   -f /docker-entrypoint-initdb.d/backfill_ai_auto_exploit.sql
 ```
 

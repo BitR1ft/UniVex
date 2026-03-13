@@ -1,8 +1,8 @@
-# AutoPenTest AI — Threat Model
+# UniVex — Threat Model
 
 > **Day 209 · Phase K: Documentation**
 > Security architecture, STRIDE threat analysis, ATT&CK mapping, implemented
-> mitigations, and residual risk register for AutoPenTest AI v1.0.
+> mitigations, and residual risk register for UniVex v1.0.
 
 ---
 
@@ -21,7 +21,7 @@
 
 ## System Overview
 
-AutoPenTest AI is an autonomous penetration testing platform. It includes:
+UniVex is an autonomous penetration testing platform. It includes:
 
 - **Next.js Frontend** — Browser-based SPA accessing the API over HTTPS.
 - **FastAPI Backend** — REST + WebSocket API server handling authentication,

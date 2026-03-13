@@ -1,7 +1,7 @@
 """
 Reconnaissance module for domain discovery and subdomain enumeration.
 
-This module implements the reconnaissance pipeline for AutoPenTest AI,
+This module implements the reconnaissance pipeline for UniVex,
 including WHOIS lookup, Certificate Transparency, passive subdomain discovery,
 and comprehensive DNS resolution.
 """

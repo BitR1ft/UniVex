@@ -8,7 +8,7 @@ Manages scheduled background jobs for refreshing:
 - Nuclei templates (delegates to NucleiTemplateUpdater)
 
 Built on APScheduler (AsyncIOScheduler).  Each job records a structured
-audit log entry in ``~/.autopentestai/update_audit.jsonl``.
+audit log entry in ``~/.univex/update_audit.jsonl``.
 
 Usage::
 
@@ -32,7 +32,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
-_AUDIT_LOG_PATH = str(Path.home() / ".autopentestai" / "update_audit.jsonl")
+_AUDIT_LOG_PATH = str(Path.home() / ".univex" / "update_audit.jsonl")
 
 # Default schedules (cron-style strings, APScheduler format)
 _DEFAULT_SCHEDULES: Dict[str, str] = {

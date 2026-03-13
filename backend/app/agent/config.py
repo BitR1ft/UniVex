@@ -243,7 +243,7 @@ DEFAULT_CONFIG = AgentConfig(
     },
     metadata={
         "version": "1.0",
-        "description": "Default AutoPenTest agent configuration",
+        "description": "Default UniVex agent configuration",
     },
 )
 
