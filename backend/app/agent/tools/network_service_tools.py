@@ -116,6 +116,9 @@ class SSHLoginTool(BaseTool):
             import paramiko
 
             client = paramiko.SSHClient()
+            # AutoAddPolicy is intentional for a pentest tool — target hosts
+            # are adversarial/CTF machines and are never in known_hosts.
+            # nosec B507
             client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             connect_kwargs: dict[str, Any] = {
                 "hostname": host,
