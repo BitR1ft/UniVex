@@ -251,3 +251,6 @@ class DomainDiscovery:
             "statistics": self.results.get("statistics", {}),
             "whois_available": self.results.get("whois") is not None,
         }
+
+# Backward-compatible alias
+DomainDiscoveryOrchestrator = DomainDiscovery

@@ -112,28 +112,28 @@ def test_log_audit_failed_action():
 def test_rate_limiter_allows_within_limit():
     limiter = SlidingWindowRateLimiter(max_calls=5, window_seconds=60, name="test")
     for _ in range(5):
-        allowed, _ = limiter.is_allowed("user1")
+        allowed = limiter.is_allowed("user1")
         assert allowed
 
 def test_rate_limiter_blocks_over_limit():
     limiter = SlidingWindowRateLimiter(max_calls=3, window_seconds=60, name="test")
     for _ in range(3):
         limiter.is_allowed("user2")
-    allowed, remaining = limiter.is_allowed("user2")
+    allowed, remaining = limiter._check_with_remaining("user2")
     assert not allowed
     assert remaining == 0
 
 def test_rate_limiter_independent_keys():
     limiter = SlidingWindowRateLimiter(max_calls=1, window_seconds=60, name="test")
-    allowed_a, _ = limiter.is_allowed("keyA")
-    allowed_b, _ = limiter.is_allowed("keyB")
+    allowed_a = limiter.is_allowed("keyA")
+    allowed_b = limiter.is_allowed("keyB")
     assert allowed_a and allowed_b
 
 def test_rate_limiter_window_expiry():
     limiter = SlidingWindowRateLimiter(max_calls=1, window_seconds=1, name="test")
     limiter.is_allowed("expiry_key")
     time.sleep(1.1)
-    allowed, _ = limiter.is_allowed("expiry_key")
+    allowed = limiter.is_allowed("expiry_key")
     assert allowed
 
 def test_rate_limiter_check_raises_http429_when_exceeded():

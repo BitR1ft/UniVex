@@ -134,7 +134,7 @@ class TestNeo4jFailures:
     @pytest.mark.asyncio
     async def test_graph_endpoint_returns_503_when_neo4j_down(self):
         """Graph endpoints should return 503 (not 500) when Neo4j is unavailable."""
-        with patch("app.graph.neo4j_client.driver", side_effect=Exception("Neo4j connection refused")):
+        with patch("app.db.neo4j_client.neo4j_client.driver", side_effect=Exception("Neo4j connection refused")):
             token = _make_token()
             async with AsyncClient(
                 transport=ASGITransport(app=app), base_url="http://test"
@@ -204,7 +204,7 @@ class TestToolFailures:
             raise asyncio.TimeoutError("Tool timed out")
 
         with pytest.raises(asyncio.TimeoutError):
-            asyncio.get_event_loop().run_until_complete(fake_run_with_timeout())
+            asyncio.run(fake_run_with_timeout())
 
         elapsed = time.time() - start
         assert elapsed < 5.0, "Tool timeout should be fast"

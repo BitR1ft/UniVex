@@ -20,7 +20,9 @@ class AuditAction(str, Enum):
     # Auth
     USER_REGISTER = "user.register"
     USER_LOGIN = "user.login"
+    LOGIN_SUCCESS = "user.login"  # alias for USER_LOGIN
     USER_LOGIN_FAILED = "user.login_failed"
+    LOGIN_FAILED = "user.login_failed"  # alias for USER_LOGIN_FAILED
     USER_LOGOUT = "user.logout"
     TOKEN_REFRESH = "token.refresh"
     PASSWORD_CHANGE = "user.password_change"

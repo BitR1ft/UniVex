@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # Weak cipher suites to detect
 WEAK_CIPHERS = {
     'RC4', 'DES', 'MD5', 'NULL', 'EXPORT', 'anon',
-    'ADH', 'AECDH', '3DES', 'CBC'
+    'ADH', 'AECDH', '3DES'
 }
 
 
