@@ -154,8 +154,8 @@ jobs:
 
     env:
       REGISTRY: ghcr.io
-      BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/autopentestai-backend
-      FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/autopentestai-frontend
+      BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/univex-backend
+      FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/univex-frontend
 
     steps:
       - name: Checkout code at new tag
@@ -227,7 +227,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.calculate-version.outputs.new_tag }}
-          name: AutoPenTest AI ${{ needs.calculate-version.outputs.new_version }}
+          name: UniVex ${{ needs.calculate-version.outputs.new_version }}
           body: ${{ needs.calculate-version.outputs.changelog }}
           prerelease: ${{ github.event.inputs.pre_release == 'true' }}
           generate_release_notes: true
@@ -248,7 +248,7 @@ jobs:
           echo "🔍 DRY RUN — No changes were made"
           echo ""
           echo "Would create tag: ${{ needs.calculate-version.outputs.new_tag }}"
-          echo "Would create release: AutoPenTest AI ${{ needs.calculate-version.outputs.new_version }}"
+          echo "Would create release: UniVex ${{ needs.calculate-version.outputs.new_version }}"
           echo "Pre-release: ${{ github.event.inputs.pre_release }}"
           echo ""
           echo "Changelog preview:"

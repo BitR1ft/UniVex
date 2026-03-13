@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     """Application settings"""
     
     # Project Information
-    PROJECT_NAME: str = "AutoPenTest AI"
+    PROJECT_NAME: str = "UniVex"
     VERSION: str = "0.1.0"
     DESCRIPTION: str = "AI-Powered Penetration Testing Framework"
     ENVIRONMENT: str = "development"
@@ -40,11 +40,11 @@ class Settings(BaseSettings):
         return v
     
     # Database - PostgreSQL
-    POSTGRES_USER: str = "autopentestai"
-    POSTGRES_PASSWORD: str = "autopentestai_dev_password"
+    POSTGRES_USER: str = "univex"
+    POSTGRES_PASSWORD: str = "univex_dev_password"
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = "autopentestai"
+    POSTGRES_DB: str = "univex"
     
     @property
     def DATABASE_URL(self) -> str:
@@ -53,7 +53,7 @@ class Settings(BaseSettings):
     # Database - Neo4j
     NEO4J_URI: str = "bolt://localhost:7687"
     NEO4J_USER: str = "neo4j"
-    NEO4J_PASSWORD: str = "autopentestai_dev_password"
+    NEO4J_PASSWORD: str = "univex_dev_password"
     NEO4J_DATABASE: str = "neo4j"
     
     # AI Configuration

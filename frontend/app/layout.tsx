@@ -4,8 +4,8 @@ import { QueryProvider } from '@/lib/query-provider'
 import { ToastContainer } from '@/components/ui/ToastContainer'
 
 export const metadata: Metadata = {
-  title: 'AutoPenTest AI',
-  description: 'AI-Powered Penetration Testing Framework',
+  title: 'UniVex',
+  description: 'UniVex — Universal Vulnerability Execution Platform · Open-Source Agentic Pentesting',
 }
 
 export default function RootLayout({

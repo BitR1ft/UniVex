@@ -1,4 +1,4 @@
-# AutoPenTest AI — API Reference (Extended)
+# UniVex — API Reference (Extended)
 
 > **Day 196: OpenAPI Documentation — Complete Endpoint Reference**
 >
@@ -14,7 +14,7 @@
 | Property | Value |
 |----------|-------|
 | Base URL (dev) | `http://localhost:8000` |
-| Base URL (production) | `https://api.autopentestai.example.com` |
+| Base URL (production) | `https://api.univex.example.com` |
 | API Version | `v1` |
 | OpenAPI Version | `3.1.0` |
 | Authentication | JWT Bearer Token |

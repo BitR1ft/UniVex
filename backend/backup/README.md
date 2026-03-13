@@ -2,7 +2,7 @@
 
 ## Overview
 
-AutoPenTest AI uses a three-tier PostgreSQL backup strategy:
+UniVex uses a three-tier PostgreSQL backup strategy:
 
 | Tier    | Frequency | Retention |
 |---------|-----------|-----------|
@@ -35,7 +35,7 @@ BACKUP_DIR=/tmp/test_backup bash backend/backup/pg_backup.sh
 
 ```bash
 # Decompress and restore
-gunzip -c /var/backups/autopentestai/daily/autopentestai_20260120_020000.sql.gz \
+gunzip -c /var/backups/univex/daily/univex_20260120_020000.sql.gz \
     | psql "$DATABASE_URL"
 ```
 
@@ -47,12 +47,12 @@ All settings are controlled via environment variables:
 
 | Variable | Default | Description |
 |---|---|---|
-| `POSTGRES_USER` | `autopentestai` | Database user |
+| `POSTGRES_USER` | `univex` | Database user |
 | `POSTGRES_PASSWORD` | *(dev default)* | Database password |
 | `POSTGRES_HOST` | `localhost` | Database host |
 | `POSTGRES_PORT` | `5432` | Database port |
-| `POSTGRES_DB` | `autopentestai` | Database name |
-| `BACKUP_DIR` | `/var/backups/autopentestai` | Root backup directory |
+| `POSTGRES_DB` | `univex` | Database name |
+| `BACKUP_DIR` | `/var/backups/univex` | Root backup directory |
 | `BACKUP_KEEP_DAILY` | `7` | Days to retain daily backups |
 | `BACKUP_KEEP_WEEKLY` | `4` | Weeks to retain weekly backups |
 
@@ -61,15 +61,15 @@ All settings are controlled via environment variables:
 ## Directory Structure
 
 ```
-/var/backups/autopentestai/
+/var/backups/univex/
 ├── daily/
-│   ├── autopentestai_20260120_020000.sql.gz
+│   ├── univex_20260120_020000.sql.gz
 │   └── ...
 ├── weekly/
-│   ├── autopentestai_20260119_020000.sql.gz   ← ran on Sunday
+│   ├── univex_20260119_020000.sql.gz   ← ran on Sunday
 │   └── ...
 └── monthly/
-    ├── autopentestai_20260101_020000.sql.gz   ← ran on 1st
+    ├── univex_20260101_020000.sql.gz   ← ran on 1st
     └── ...
 ```
 
@@ -80,11 +80,11 @@ All settings are controlled via environment variables:
 The backup script logs to stdout; redirect via crontab to a log file:
 
 ```
-0 2 * * * /app/backend/backup/pg_backup.sh >> /var/log/autopentestai/backup.log 2>&1
+0 2 * * * /app/backend/backup/pg_backup.sh >> /var/log/univex/backup.log 2>&1
 ```
 
 Check the last backup:
 
 ```bash
-tail -50 /var/log/autopentestai/backup.log
+tail -50 /var/log/univex/backup.log
 ```

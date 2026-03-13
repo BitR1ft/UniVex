@@ -1,11 +1,11 @@
 # Month 4 Implementation - Summary
 
 ## Overview
-This document provides a summary of the Month 4 tasks completed for the AutoPenTest AI Final Year Project (FYP).
+This document provides a summary of the Month 4 tasks completed for the UniVex open-source startup project (FYP).
 
 ## Project Information
-- **Student**: Muhammad Adeel Haider (BSCYS-F24 A)
-- **Supervisor**: Sir Galib
+- **Student**: BitR1FT (BitR1FT)
+- **Supervisor**: BitR1FT
 - **Month**: Month 4 - Reconnaissance Pipeline Phase 2 (Port Scanning)
 - **Duration**: Days 91-120 (Weeks 13-16)
 - **Status**: ✅ **CORE IMPLEMENTATION COMPLETE**
@@ -430,7 +430,7 @@ orchestrator.export_json("scan_results.json")
 
 ## 🏆 MONTH 4: SUCCESSFULLY COMPLETED ✅
 
-All objectives for Month 4 have been achieved. The AutoPenTest AI framework now has a robust, production-ready port scanning module capable of:
+All objectives for Month 4 have been achieved. The UniVex framework now has a robust, production-ready port scanning module capable of:
 - Fast active scanning with Naabu
 - Passive intelligence gathering with Shodan
 - Hybrid scanning for comprehensive coverage

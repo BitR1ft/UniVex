@@ -1,9 +1,9 @@
-# AutoPenTest AI — CI/CD Guide
+# UniVex — CI/CD Guide
 
 > **Day 187: CI/CD Documentation — Complete CI/CD Reference**
 
 > **Complete guide to the Continuous Integration and Continuous Deployment
-> pipeline for AutoPenTest AI.**
+> pipeline for UniVex.**
 
 ---
 
@@ -192,10 +192,10 @@ Requires: PostgreSQL + Neo4j services.
 
 ```bash
 # List available images
-docker pull ghcr.io/bitr1ft/autopentestai-backend --list-digests
+docker pull ghcr.io/bitr1ft/univex-backend --list-digests
 
 # Pull specific version
-docker pull ghcr.io/bitr1ft/autopentestai-backend:v1.2.3
+docker pull ghcr.io/bitr1ft/univex-backend:v1.2.3
 ```
 
 ---

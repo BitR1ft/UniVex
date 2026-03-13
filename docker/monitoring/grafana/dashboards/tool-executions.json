@@ -1,8 +1,8 @@
 {
   "id": null,
-  "uid": "autopentestai-tool-executions",
-  "title": "AutoPenTest AI — Tool Executions",
-  "tags": ["autopentestai", "tools"],
+  "uid": "univex-tool-executions",
+  "title": "UniVex — Tool Executions",
+  "tags": ["univex", "tools"],
   "timezone": "browser",
   "schemaVersion": 38,
   "version": 1,

@@ -1,4 +1,4 @@
-# AutoPenTest AI - API Documentation
+# UniVex - API Documentation
 
 ## Base URL
 ```
@@ -328,7 +328,7 @@ Basic API health check.
 **Response:** `200 OK`
 ```json
 {
-  "message": "AutoPenTest AI API",
+  "message": "UniVex API",
   "status": "operational",
   "version": "0.1.0",
   "timestamp": "2024-01-01T00:00:00Z"

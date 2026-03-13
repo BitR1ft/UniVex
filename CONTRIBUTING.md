@@ -1,6 +1,6 @@
-# Contributing to AutoPenTest AI
+# Contributing to UniVex
 
-Thank you for your interest in contributing to AutoPenTest AI! This document provides guidelines and instructions for contributing to this project.
+Thank you for your interest in contributing to UniVex! This document provides guidelines and instructions for contributing to this project.
 
 ## 📋 Table of Contents
 
@@ -24,7 +24,7 @@ This project adheres to ethical standards for cybersecurity research:
 ## 🚀 Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/FYP.git`
+2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/UnderProgress.git`
 3. Create a feature branch: `git checkout -b feature/your-feature-name`
 4. Make your changes
 5. Test thoroughly
@@ -59,7 +59,7 @@ docker-compose up -d
 ## 📁 Project Structure
 
 ```
-FYP/
+UnderProgress/
 ├── backend/                 # FastAPI backend
 │   ├── app/
 │   │   ├── api/            # API routes
@@ -288,4 +288,4 @@ Open an issue with the `question` label or contact the maintainers.
 
 ---
 
-**Thank you for contributing to AutoPenTest AI!** 🎉
+**Thank you for contributing to UniVex!** 🎉

@@ -106,7 +106,7 @@ async def scan_ports(args):
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(
-        description="Port Scanning CLI - AutoPenTest AI",
+        description="Port Scanning CLI - UniVex",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

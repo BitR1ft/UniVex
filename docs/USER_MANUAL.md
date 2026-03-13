@@ -1,6 +1,6 @@
-# AutoPenTest AI — User Manual
+# UniVex — User Manual
 
-> **Version 1.0.0** | Last Updated: February 2026
+> **Version 1.2.0** | Last Updated: March 2026
 
 ---
 
@@ -24,12 +24,14 @@
 16. [Troubleshooting](#16-troubleshooting)
 17. [Security & Ethics](#17-security--ethics)
 18. [FAQ](#18-faq)
+19. [AutoChain — Automated Pentest Pipeline](#19-autochain--automated-pentest-pipeline)
+20. [New in v1.2 — Feature Summary](#20-new-in-v12--feature-summary)
 
 ---
 
 ## 1. Introduction
 
-AutoPenTest AI is an AI-powered penetration testing framework that automates the complete penetration testing lifecycle. The AI agent uses the ReAct (Reasoning + Acting) pattern to autonomously:
+UniVex is an AI-powered penetration testing framework that automates the complete penetration testing lifecycle. The AI agent uses the ReAct (Reasoning + Acting) pattern to autonomously:
 
 - Discover and enumerate targets
 - Identify vulnerabilities
@@ -85,8 +87,8 @@ This is the quickest way to get all services running.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/BitR1ft/FYP.git
-cd FYP
+git clone https://github.com/BitR1ft/UniVex.git
+cd UniVex
 
 # 2. Copy and configure environment variables
 cp .env.example .env
@@ -324,7 +326,7 @@ The agent transitions between phases based on progress. You can also guide phase
 
 ## 9. Reconnaissance Pipeline
 
-AutoPenTest AI includes a 5-phase reconnaissance pipeline:
+UniVex includes a 5-phase reconnaissance pipeline:
 
 ### Phase 1: Domain Discovery
 - Subdomain enumeration
@@ -680,7 +682,7 @@ lsof -i :3000
 
 - Check the [API Documentation](http://localhost:8000/docs) for endpoint details
 - Review the [Architecture Guide](ARCHITECTURE.md) for system design
-- Open an issue on [GitHub](https://github.com/BitR1ft/FYP/issues)
+- Open an issue on [GitHub](https://github.com/BitR1ft/UniVex/issues)
 
 ---
 
@@ -692,7 +694,7 @@ lsof -i :3000
 
 ### Safety Controls
 
-AutoPenTest AI includes multiple safety mechanisms:
+UniVex includes multiple safety mechanisms:
 
 | Control | Description |
 |---------|-------------|
@@ -753,7 +755,75 @@ A: v1.0 uses keyword-based classification with confidence scoring. The system re
 
 ---
 
-## 19. New in v1.0 — Feature Summary (Week 31 Update)
+## 19. AutoChain — Automated Pentest Pipeline
+
+**AutoChain** is a deterministic, non-LLM automated pipeline that runs the full
+pentest kill chain using direct MCP tool calls. Unlike the free-form AI agent, it
+follows a fixed phase sequence defined by a JSON template, making it faster and
+more predictable.
+
+### Starting a Chain via the API
+
+```bash
+# Start a custom chain
+curl -s -X POST http://localhost:8000/api/autochain/start \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target": "10.10.10.3",
+    "auto_approve_risk_level": "high",
+    "project_id": "optional-uuid"
+  }' | python3 -m json.tool
+
+# Start from an HTB template
+curl -s -X POST http://localhost:8000/api/autochain/start/template \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"template_id": "htb_easy", "target": "10.10.10.3"}' \
+  | python3 -m json.tool
+
+# Stream real-time progress
+curl -N http://localhost:8000/api/autochain/$CHAIN_ID/stream
+
+# Check status
+curl -s http://localhost:8000/api/autochain/$CHAIN_ID | python3 -m json.tool
+
+# Retrieve captured flags (MD5-verified)
+curl -s http://localhost:8000/api/autochain/$CHAIN_ID/flags | python3 -m json.tool
+```
+
+### HTB Templates
+
+Two templates are shipped:
+
+**`htb_easy`** — For HackTheBox Easy machines:
+1. Naabu port scan (top 1000)
+2. ffuf directory/file brute-force
+3. Nuclei CVE/web vulnerability scan
+4. Metasploit auto-exploitation (retry × 3)
+5. Session upgrade → Meterpreter / TTY stabilise
+6. System enumeration (sysinfo, whoami, ifconfig)
+7. Flag capture (`/root/root.txt`, `~/user.txt`) + MD5 verification
+
+**`htb_medium`** — Adds: LDAP enumeration, SQLMap injection testing, CMS
+detection, lateral movement scanning, vhost fuzzing, and extended priv-esc.
+
+### Auto-Approval Levels
+
+| Level | Behaviour |
+|-------|-----------|
+| `none` | All high/critical operations require manual approval (safest) |
+| `low` | Auto-approve only low-risk operations |
+| `medium` | Auto-approve low + medium risk |
+| `high` | Auto-approve low/medium/high — critical still needs approval |
+| `critical` | Fully autonomous — only use in isolated lab environments |
+
+Set `AUTO_APPROVE_RISK_LEVEL` in `.env` or pass `auto_approve_risk_level` in the
+API request body to override per-run.
+
+---
+
+## 20. New in v1.2 — Feature Summary
 
 ### Real-Time Scan Progress
 
@@ -823,6 +893,6 @@ reduce visual clutter. Tap the **Filters** button to expand.
 
 ---
 
-*AutoPenTest AI v1.0.0 — User Manual*
-*Last updated: Week 31 — Day 207*
-*© 2026 Muhammad Adeel Haider. All rights reserved.*
+*UniVex v1.2.0 — User Manual*
+*Last updated: March 2026 — Betterment Plan Weeks 1-12 Complete*
+*© 2026 BitR1FT. All rights reserved.*

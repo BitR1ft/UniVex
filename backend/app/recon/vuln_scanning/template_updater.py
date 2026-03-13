@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 # Default paths
 # ---------------------------------------------------------------------------
 
-_DEFAULT_STATE_FILE = Path.home() / ".autopentestai" / "nuclei_templates_state.json"
+_DEFAULT_STATE_FILE = Path.home() / ".univex" / "nuclei_templates_state.json"
 
 
 # ---------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 """
-Prometheus metrics definitions for AutoPenTest AI.
+Prometheus metrics definitions for UniVex.
 """
 from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
 

@@ -3,9 +3,9 @@ Resource Enumeration Schemas
 
 Pydantic models for resource enumeration requests, responses, and data structures.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 6
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 6
 """
 
 from enum import Enum

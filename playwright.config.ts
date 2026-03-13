@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Playwright configuration for AutoPenTest AI E2E tests.
+ * Playwright configuration for UniVex E2E tests.
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({

@@ -1,8 +1,8 @@
 {
   "id": null,
-  "uid": "autopentestai-api-metrics",
-  "title": "AutoPenTest AI — API Metrics",
-  "tags": ["autopentestai", "api"],
+  "uid": "univex-api-metrics",
+  "title": "UniVex — API Metrics",
+  "tags": ["univex", "api"],
   "timezone": "browser",
   "schemaVersion": 38,
   "version": 1,

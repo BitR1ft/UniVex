@@ -7,7 +7,7 @@
 
 ## 🎯 What You Have
 
-You now have a **complete, structured plan** to fill all Year 1 gaps identified in your FYP project. This isn't just a to-do list—it's a comprehensive roadmap with:
+You now have a **complete, structured plan** to fill all Year 1 gaps identified in your UniVex project. This isn't just a to-do list—it's a comprehensive roadmap with:
 
 - ✅ **215 days** of structured work
 - ✅ **~860 actionable tasks** (3-4 per day)

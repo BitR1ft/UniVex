@@ -7,7 +7,7 @@
  * Run: k6 run performance/k6-api.js
  */
 
-# AutoPenTest AI — Performance Baselines
+# UniVex — Performance Baselines
 
 ## Test Environment
 

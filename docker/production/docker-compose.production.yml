@@ -1,5 +1,5 @@
 # ==============================================================================
-# AutoPenTest AI — Production Environment Configuration
+# UniVex — Production Environment Configuration
 # Day 189: Production Environment Setup
 #
 # ⚠️  IMPORTANT: Never commit .env.production — use secrets management.
@@ -28,7 +28,7 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: autopentestai-prod-postgres
+    container_name: univex-prod-postgres
     <<: *always-restart
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER required}
@@ -64,7 +64,7 @@ services:
 
   neo4j:
     image: neo4j:5.15-community
-    container_name: autopentestai-prod-neo4j
+    container_name: univex-prod-neo4j
     <<: *always-restart
     environment:
       NEO4J_AUTH: ${NEO4J_USER:?required}/${NEO4J_PASSWORD:?required}
@@ -104,11 +104,11 @@ services:
 
   backend:
     image: ${BACKEND_IMAGE:?BACKEND_IMAGE required}:${IMAGE_TAG:?IMAGE_TAG required}
-    container_name: autopentestai-prod-backend
+    container_name: univex-prod-backend
     <<: *always-restart
     environment:
       ENVIRONMENT: production
-      PROJECT_NAME: "AutoPenTest AI"
+      PROJECT_NAME: "UniVex"
       DEBUG: "false"
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       NEO4J_URI: bolt://neo4j:7687
@@ -122,7 +122,7 @@ services:
       LOG_LEVEL: WARNING
       # OpenTelemetry
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_ENDPOINT:-}
-      OTEL_SERVICE_NAME: autopentestai-backend
+      OTEL_SERVICE_NAME: univex-backend
       # Rate limiting
       RATE_LIMIT_ENABLED: "true"
     ports:
@@ -163,7 +163,7 @@ services:
 
   frontend:
     image: ${FRONTEND_IMAGE:?FRONTEND_IMAGE required}:${IMAGE_TAG}
-    container_name: autopentestai-prod-frontend
+    container_name: univex-prod-frontend
     <<: *always-restart
     environment:
       NODE_ENV: production
@@ -200,7 +200,7 @@ services:
 
   nginx:
     image: nginx:1.25-alpine
-    container_name: autopentestai-prod-nginx
+    container_name: univex-prod-nginx
     <<: *always-restart
     ports:
       - "80:80"
@@ -223,7 +223,7 @@ services:
 
   backup:
     image: postgres:16-alpine
-    container_name: autopentestai-prod-backup
+    container_name: univex-prod-backup
     <<: *always-restart
     environment:
       POSTGRES_HOST: postgres
@@ -255,13 +255,13 @@ networks:
   prod-db:
     driver: bridge
     internal: true
-    name: autopentestai-prod-db-network
+    name: univex-prod-db-network
   prod-backend:
     driver: bridge
-    name: autopentestai-prod-backend-network
+    name: univex-prod-backend-network
   prod-frontend:
     driver: bridge
-    name: autopentestai-prod-frontend-network
+    name: univex-prod-frontend-network
 
 # ==============================================================================
 # VOLUMES
@@ -269,23 +269,23 @@ networks:
 
 volumes:
   postgres-prod-data:
-    name: autopentestai-prod-postgres-data
+    name: univex-prod-postgres-data
     driver: local
   postgres-prod-backups:
-    name: autopentestai-prod-postgres-backups
+    name: univex-prod-postgres-backups
     driver: local
   neo4j-prod-data:
-    name: autopentestai-prod-neo4j-data
+    name: univex-prod-neo4j-data
     driver: local
   neo4j-prod-logs:
-    name: autopentestai-prod-neo4j-logs
+    name: univex-prod-neo4j-logs
     driver: local
   neo4j-prod-backups:
-    name: autopentestai-prod-neo4j-backups
+    name: univex-prod-neo4j-backups
     driver: local
   nginx-certs:
-    name: autopentestai-prod-nginx-certs
+    name: univex-prod-nginx-certs
     driver: local
   nginx-logs:
-    name: autopentestai-prod-nginx-logs
+    name: univex-prod-nginx-logs
     driver: local

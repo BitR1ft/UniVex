@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-Month 12 completes the Year 1 development cycle by implementing the exploitation subsystem for the AutoPenTest AI framework. Building on Month 11's MCP tool infrastructure, this month adds attack path routing, CVE exploitation, brute force capabilities, post-exploitation features, session management, and an approval workflow for dangerous operations. The AI agent can now autonomously classify attack intents, execute exploits, manage sessions, and perform post-exploitation — all with safety gates and user oversight.
+Month 12 completes the Year 1 development cycle by implementing the exploitation subsystem for the UniVex framework. Building on Month 11's MCP tool infrastructure, this month adds attack path routing, CVE exploitation, brute force capabilities, post-exploitation features, session management, and an approval workflow for dangerous operations. The AI agent can now autonomously classify attack intents, execute exploits, manage sessions, and perform post-exploitation — all with safety gates and user oversight.
 
 ## ✅ Completed Deliverables
 
@@ -223,7 +223,7 @@ Stop / Resume / Guidance / Progress Stream
 
 ## ✨ Conclusion
 
-Month 12 transforms the AutoPenTest AI agent into a complete penetration testing system. With attack path routing, CVE exploitation, brute force capabilities, post-exploitation features, session management, and approval workflows, the agent can now autonomously execute the full penetration testing lifecycle — from reconnaissance through exploitation to post-exploitation — while maintaining safety through approval gates and user control.
+Month 12 transforms the UniVex agent into a complete penetration testing system. With attack path routing, CVE exploitation, brute force capabilities, post-exploitation features, session management, and approval workflows, the agent can now autonomously execute the full penetration testing lifecycle — from reconnaissance through exploitation to post-exploitation — while maintaining safety through approval gates and user control.
 
 The implementation follows security-first design principles with:
 - Approval workflows for dangerous operations
@@ -236,7 +236,7 @@ The implementation follows security-first design principles with:
 
 ---
 
-**Muhammad Adeel Haider**  
-BSCYS-F24 A  
-Supervisor: Sir Galib  
+**BitR1FT**  
+BitR1FT  
+Supervisor: BitR1FT  
 Date: March 2026

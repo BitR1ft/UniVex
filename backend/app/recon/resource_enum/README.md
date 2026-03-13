@@ -1,6 +1,6 @@
 # Resource Enumeration Module
 
-Comprehensive endpoint discovery using Katana, GAU, and Kiterunner for the AutoPenTest AI framework.
+Comprehensive endpoint discovery using Katana, GAU, and Kiterunner for the UniVex framework.
 
 ## Overview
 
@@ -441,10 +441,10 @@ Multi-source URL deduplication and classification pipeline:
 
 ## Author
 
-**Muhammad Adeel Haider** (BSCYS-F24 A)  
-Supervisor: Sir Galib  
-Final Year Project: AutoPenTest AI - Month 6
+**BitR1FT** (BitR1FT)  
+Developed by: BitR1FT  
+open-source startup project: UniVex - Month 6
 
 ## License
 
-Part of the AutoPenTest AI project.
+Part of the UniVex project.

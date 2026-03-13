@@ -4,9 +4,9 @@ MITRE Mapper Module
 Maps CVEs to CWE (Common Weakness Enumeration) and CAPEC (Common Attack Pattern
 Enumeration and Classification) using the MITRE database.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 7
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 7
 """
 
 import json
@@ -44,7 +44,7 @@ class MITREMapper:
             config: MITRE mapping configuration
         """
         self.config = config
-        self.db_path = Path(config.db_path) if config.db_path else Path.home() / ".autopentestai" / "mitre_db"
+        self.db_path = Path(config.db_path) if config.db_path else Path.home() / ".univex" / "mitre_db"
         self.db_path.mkdir(parents=True, exist_ok=True)
         
         # In-memory databases

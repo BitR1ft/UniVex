@@ -27,7 +27,7 @@ Three built-in roles:
 
 ## Audit Logging
 
-Sensitive operations are written to the `autopentestai.audit` logger as
+Sensitive operations are written to the `univex.audit` logger as
 structured JSON. Configure this logger to write to a separate file or SIEM.
 
 Audited events: user registration, login (success/fail), logout, token refresh,

@@ -1,8 +1,8 @@
-# AutoPenTest AI — Configuration Guide
+# UniVex — Configuration Guide
 
 > **Day 204 · Phase K: Documentation**
 > Complete reference for every environment variable, configuration file, and
-> runtime option in AutoPenTest AI.
+> runtime option in UniVex.
 
 ---
 
@@ -33,7 +33,7 @@ Copy `.env.example` to `.env` and configure each section below.
 | `DEBUG` | — | `false` | Enable debug logging. **Never true in production** |
 | `ALLOWED_ORIGINS` | — | `http://localhost:3000` | Comma-separated CORS allowed origins |
 | `API_PREFIX` | — | `/api/v1` | URL prefix for all API routes |
-| `APP_NAME` | — | `AutoPenTest AI` | Application name shown in docs |
+| `APP_NAME` | — | `UniVex` | Application name shown in docs |
 
 ### Database
 
@@ -87,7 +87,7 @@ At least one AI provider must be configured for the agent to function.
 |----------|----------|---------|-------------|
 | `LANGCHAIN_TRACING_V2` | — | `false` | Enable LangSmith tracing |
 | `LANGCHAIN_API_KEY` | — | — | LangSmith API key |
-| `LANGCHAIN_PROJECT` | — | `autopentestai` | LangSmith project name |
+| `LANGCHAIN_PROJECT` | — | `univex` | LangSmith project name |
 
 ### Tool Execution
 
@@ -106,7 +106,7 @@ At least one AI provider must be configured for the agent to function.
 |----------|----------|---------|-------------|
 | `NEXT_PUBLIC_API_URL` | ✅ | `http://localhost:8000` | Backend API base URL |
 | `NEXT_PUBLIC_WS_URL` | ✅ | `ws://localhost:8000` | WebSocket base URL |
-| `NEXT_PUBLIC_APP_NAME` | — | `AutoPenTest AI` | Branding name |
+| `NEXT_PUBLIC_APP_NAME` | — | `UniVex` | Branding name |
 | `NEXT_PUBLIC_ENABLE_REGISTRATION` | — | `true` | Show registration form |
 | `NEXT_PUBLIC_MAX_UPLOAD_MB` | — | `10` | Max file upload size shown to users |
 
@@ -116,7 +116,7 @@ At least one AI provider must be configured for the agent to function.
 |----------|----------|---------|-------------|
 | `OTEL_ENABLED` | — | `false` | Enable OpenTelemetry tracing |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | — | `http://jaeger:4317` | OTLP gRPC endpoint |
-| `OTEL_SERVICE_NAME` | — | `autopentestai-backend` | Service name in traces |
+| `OTEL_SERVICE_NAME` | — | `univex-backend` | Service name in traces |
 | `PROMETHEUS_ENABLED` | — | `true` | Expose `/metrics` endpoint |
 | `GRAFANA_PASSWORD` | — | `admin` | Grafana admin password (change in production!) |
 
@@ -128,7 +128,7 @@ At least one AI provider must be configured for the agent to function.
 | `SMTP_PORT` | — | `587` | SMTP port |
 | `SMTP_USER` | — | — | SMTP username |
 | `SMTP_PASSWORD` | — | — | SMTP password |
-| `SMTP_FROM` | — | `noreply@autopentestai.local` | From address for system emails |
+| `SMTP_FROM` | — | `noreply@univex.local` | From address for system emails |
 | `ALERT_EMAIL_TO` | — | — | Comma-separated alert recipients |
 
 ---
@@ -286,7 +286,7 @@ docker/production/nginx/
 ### Allowed hosts
 
 ```dotenv
-ALLOWED_HOSTS=autopentestai.example.com,www.autopentestai.example.com
+ALLOWED_HOSTS=univex.example.com,www.univex.example.com
 ```
 
 Leave empty to allow all hosts (development only).
@@ -302,7 +302,7 @@ To change the interval, edit `docker/monitoring/prometheus.yml`:
 
 ```yaml
 scrape_configs:
-  - job_name: 'autopentestai-backend'
+  - job_name: 'univex-backend'
     scrape_interval: 30s     # ← change here
 ```
 
@@ -317,7 +317,7 @@ To add custom dashboards, drop JSON files into
 ```dotenv
 OTEL_ENABLED=true
 OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
-OTEL_SERVICE_NAME=autopentestai-backend
+OTEL_SERVICE_NAME=univex-backend
 ```
 
 Add Jaeger to your compose file:

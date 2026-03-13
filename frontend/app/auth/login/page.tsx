@@ -36,7 +36,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4">
       <div className="w-full max-w-md space-y-4">
         <div className="text-center mb-2">
-          <h1 className="text-4xl font-bold text-white">AutoPenTest AI</h1>
+          <h1 className="text-4xl font-bold text-white">UniVex</h1>
           <p className="text-gray-400 mt-1">Automated Penetration Testing Platform</p>
         </div>
 

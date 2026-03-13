@@ -5,7 +5,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
       <div className="max-w-5xl w-full text-center">
         <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
-          AutoPenTest AI
+          UniVex
         </h1>
         
         <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">

@@ -1,9 +1,9 @@
 """
 Tests for vulnerability scanning schemas.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 7
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 7
 """
 
 import pytest

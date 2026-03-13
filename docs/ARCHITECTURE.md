@@ -1,4 +1,4 @@
-# AutoPenTest AI — System Architecture Documentation
+# UniVex — System Architecture Documentation
 
 > **Day 202: Architecture Documentation — Complete System Design**
 >
@@ -9,7 +9,7 @@
 
 ## 🏗️ System Overview
 
-AutoPenTest AI is a **full-stack AI-powered penetration testing assistant**
+UniVex is a **full-stack AI-powered penetration testing assistant**
 that automates the reconnaissance and vulnerability assessment phases of
 security testing, guided by an LLM-powered AI agent.
 

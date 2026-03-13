@@ -1,7 +1,7 @@
-# AutoPenTest AI — Developer Guide
+# UniVex — Developer Guide
 
 > **Day 208 · Phase K: Documentation**
-> Everything you need to contribute to AutoPenTest AI: environment setup, code
+> Everything you need to contribute to UniVex: environment setup, code
 > standards, testing practices, and the pull-request workflow.
 
 ---
@@ -26,8 +26,8 @@
 ### 1. Fork and clone
 
 ```bash
-git clone https://github.com/<your-fork>/UnderProgress.git autopentestai
-cd autopentestai
+git clone https://github.com/<your-fork>/UnderProgress.git univex
+cd univex
 git remote add upstream https://github.com/BitR1ft/UnderProgress.git
 ```
 
@@ -80,7 +80,7 @@ The `.pre-commit-config.yaml` runs ruff, mypy, and ESLint before every commit.
 ## Project Structure
 
 ```
-autopentestai/
+univex/
 ├── backend/
 │   ├── app/
 │   │   ├── api/          # FastAPI routers (v1 endpoints)
@@ -504,7 +504,7 @@ Open **http://localhost:7474** and connect with your Neo4j credentials.
 ### Postgres — psql shell
 
 ```bash
-docker compose exec postgres psql -U autopentestai autopentestai
+docker compose exec postgres psql -U univex univex
 ```
 
 ---

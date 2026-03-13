@@ -1,8 +1,8 @@
-# Month 3 Completion Summary - AutoPenTest AI
+# Month 3 Completion Summary - UniVex
 
-**Project**: AutoPenTest AI - Professional FYP  
-**Student**: Muhammad Adeel Haider (BSCYS-F24 A)  
-**Supervisor**: Sir Galib  
+**Project**: UniVex - open-source startup project  
+**Student**: BitR1FT (BitR1FT)  
+**Supervisor**: BitR1FT  
 **Period**: Month 3 - Reconnaissance Pipeline Phase 1  
 **Status**: ✅ **IN PROGRESS**
 

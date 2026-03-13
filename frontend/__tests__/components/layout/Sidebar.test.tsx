@@ -62,7 +62,7 @@ describe('Sidebar', () => {
 
   it('shows logo text when not collapsed', () => {
     render(<Sidebar {...defaultProps} collapsed={false} />);
-    const logos = screen.getAllByText('AutoPenTest AI');
+    const logos = screen.getAllByText('UniVex');
     expect(logos.length).toBeGreaterThan(0);
   });
 
@@ -71,7 +71,7 @@ describe('Sidebar', () => {
     // When collapsed, sidebarContent renders without the logo text
     // But both mobile and desktop share sidebarContent with collapsed state
     // The text should not appear at all since collapsed controls it
-    expect(screen.queryByText('AutoPenTest AI')).not.toBeInTheDocument();
+    expect(screen.queryByText('UniVex')).not.toBeInTheDocument();
   });
 
   it('shows username', () => {

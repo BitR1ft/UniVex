@@ -1,8 +1,8 @@
-# AutoPenTest AI — Final Verification Report
+# UniVex — Final Verification Report
 
 > **Days 211–215 · Final Verification Phase**
 > Complete system testing, performance verification, security audit, and
-> documentation verification for AutoPenTest AI v1.0.
+> documentation verification for UniVex v1.0.
 
 ---
 
@@ -246,7 +246,7 @@ implementation:
 
 ### Feature Summary
 
-AutoPenTest AI v1.0 delivers:
+UniVex v1.0 delivers:
 
 - **Autonomous recon**: Multi-phase subdomain enum, port scanning, web crawl,
   technology detection, vulnerability scanning with Nuclei
@@ -267,4 +267,4 @@ AutoPenTest AI v1.0 delivers:
 
 ---
 
-*Report generated: Week 32 — Day 215 | AutoPenTest AI v1.0*
+*Report generated: Week 32 — Day 215 | UniVex v1.0*

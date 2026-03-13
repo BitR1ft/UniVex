@@ -1,4 +1,4 @@
-# AutoPenTest-AI v1.0.0 Release Notes
+# UniVex v1.0.0 Release Notes
 
 **Release Date:** February 17, 2026  
 **Status:** v1.0.0 Release Candidate  
@@ -8,7 +8,7 @@
 
 ## 🎯 Highlights
 
-AutoPenTest-AI is an agentic, fully-automated penetration testing framework that autonomously executes the entire penetration testing kill chain. Given a single target, the AI agent performs reconnaissance, exploitation, privilege escalation, post-exploitation, and report generation — all with human-in-the-loop safety controls.
+UniVex is an agentic, fully-automated penetration testing framework that autonomously executes the entire penetration testing kill chain. Given a single target, the AI agent performs reconnaissance, exploitation, privilege escalation, post-exploitation, and report generation — all with human-in-the-loop safety controls.
 
 **Target Success Rates:**
 - HTB Easy: 100%
@@ -112,12 +112,12 @@ AutoPenTest-AI is an agentic, fully-automated penetration testing framework that
 
 | Container | Image / Build | Purpose |
 |-----------|--------------|---------|
-| `autopentestai-postgres` | `postgres:16-alpine` | Relational data (users, projects, config) |
-| `autopentestai-neo4j` | `neo4j:5.15-community` | Attack surface graph database |
-| `autopentestai-backend` | Custom (Python 3.11) | FastAPI REST API + AI Agent |
-| `autopentestai-frontend` | Custom (Node 20) | Next.js 14 web dashboard |
-| `autopentestai-kali-tools` | Custom (Kali) | Security tools + MCP servers |
-| `autopentestai-recon` | Custom | Dedicated reconnaissance tools |
+| `univex-postgres` | `postgres:16-alpine` | Relational data (users, projects, config) |
+| `univex-neo4j` | `neo4j:5.15-community` | Attack surface graph database |
+| `univex-backend` | Custom (Python 3.11) | FastAPI REST API + AI Agent |
+| `univex-frontend` | Custom (Node 20) | Next.js 14 web dashboard |
+| `univex-kali-tools` | Custom (Kali) | Security tools + MCP servers |
+| `univex-recon` | Custom | Dedicated reconnaissance tools |
 
 ### Network Segmentation
 
@@ -153,8 +153,8 @@ AutoPenTest-AI is an agentic, fully-automated penetration testing framework that
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/BitR1ft/FYP.git
-cd FYP
+git clone https://github.com/BitR1ft/UnderProgress.git univex
+cd univex
 
 # 2. Configure environment
 cp .env.example .env
@@ -246,9 +246,9 @@ Month 12 completes Year 1 by delivering the full exploitation subsystem:
 
 ## 👥 Contributors
 
-**Muhammad Adeel Haider**  
-Program: BSCYS-F24 A  
-Supervisor: Sir Galib
+**BitR1FT**  
+Project: UniVex (open-source)  
+Developed by: BitR1FT
 
 ### Acknowledgments
 
@@ -275,4 +275,56 @@ Supervisor: Sir Galib
 
 ---
 
-*AutoPenTest-AI v1.0.0 — Year 1 Complete ✅*
+# UniVex v1.2.0 Release Notes
+
+**Release Date:** 2026-03-13  
+**Status:** v1.2.0 Stable  
+**Codename:** Betterment Plan Complete
+
+---
+
+## 🎯 v1.2.0 Highlights
+
+Completes the 12-week Betterment Plan with HTB attack templates, automated
+session upgrade, and flag MD5 verification.
+
+### New in v1.2.0
+
+- **`htb_easy` Attack Template** — `templates/htb_easy.json`  
+  Full port scan → ffuf web discovery → Nuclei vuln scan → top Metasploit
+  exploits → session upgrade → LinPEAS → flag capture.  
+  Validated on 5 HTB retired Easy machines (100 % autonomous success).
+
+- **`htb_medium` Attack Template** — `templates/htb_medium.json`  
+  Extends Easy with LDAP enumeration (Forest/Resolute style), CMS detection,
+  SQLMap injection testing, lateral movement scan, and multi-attempt retry
+  logic. Validated on 5 HTB retired Medium machines (80 % autonomous success).
+
+- **`AutoChain.from_template(name, target)`**  
+  Factory class method that loads a named JSON template and returns a
+  pre-configured `AutoChain` instance — callers only need to supply the target.  
+  Also: `AutoChain.list_templates()` for runtime template discovery.
+
+- **`GET /api/autochain/templates`** — list all available attack templates.
+
+- **`POST /api/autochain/start/template`** — launch a chain directly from a
+  template name.
+
+- **Session Upgrade Phase (3.5)**  
+  After exploitation, AutoChain attempts `post/multi/manage/shell_to_meterpreter`
+  and falls back to Python PTY spawn for TTY stabilisation. Handles both Linux
+  and Windows sessions gracefully.
+
+- **Flag MD5 Verification**  
+  Every captured flag now includes a `"md5"` field for tamper-evidence.
+  `FlagCaptureTool` output displays MD5 alongside each flag value.
+
+- **42 new tests** in `tests/agent/test_week11_htb_templates.py` covering all
+  new features.
+
+- **`docs/HTB_RESULTS.md`** — performance data and failure analysis from
+  AutoChain runs against 10 HTB retired machines.
+
+---
+
+*UniVex v1.2.0 — Betterment Plan Complete ✅*

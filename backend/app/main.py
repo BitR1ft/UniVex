@@ -1,5 +1,5 @@
 """
-AutoPenTest AI - Main Application Entry Point
+UniVex - Main Application Entry Point
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -65,7 +65,7 @@ setup_middleware(app)
 async def root():
     """Root endpoint - API health check"""
     return {
-        "message": "AutoPenTest AI API",
+        "message": "UniVex API",
         "status": "operational",
         "version": settings.VERSION,
         "timestamp": datetime.utcnow().isoformat()

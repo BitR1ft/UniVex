@@ -4,9 +4,9 @@ Resource Enumeration Module
 Comprehensive endpoint discovery using Katana, GAU, and Kiterunner.
 Implements parallel execution, URL merging, deduplication, and classification.
 
-Author: Muhammad Adeel Haider (BSCYS-F24 A)
-Supervisor: Sir Galib
-FYP: AutoPenTest AI - Month 6
+Author: BitR1FT (BitR1FT)
+Developed by: BitR1FT
+Project: UniVex - Month 6
 """
 
 from .schemas import (
@@ -56,4 +56,4 @@ __all__ = [
 ]
 
 __version__ = "1.0.0"
-__author__ = "Muhammad Adeel Haider"
+__author__ = "BitR1FT"

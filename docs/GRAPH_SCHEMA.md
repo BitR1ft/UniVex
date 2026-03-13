@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AutoPenTest AI attack surface graph database uses Neo4j to store and represent relationships between all reconnaissance and vulnerability data. The schema consists of **17 node types** and **20+ relationship types**, forming a complete knowledge graph of the target's attack surface.
+The UniVex attack surface graph database uses Neo4j to store and represent relationships between all reconnaissance and vulnerability data. The schema consists of **17 node types** and **20+ relationship types**, forming a complete knowledge graph of the target's attack surface.
 
 ## Multi-Tenancy
 

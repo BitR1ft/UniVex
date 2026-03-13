@@ -2,7 +2,7 @@
 
 ## Overview
 
-AutoPenTest AI uses [Prisma](https://prisma.io) with the
+UniVex uses [Prisma](https://prisma.io) with the
 `prisma-client-py` (async) generator to manage PostgreSQL schema
 migrations.
 

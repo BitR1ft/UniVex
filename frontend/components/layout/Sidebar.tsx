@@ -54,7 +54,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
         <Shield className="h-8 w-8 text-blue-500 shrink-0" />
         {!collapsed && (
           <span className="text-lg font-bold text-white whitespace-nowrap">
-            AutoPenTest AI
+            UniVex
           </span>
         )}
         {/* Mobile close button */}

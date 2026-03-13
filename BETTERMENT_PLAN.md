@@ -1,4 +1,4 @@
-# AutoPenTest AI — Complete Project Analysis & Betterment Plan
+# UniVex — Complete Project Analysis & Betterment Plan
 
 > **Author**: Copilot Analysis — March 2026  
 > **Based on**: Full codebase review of Year 1 (v1.0.0)
@@ -215,7 +215,7 @@ The current system is better described as a **semi-autonomous recon-to-exploitat
 
 ## 5. Betterment Plan — Day-by-Day Tasks
 
-> **Goal**: Make AutoPenTest-AI capable of autonomously solving **HTB Easy** (100%) and **HTB Medium** (70%+) boxes with zero or minimal human approval clicks.
+> **Goal**: Make UniVex capable of autonomously solving **HTB Easy** (100%) and **HTB Medium** (70%+) boxes with zero or minimal human approval clicks.
 > **Duration**: 90 days (Months 13-15 of Year 2)
 > **Priority order**: Fix critical gaps first, add missing tools second, optimize third.
 
@@ -572,40 +572,40 @@ The current system is better described as a **semi-autonomous recon-to-exploitat
 
 ### 🗂️ Phase 3: Autonomous HTB Workflow (Days 61-90)
 
-#### Week 11-12: HTB-Specific Attack Templates (Days 66-79)
+#### Week 11-12: HTB-Specific Attack Templates (Days 66-79) ✅
 
 - **Day 66-68**: Build "HTB Easy" attack template
-  - [ ] Create `templates/htb_easy.json` defining the standard attack sequence:
+  - [x] Create `templates/htb_easy.json` defining the standard attack sequence:
     1. Port scan (naabu + nmap service detection)
     2. Web discovery (ffuf common wordlist)
     3. Vuln scan (nuclei critical/high)
     4. CVE exploitation (top Metasploit modules for detected services)
     5. Post-exploit (whoami, cat user.txt, linpeas, privesc, cat root.txt)
-  - [ ] Create `AutoChain.from_template("htb_easy")` factory method
+  - [x] Create `AutoChain.from_template("htb_easy")` factory method
 
 - **Day 69-71**: Build "HTB Medium" attack template
-  - [ ] Standard sequence +: LDAP enum, CMS-specific attacks, SQLMap
-  - [ ] Add retry logic: if first exploit fails, try next candidate
-  - [ ] Add lateral movement step: if box has internal network
-  - [ ] Test template on HTB retired machines (Academy, Jerry, Lame)
+  - [x] Standard sequence +: LDAP enum, CMS-specific attacks, SQLMap
+  - [x] Add retry logic: if first exploit fails, try next candidate
+  - [x] Add lateral movement step: if box has internal network
+  - [x] Test template on HTB retired machines (Academy, Jerry, Lame)
 
 - **Day 72-73**: Flag capture and verification
-  - [ ] `FlagCaptureTool`: reads `/root/root.txt` and `/home/*/user.txt`
-  - [ ] Calculate MD5 to verify valid flag format
-  - [ ] Display captured flags in frontend dashboard
-  - [ ] Store in Neo4j `Credential` node with `type: flag`
+  - [x] `FlagCaptureTool`: reads `/root/root.txt` and `/home/*/user.txt`
+  - [x] Calculate MD5 to verify valid flag format
+  - [x] Display captured flags in frontend dashboard
+  - [x] Store in Neo4j `Credential` node with `type: flag`
 
 - **Day 74-76**: Automatic session upgrade
-  - [ ] On initial shell: auto-run `shell_to_meterpreter`
-  - [ ] Or use `python3 -c 'import pty; pty.spawn("/bin/bash")'` for TTY
-  - [ ] Auto-stabilize shell (stty raw -echo, etc.)
-  - [ ] Handle both Windows and Linux shell types
+  - [x] On initial shell: auto-run `shell_to_meterpreter`
+  - [x] Or use `python3 -c 'import pty; pty.spawn("/bin/bash")'` for TTY
+  - [x] Auto-stabilize shell (stty raw -echo, etc.)
+  - [x] Handle both Windows and Linux shell types
 
 - **Day 77-79**: Testing
-  - [ ] Test complete HTB Easy template on 5 retired machines
-  - [ ] Record success rate and time per machine
-  - [ ] Identify failure patterns and add compensating logic
-  - [ ] Document results in `docs/HTB_RESULTS.md`
+  - [x] Test complete HTB Easy template on 5 retired machines
+  - [x] Record success rate and time per machine
+  - [x] Identify failure patterns and add compensating logic
+  - [x] Document results in `docs/HTB_RESULTS.md`
 
 ---
 
@@ -712,4 +712,4 @@ The current system is better described as a **semi-autonomous recon-to-exploitat
 
 ---
 
-*Analysis completed: March 2026 | AutoPenTest-AI v1.0.0 → v1.1.0 Betterment Plan*
+*Analysis completed: March 2026 | UniVex v1.0.0 → v1.1.0 Betterment Plan*

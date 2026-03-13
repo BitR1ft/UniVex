@@ -154,7 +154,7 @@ jobs:
           #   ln -sf /etc/nginx/sites-available/$ENV-$INACTIVE \
           #           /etc/nginx/sites-enabled/$ENV
           #   nginx -t && nginx -s reload
-          #   echo $INACTIVE > /opt/autopentestai/.active-slot
+          #   echo $INACTIVE > /opt/univex/.active-slot
           # "
 
           echo "✅ Traffic switched to $INACTIVE slot"
@@ -192,7 +192,7 @@ jobs:
           #   ln -sf /etc/nginx/sites-available/$ENV-$INACTIVE \
           #           /etc/nginx/sites-enabled/$ENV
           #   nginx -t && nginx -s reload
-          #   echo $INACTIVE > /opt/autopentestai/.active-slot
+          #   echo $INACTIVE > /opt/univex/.active-slot
           # "
 
           echo "✅ Rollback complete — traffic now on $INACTIVE slot"

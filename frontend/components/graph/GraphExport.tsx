@@ -57,7 +57,7 @@ export default function GraphExport({ graphRef, nodes, relationships }: GraphExp
     lines.push('<gexf xmlns="http://gexf.net/1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"');
     lines.push('  xsi:schemaLocation="http://gexf.net/1.2 http://gexf.net/1.2/gexf.xsd" version="1.2">');
     lines.push('  <meta>');
-    lines.push(`    <creator>AutoPenTest AI</creator>`);
+    lines.push(`    <creator>UniVex</creator>`);
     lines.push(`    <description>Attack Surface Graph</description>`);
     lines.push('  </meta>');
     lines.push('  <graph defaultedgetype="directed">');

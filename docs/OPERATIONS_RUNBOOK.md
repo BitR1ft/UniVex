@@ -1,8 +1,8 @@
-# AutoPenTest AI — Operations Runbook
+# UniVex — Operations Runbook
 
 > **Day 195: Phase J Completion — CI/CD & Operations Guide**
 >
-> This runbook covers all operational procedures for AutoPenTest AI including
+> This runbook covers all operational procedures for UniVex including
 > deployment, monitoring, incident response, backup, and disaster recovery.
 
 ---
@@ -36,8 +36,8 @@ docker compose -f docker/staging/docker-compose.staging.yml pull
 docker compose -f docker/staging/docker-compose.staging.yml up -d --no-build
 
 # 4. Verify health
-curl http://staging.autopentestai.local/health
-curl http://staging.autopentestai.local/api/health
+curl http://staging.univex.local/health
+curl http://staging.univex.local/api/health
 ```
 
 ### Blue/Green Deployment (Production)
@@ -50,7 +50,7 @@ gh workflow run blue-green.yml \
   -f environment=production
 
 # Step 2: Verify inactive slot health
-curl http://green.autopentestai.example.com/health
+curl http://green.univex.example.com/health
 
 # Step 3: Switch traffic (requires approval in GitHub)
 gh workflow run blue-green.yml \
@@ -72,7 +72,7 @@ gh workflow run blue-green.yml \
 # Pull specific image directly on server
 ssh deploy@production-server
 
-cd /opt/autopentestai
+cd /opt/univex
 export IMAGE_TAG=v1.2.2  # Previous stable version
 export POSTGRES_PASSWORD=$(cat /run/secrets/postgres_password)
 export SECRET_KEY=$(cat /run/secrets/secret_key)
@@ -94,7 +94,7 @@ gh workflow run blue-green.yml -f action=rollback -f environment=production
 
 # Option 2: Docker compose on server
 ssh deploy@production-server
-cd /opt/autopentestai
+cd /opt/univex
 export IMAGE_TAG=$(cat .previous-image-tag)
 docker compose -f docker/production/docker-compose.production.yml up -d --no-build
 ```
@@ -110,7 +110,7 @@ docker compose stop backend
 
 # 2. Restore from backup
 BACKUP_FILE=/backups/backup-20260307-020000.sql.gz
-gunzip -c $BACKUP_FILE | docker compose exec -T postgres psql -U autopentestai autopentestai
+gunzip -c $BACKUP_FILE | docker compose exec -T postgres psql -U univex univex
 
 # 3. Restart application with previous image
 export IMAGE_TAG=v1.2.2
@@ -143,8 +143,8 @@ echo "Full rollback executed at $(date)" | notify-slack
 # Manual backup
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 docker compose exec postgres pg_dump \
-  -U autopentestai \
-  autopentestai \
+  -U univex \
+  univex \
   | gzip > /backups/manual-backup-$TIMESTAMP.sql.gz
 
 # Verify backup
@@ -162,7 +162,7 @@ docker compose stop neo4j
 
 # Copy data directory
 docker run --rm \
-  -v autopentestai-prod-neo4j-data:/data \
+  -v univex-prod-neo4j-data:/data \
   -v /backups/neo4j:/backup \
   alpine tar czf /backup/neo4j-$(date +%Y%m%d).tar.gz /data
 
@@ -174,7 +174,7 @@ docker compose start neo4j
 ```bash
 # Test PostgreSQL backup restoration
 docker run --rm \
-  -e POSTGRES_USER=autopentestai \
+  -e POSTGRES_USER=univex \
   -e POSTGRES_PASSWORD=testpass \
   -e POSTGRES_DB=restore_test \
   postgres:16-alpine \
@@ -184,7 +184,7 @@ sleep 10
 
 # Restore to test database
 gunzip -c /backups/latest.sql.gz | \
-  PGPASSWORD=testpass psql -h localhost -U autopentestai restore_test
+  PGPASSWORD=testpass psql -h localhost -U univex restore_test
 
 echo "✅ Backup verification complete"
 ```
@@ -203,7 +203,7 @@ ENV=${1:-production}
 API_URL="http://localhost:8000"
 FRONTEND_URL="http://localhost:3000"
 
-echo "=== AutoPenTest AI Health Check ==="
+echo "=== UniVex Health Check ==="
 echo "Environment: $ENV"
 echo "Time: $(date)"
 echo ""
@@ -217,7 +217,7 @@ HTTP_CODE=$(curl -so /dev/null -w "%{http_code}" $FRONTEND_URL 2>/dev/null)
 echo "Frontend:     HTTP $HTTP_CODE"
 
 # PostgreSQL
-PG_OK=$(docker compose exec -T postgres pg_isready -U autopentestai && echo "OK" || echo "ERROR")
+PG_OK=$(docker compose exec -T postgres pg_isready -U univex && echo "OK" || echo "ERROR")
 echo "PostgreSQL:   $PG_OK"
 
 # Neo4j
@@ -255,7 +255,7 @@ docker compose ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
 ./scripts/health-check.sh production
 
 # 3. Check recent deployments
-docker inspect autopentestai-prod-backend | grep -A5 "Image"
+docker inspect univex-prod-backend | grep -A5 "Image"
 git log --oneline -5
 
 # 4. Check application logs
@@ -373,7 +373,7 @@ docker compose exec backend alembic history --verbose
 
 ```bash
 # Scale backend to 3 replicas (Docker Swarm)
-docker service scale autopentestai_backend=3
+docker service scale univex_backend=3
 
 # Scale with compose (development/staging)
 docker compose up -d --scale backend=2

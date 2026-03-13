@@ -1,8 +1,8 @@
-# AutoPenTest AI — Testing Guide
+# UniVex — Testing Guide
 
 > **Day 180: Phase I Completion — Testing Strategy & Coverage Guide**
 >
-> This document describes the complete testing strategy for AutoPenTest AI,
+> This document describes the complete testing strategy for UniVex,
 > covering unit tests, integration tests, contract tests, E2E tests,
 > performance tests, and chaos tests.
 

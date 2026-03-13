@@ -1,4 +1,4 @@
-# AutoPenTest AI — MCP Tool Server Guide
+# UniVex — MCP Tool Server Guide
 
 > **Day 201: MCP Documentation — Model Context Protocol Tool Servers**
 >
@@ -9,7 +9,7 @@
 
 ## 📋 Overview
 
-AutoPenTest AI implements the **Model Context Protocol (MCP)** to expose
+UniVex implements the **Model Context Protocol (MCP)** to expose
 security tools as structured, typed functions callable by the AI agent.
 
 Each tool server is a lightweight Python service that:

@@ -2,7 +2,7 @@
 Audit logging for sensitive operations.
 
 All writes go to the standard Python logging system under the
-``autopentestai.audit`` logger so they can be routed to a separate
+``univex.audit`` logger so they can be routed to a separate
 sink (file, SIEM, etc.) via logging configuration.
 """
 from __future__ import annotations
@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Optional
 
-audit_logger = logging.getLogger("autopentestai.audit")
+audit_logger = logging.getLogger("univex.audit")
 
 
 class AuditAction(str, Enum):

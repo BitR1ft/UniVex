@@ -159,6 +159,6 @@ Month 7 will focus on:
 
 ---
 
-**Author**: Muhammad Adeel Haider (BSCYS-F24 A)  
-**Supervisor**: Sir Galib  
-**FYP**: AutoPenTest AI
+**Author**: BitR1FT (BitR1FT)  
+**Supervisor**: BitR1FT  
+**FYP**: UniVex

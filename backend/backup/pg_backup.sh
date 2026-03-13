@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# pg_backup.sh – PostgreSQL backup script for AutoPenTest AI
+# pg_backup.sh – PostgreSQL backup script for UniVex
 # ==============================================================================
 #
 # Usage:
 #   ./pg_backup.sh [backup_dir]
 #
 # Environment variables (all optional – defaults match docker-compose.yml):
-#   POSTGRES_USER     – default: autopentestai
-#   POSTGRES_PASSWORD – default: autopentestai_dev_password
+#   POSTGRES_USER     – default: univex
+#   POSTGRES_PASSWORD – default: univex_dev_password
 #   POSTGRES_HOST     – default: localhost
 #   POSTGRES_PORT     – default: 5432
-#   POSTGRES_DB       – default: autopentestai
-#   BACKUP_DIR        – default: /var/backups/autopentestai
+#   POSTGRES_DB       – default: univex
+#   BACKUP_DIR        – default: /var/backups/univex
 #   BACKUP_KEEP_DAILY – days to keep daily backups (default: 7)
 #   BACKUP_KEEP_WEEKLY– weeks to keep weekly backups  (default: 4)
 #
@@ -31,13 +31,13 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-PGUSER="${POSTGRES_USER:-autopentestai}"
-PGPASSWORD="${POSTGRES_PASSWORD:-autopentestai_dev_password}"
+PGUSER="${POSTGRES_USER:-univex}"
+PGPASSWORD="${POSTGRES_PASSWORD:-univex_dev_password}"
 PGHOST="${POSTGRES_HOST:-localhost}"
 PGPORT="${POSTGRES_PORT:-5432}"
-PGDATABASE="${POSTGRES_DB:-autopentestai}"
+PGDATABASE="${POSTGRES_DB:-univex}"
 
-BACKUP_DIR="${BACKUP_DIR:-/var/backups/autopentestai}"
+BACKUP_DIR="${BACKUP_DIR:-/var/backups/univex}"
 KEEP_DAILY="${BACKUP_KEEP_DAILY:-7}"
 KEEP_WEEKLY="${BACKUP_KEEP_WEEKLY:-4}"   # in weeks → kept for 28 days max
 
@@ -56,7 +56,7 @@ else
     BACKUP_TYPE="daily"
 fi
 
-BACKUP_FILE="${BACKUP_DIR}/${BACKUP_TYPE}/autopentestai_${TIMESTAMP}.sql.gz"
+BACKUP_FILE="${BACKUP_DIR}/${BACKUP_TYPE}/univex_${TIMESTAMP}.sql.gz"
 
 # ---------------------------------------------------------------------------
 # Ensure directories exist
