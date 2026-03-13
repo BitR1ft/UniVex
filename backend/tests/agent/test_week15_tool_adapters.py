@@ -42,7 +42,7 @@ from app.agent.tools.error_handling import (
 
 def run(coro):
     """Helper to run async functions in a test event loop."""
-    return asyncio.get_event_loop().run_until_complete(coro)
+    return asyncio.run(coro)
 
 
 # ---------------------------------------------------------------------------

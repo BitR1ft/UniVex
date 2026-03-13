@@ -201,14 +201,14 @@ class TestToolInterfaceFramework:
         """MockTool.execute is async and returns response."""
         import asyncio
         tool = MockTool(response="scan complete")
-        result = asyncio.get_event_loop().run_until_complete(tool.execute(target="10.0.0.1"))
+        result = asyncio.run(tool.execute(target="10.0.0.1"))
         assert result == "scan complete"
 
     def test_mock_tool_records_calls(self):
         import asyncio
         tool = MockTool()
-        asyncio.get_event_loop().run_until_complete(tool.execute(a=1))
-        asyncio.get_event_loop().run_until_complete(tool.execute(b=2))
+        asyncio.run(tool.execute(a=1))
+        asyncio.run(tool.execute(b=2))
         assert tool.call_count == 2
         assert tool.calls[0] == {"a": 1}
 
@@ -216,7 +216,7 @@ class TestToolInterfaceFramework:
         import asyncio
         tool = MockTool(should_fail=True, fail_message="boom")
         with pytest.raises(RuntimeError, match="boom"):
-            asyncio.get_event_loop().run_until_complete(tool.execute())
+            asyncio.run(tool.execute())
 
     def test_tool_registry_phase_control(self):
         registry = ToolRegistry()
@@ -532,15 +532,15 @@ class TestAgentTestingFramework:
     def test_mock_llm_returns_response(self):
         import asyncio
         mock = MockLLM(["THOUGHT: done\nACTION: respond\nTOOL_INPUT: ok"])
-        resp = asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
+        resp = asyncio.run(mock.ainvoke([]))
         assert "done" in resp.content
 
     def test_mock_llm_cycles_responses(self):
         import asyncio
         mock = MockLLM(["resp-A", "resp-B"])
-        r1 = asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
-        r2 = asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
-        r3 = asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
+        r1 = asyncio.run(mock.ainvoke([]))
+        r2 = asyncio.run(mock.ainvoke([]))
+        r3 = asyncio.run(mock.ainvoke([]))
         assert r1.content == "resp-A"
         assert r2.content == "resp-B"
         assert r3.content == "resp-A"  # cycles back
@@ -548,14 +548,14 @@ class TestAgentTestingFramework:
     def test_mock_llm_call_count(self):
         import asyncio
         mock = MockLLM()
-        asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
-        asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
+        asyncio.run(mock.ainvoke([]))
+        asyncio.run(mock.ainvoke([]))
         assert mock.call_count == 2
 
     def test_mock_llm_reset(self):
         import asyncio
         mock = MockLLM()
-        asyncio.get_event_loop().run_until_complete(mock.ainvoke([]))
+        asyncio.run(mock.ainvoke([]))
         mock.reset()
         assert mock.call_count == 0
 
@@ -648,7 +648,7 @@ class TestAgentTestingFramework:
         import asyncio
         scenario = AgentTestScenario()
         tool = scenario.add_tool("scanner")
-        asyncio.get_event_loop().run_until_complete(tool.execute(target="10.0.0.1"))
+        asyncio.run(tool.execute(target="10.0.0.1"))
         scenario.assert_tool_called("scanner", times=1)
 
     def test_scenario_assert_tool_called_fails(self):
@@ -661,7 +661,7 @@ class TestAgentTestingFramework:
         import asyncio
         scenario = AgentTestScenario()
         tool = scenario.add_tool("scanner")
-        asyncio.get_event_loop().run_until_complete(tool.execute())
+        asyncio.run(tool.execute())
         assert tool.call_count == 1
         scenario.reset_all()
         assert tool.call_count == 0

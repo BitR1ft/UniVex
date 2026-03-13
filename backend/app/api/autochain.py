@@ -310,7 +310,7 @@ async def stream_chain_progress(chain_id: str, request: Request):
     )
 
 
-@router.delete("/{chain_id}", status_code=204)
+@router.delete("/{chain_id}", status_code=204, response_model=None)
 async def stop_chain(chain_id: str) -> None:
     """
     Request cancellation of a running AutoChain.

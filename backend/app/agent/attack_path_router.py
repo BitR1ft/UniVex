@@ -132,7 +132,7 @@ class AttackPathRouter:
         ],
         AttackCategory.WEB_APP_ATTACK: [
             # primary tool names expected by tests
-            "sqlmap", "nuclei",
+            "sqlmap", "nuclei", "ffuf",
             # detailed tool adapter names
             "sqlmap_detect", "sqlmap_databases", "sqlmap_dump",
             "nikto_scan", "wpscan", "curl",
