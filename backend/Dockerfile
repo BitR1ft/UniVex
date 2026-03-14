@@ -58,7 +58,7 @@ RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 RUN npm install -g wappalyzer-cli
 
 # Verify installations
-RUN httpx -version && nmap --version
+RUN httpx -version && nmap --version && which wappalyzer
 
 # ==============================================================================
 # PYTHON ENVIRONMENT
