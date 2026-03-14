@@ -199,15 +199,13 @@ services:
       NEXT_TELEMETRY_DISABLED: "1"
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
-    volumes:
-      - frontend-cache:/cache
     depends_on:
       backend:
         condition: service_healthy
     networks:
       - frontend-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -431,9 +429,6 @@ volumes:
   backend-cache:
     driver: local
     name: univex-backend-cache
-  frontend-cache:
-    driver: local
-    name: univex-frontend-cache
   
   # Tools & Results Volumes
   kali-tools-data:

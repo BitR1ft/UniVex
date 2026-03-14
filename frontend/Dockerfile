@@ -4,31 +4,18 @@
 # ==============================================================================
 
 # ==============================================================================
-# Stage 1: Dependencies
+# Stage 1: Builder
 # ==============================================================================
-FROM node:20-alpine AS deps
+FROM node:20-alpine AS builder
 
 LABEL maintainer="BitR1FT"
 LABEL description="UniVex - Next.js Frontend"
 LABEL version="1.0.0"
 
-# Install dependencies only when needed
+WORKDIR /app
+
+# Install libc compatibility shim needed by some native modules on Alpine
 RUN apk add --no-cache libc6-compat
-
-WORKDIR /app
-
-# Copy package files
-COPY package.json package-lock.json* ./
-
-# Install dependencies
-RUN npm ci --only=production --ignore-scripts
-
-# ==============================================================================
-# Stage 2: Builder
-# ==============================================================================
-FROM node:20-alpine AS builder
-
-WORKDIR /app
 
 # Copy package files and install ALL dependencies (including dev) for build
 COPY package.json package-lock.json* ./
@@ -44,7 +31,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # ==============================================================================
-# Stage 3: Runner
+# Stage 2: Runner
 # ==============================================================================
 FROM node:20-alpine AS runner
 
