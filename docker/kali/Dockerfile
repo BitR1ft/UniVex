@@ -5,8 +5,8 @@
 
 FROM kalilinux/kali-rolling:latest
 
-LABEL maintainer="Muhammad Adeel Haider"
-LABEL description="AutoPenTest AI - Kali Linux Tools Container"
+LABEL maintainer="BitR1FT"
+LABEL description="UniVex - Kali Linux Tools Container"
 LABEL version="1.0.0"
 
 # Prevent interactive prompts during package installation

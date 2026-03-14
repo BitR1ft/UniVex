@@ -1,5 +1,5 @@
 # =============================================================================
-# Day 190-191: Blue/Green Deployment & Rollback
+# Blue/Green Deployment & Rollback
 # =============================================================================
 
 name: Blue-Green Deploy & Rollback

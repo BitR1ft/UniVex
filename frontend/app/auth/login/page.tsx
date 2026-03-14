@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { LoginForm } from '@/components/forms/LoginForm';
 import type { LoginFormData } from '@/lib/validations';
 import { authApi } from '@/lib/api';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState('');
@@ -61,5 +61,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>
+      <LoginContent />
+    </Suspense>
   );
 }

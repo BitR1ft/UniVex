@@ -1,5 +1,5 @@
 # =============================================================================
-# Day 185: Docker Build Pipeline — Multi-stage builds with caching & SBOM
+# Docker Build Pipeline — Multi-stage builds with caching & SBOM
 # =============================================================================
 
 name: Docker Build

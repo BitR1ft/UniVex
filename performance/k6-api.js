@@ -1,7 +1,7 @@
 /**
  * Day 178: Performance Test Suite – API Throughput & Load Testing
  *
- * k6 performance tests for the AutoPenTest AI API.
+ * k6 performance tests for the UniVex API.
  *
  * Install k6: https://k6.io/docs/get-started/installation/
  * Run: k6 run performance/k6-api.js

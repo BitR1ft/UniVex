@@ -5,8 +5,8 @@
 
 FROM python:3.11-slim-bookworm
 
-LABEL maintainer="Muhammad Adeel Haider"
-LABEL description="AutoPenTest AI - Reconnaissance Container"
+LABEL maintainer="BitR1FT"
+LABEL description="UniVex - Reconnaissance Container"
 LABEL version="1.0.0"
 
 # Prevent interactive prompts
@@ -148,7 +148,7 @@ WORKDIR /app
 # Create entrypoint script for recon container
 RUN echo '#!/bin/bash\n\
 set -e\n\
-echo "=== AutoPenTest AI - Reconnaissance Container ==="\n\
+echo "=== UniVex - Reconnaissance Container ==="\n\
 echo "Container started at: $(date)"\n\
 echo "Tools available:"\n\
 echo "  - Subfinder: $(subfinder -version 2>&1 | head -1)"\n\

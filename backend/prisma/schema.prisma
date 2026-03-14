@@ -1,4 +1,4 @@
-// Prisma Schema for AutoPenTest AI
+// Prisma Schema for UniVex
 // Database: PostgreSQL
 
 generator client {

@@ -1,5 +1,5 @@
 # =============================================================================
-# Day 181-183: CI Pipeline — Backend, Frontend & Integration Tests
+# CI Pipeline — Backend, Frontend & Integration Tests
 #
 # Triggers on every push and pull request to main/develop branches.
 # =============================================================================
@@ -53,12 +53,12 @@ jobs:
       - name: Run ruff linter
         run: |
           cd backend
-          ruff check app/ --output-format=github || true
+          ruff check app/ --output-format=github
 
       - name: Run mypy type checker
         run: |
           cd backend
-          mypy app/ --ignore-missing-imports --no-strict-optional || true
+          mypy app/ --ignore-missing-imports --no-strict-optional
 
 # =============================================================================
 # JOB 2: Backend Tests

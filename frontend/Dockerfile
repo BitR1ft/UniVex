@@ -1,5 +1,5 @@
 # ==============================================================================
-# AutoPenTest AI Frontend - Next.js Application
+# UniVex Frontend - Next.js Application
 # Multi-stage build for optimized production image
 # ==============================================================================
 
@@ -8,8 +8,8 @@
 # ==============================================================================
 FROM node:20-alpine AS deps
 
-LABEL maintainer="Muhammad Adeel Haider"
-LABEL description="AutoPenTest AI - Next.js Frontend"
+LABEL maintainer="BitR1FT"
+LABEL description="UniVex - Next.js Frontend"
 LABEL version="1.0.0"
 
 # Install dependencies only when needed
@@ -30,8 +30,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
+# Copy package files and install ALL dependencies (including dev) for build
+COPY package.json package-lock.json* ./
+RUN npm ci --ignore-scripts
 
 # Copy application code
 COPY . .
