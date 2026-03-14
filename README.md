@@ -7,13 +7,13 @@
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.109-teal?style=flat-square&logo=fastapi">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=nextdotjs">
   <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-blue?style=flat-square&logo=docker">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-1624%2B-brightgreen?style=flat-square">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square">
 </p>
 
 > **AI-powered, fully-autonomous penetration testing platform.**  
-> One target → full kill chain: recon → exploitation → post-exploitation → flag capture.  
-> Release 1.0.0 ✅
+> **BitR1FT** — Founder & Lead Developer  
+> One target → full kill chain: recon → exploitation → post-exploitation → Command and Control.  
+> Release 1.0.0 
 
 ---
 
@@ -79,7 +79,7 @@ Target IP / Domain
 │  LinPEAS/WinPEAS · Hash crack · Credential reuse        │
 ├─────────────────────────────────────────────────────────┤
 │  Phase 5 · FLAG CAPTURE                                 │
-│  user.txt + root.txt · MD5 verification · Neo4j storage  │
+│  user.txt + root.txt · MD5 verification · Neo4j storage │
 └─────────────────────────────────────────────────────────┘
        │
        ▼
@@ -87,13 +87,6 @@ Structured Report + Attack Graph (Neo4j)
 ```
 
 The AI agent uses the **ReAct (Reasoning + Acting)** pattern powered by GPT-4 / Claude and communicates with 8 MCP (Model Context Protocol) tool servers running inside an isolated Kali Linux container.
-
-**Validated against HackTheBox retired machines:**
-
-| Difficulty | Machines Tested | Autonomous Success |
-|------------|----------------|-------------------|
-| Easy       | 5              | **100 %** (5/5)    |
-| Medium     | 5              | **80 %** (4/5 full compromise) |
 
 ---
 
@@ -1383,7 +1376,6 @@ GitHub: [@BitR1ft](https://github.com/BitR1ft)
 Project: [UniVex](https://github.com/BitR1ft/UnderProgress) — open-source, professional offensive security platform
 
 **Acknowledgments:**
-- Inspired by the RedAmon offensive security framework
 - Built on industry-standard security tools (Metasploit, Nuclei, Naabu, etc.)
 - Powered by LangGraph, LangChain, and OpenAI / Anthropic APIs
 - Graph visualization via react-force-graph
