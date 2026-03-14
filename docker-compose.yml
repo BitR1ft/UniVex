@@ -1,5 +1,3 @@
-version: '3.8'
-
 # ==============================================================================
 # UniVex — Docker Compose Configuration
 # Professional Open-Source Security Platform with Network Segmentation & Service Isolation
@@ -158,7 +156,7 @@ services:
       - ./backend:/app:ro
       - ./logs:/var/log/univex
       - /var/run/docker.sock:/var/run/docker.sock:ro  # For Docker SDK
-      - backend-cache:/app/.cache
+      - backend-cache:/cache
     depends_on:
       postgres:
         condition: service_healthy
@@ -201,17 +199,13 @@ services:
       NEXT_TELEMETRY_DISABLED: "1"
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
-    volumes:
-      - ./frontend:/app:ro
-      - frontend-cache:/app/.next
-      - /app/node_modules
     depends_on:
       backend:
         condition: service_healthy
     networks:
       - frontend-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -435,9 +429,6 @@ volumes:
   backend-cache:
     driver: local
     name: univex-backend-cache
-  frontend-cache:
-    driver: local
-    name: univex-frontend-cache
   
   # Tools & Results Volumes
   kali-tools-data:

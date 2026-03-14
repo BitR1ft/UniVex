@@ -85,14 +85,14 @@ RUN pip install --no-cache-dir docker
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p /var/log/univex /app/.cache
+RUN mkdir -p /var/log/univex /cache
 
 # ==============================================================================
 # RUNTIME USER (Security)
 # ==============================================================================
 # Create non-root user for running the application
 RUN useradd -m -u 1000 univex && \
-    chown -R univex:univex /app /var/log/univex
+    chown -R univex:univex /app /var/log/univex /cache
 
 # ==============================================================================
 # EXPOSE PORTS
