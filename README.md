@@ -1,19 +1,19 @@
 # UniVex
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.2.0-blue?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square">
   <img alt="Python" src="https://img.shields.io/badge/python-3.11+-green?style=flat-square&logo=python">
   <img alt="Node" src="https://img.shields.io/badge/node-20+-green?style=flat-square&logo=nodedotjs">
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.109-teal?style=flat-square&logo=fastapi">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=nextdotjs">
   <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-blue?style=flat-square&logo=docker">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-892%2B-brightgreen?style=flat-square">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-1624%2B-brightgreen?style=flat-square">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square">
 </p>
 
 > **AI-powered, fully-autonomous penetration testing platform.**  
 > One target → full kill chain: recon → exploitation → post-exploitation → flag capture.  
-> Version 1.2.0 | Betterment Plan Weeks 1-12 Complete ✅
+> Release 1.0.0 ✅
 
 ---
 
@@ -308,7 +308,7 @@ cp .env.example .env.production
 # Edit .env.production and fill in all values
 
 # 3. Build and deploy with the production compose file
-export IMAGE_TAG=v1.2.0
+export IMAGE_TAG=v1.0.0
 docker compose \
   -f docker/production/docker-compose.production.yml \
   --env-file .env.production \
@@ -1272,7 +1272,7 @@ GitHub Security Advisory tab rather than opening a public issue.
 
 ## 15. Project Status & Roadmap
 
-### Current: v1.2.0 — Complete ✅
+### Current: v1.0.0 — Release ✅
 
 **12 Development Months:**
 
@@ -1305,7 +1305,7 @@ GitHub Security Advisory tab rather than opening a public issue.
 | 9-10 | ML intent classifier — 4 classifier modes, confidence scoring |
 | 11-12 | HTB templates (htb_easy / htb_medium), session upgrade, flag MD5 |
 
-### v1.2 Statistics
+### v1.0 Statistics
 
 | Metric | Value |
 |--------|-------|
@@ -1313,7 +1313,7 @@ GitHub Security Advisory tab rather than opening a public issue.
 | Lines of code | 21,000+ |
 | Backend Python | 12,500+ lines |
 | Frontend TypeScript | 5,000+ lines |
-| Backend tests | 892+ |
+| Backend tests | 1624+ |
 | Frontend tests | 87 |
 | MCP servers | 8 |
 | Agent tools | 37+ |
@@ -1358,9 +1358,7 @@ GitHub Security Advisory tab rather than opening a public issue.
 | **Configuration Guide** | `docs/CONFIGURATION_GUIDE.md` | All config options |
 | **HTB Results** | `docs/HTB_RESULTS.md` | AutoChain HTB machine data |
 | **Release Notes** | `RELEASE_NOTES.md` | Full changelog |
-| **Betterment Plan** | `BETTERMENT_PLAN.md` | 12-week improvement plan |
 | **Contributing** | `CONTRIBUTING.md` | How to contribute |
-| **Progress Tracker** | `PROGRESS_TRACKER.md` | Development progress log |
 
 ---
 

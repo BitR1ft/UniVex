@@ -90,3 +90,6 @@ desktop.ini
 tmp/
 temp/
 *.tmp
+
+# Internal development docs
+private/
