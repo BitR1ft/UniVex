@@ -1,6 +1,6 @@
 # UniVex — User Manual
 
-> **Version 1.2.0** | Last Updated: March 2026
+> **Version 1.0.0** | Last Updated: March 2026
 
 ---
 
@@ -25,7 +25,7 @@
 17. [Security & Ethics](#17-security--ethics)
 18. [FAQ](#18-faq)
 19. [AutoChain — Automated Pentest Pipeline](#19-autochain--automated-pentest-pipeline)
-20. [New in v1.2 — Feature Summary](#20-new-in-v12--feature-summary)
+20. [Feature Highlights](#20-feature-highlights)
 
 ---
 
@@ -823,7 +823,7 @@ API request body to override per-run.
 
 ---
 
-## 20. New in v1.2 — Feature Summary
+## 20. Feature Highlights
 
 ### Real-Time Scan Progress
 
@@ -893,6 +893,6 @@ reduce visual clutter. Tap the **Filters** button to expand.
 
 ---
 
-*UniVex v1.2.0 — User Manual*
-*Last updated: March 2026 — Betterment Plan Weeks 1-12 Complete*
+*UniVex v1.0.0 — User Manual*
+*Last updated: March 2026*
 *© 2026 BitR1FT. All rights reserved.*

@@ -1,6 +1,6 @@
 # UniVex — Quick Start Guide
 
-> **v1.2.0** | Get up and running in 5 minutes with Docker
+> **v1.0.0** | Get up and running in 5 minutes with Docker
 
 ---
 

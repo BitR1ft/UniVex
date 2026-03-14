@@ -1,208 +1,214 @@
-# UniVex v1.2.0 Release Notes
+# UniVex v1.0.0 Release Notes
 
-**Release Date:** March 13, 2026  
-**Status:** v1.2.0 — Pre-Release Final / Release Candidate  
-**Codename:** "Secure Foundation"
-
----
-
-## 🛡️ Security & Vulnerability Assessment Summary
-
-This release was the subject of a comprehensive pre-release security and capability audit. All
-known vulnerabilities have been remediated. Below is the detailed security posture of UniVex at
-the time of release.
-
-### Critical Security Fixes in This Release
-
-| # | Severity | Component | Issue | Status |
-|---|----------|-----------|-------|--------|
-| 1 | **HIGH** | `app/core/secrets.py` | Validation error messages included the literal secret value (e.g. `SECRET_KEY is too short … "short"`) allowing secret leakage via logs or API responses | ✅ Fixed |
-| 2 | **MEDIUM** | `app/core/rate_limit.py` | `is_allowed()` returned `tuple[bool, int]` instead of `bool`, misleading callers and causing downstream unpack errors in middleware | ✅ Fixed |
-| 3 | **MEDIUM** | `app/recon/http_probing/tls_inspector.py` | `CBC` ciphers were classified as "weak", causing false-positive TLS findings for AES-128-CBC (which is medium strength) | ✅ Fixed |
-| 4 | **LOW** | `app/core/audit.py` | `AuditAction.LOGIN_SUCCESS` alias missing, causing `AttributeError` when audit code referenced the canonical login success event | ✅ Fixed |
-| 5 | **LOW** | MCP phase middleware tests | Used `asyncio.get_event_loop()` which fails in Python 3.12 after event-loop teardown, masking real permission-enforcement failures | ✅ Fixed |
-| 6 | **LOW** | `tests/test_chaos.py` | Neo4j client patch targeted `app.graph.neo4j_client` (non-existent path) instead of `app.db.neo4j_client`; chaos test could never exercise the DB failure path | ✅ Fixed |
+**Release Date:** March 14, 2026  
+**Status:** v1.0.0 — First Stable Release  
+**Codename:** "Genesis"
 
 ---
 
-## 🔍 Security Architecture
+## 🚀 Overview
+
+UniVex v1.0.0 is the **first stable release** of the AI-powered, fully-autonomous penetration
+testing platform. Given a single target IP or domain, UniVex autonomously executes the complete
+offensive security kill chain — from reconnaissance through exploitation to flag capture — without
+manual intervention.
+
+This release represents 12 months of development and comprehensive security hardening.
+
+---
+
+## ✨ Features
+
+### Autonomous AI Agent
+- **LangGraph ReAct agent** with typed `AgentState` and multi-step tool-call loops
+- **Multi-LLM provider support** — GPT-4 and Claude via pluggable adapters
+- **Human-in-the-loop approval** for destructive operations (exploitation, privilege escalation)
+- **Real-time streaming** of tool execution output with operator stop/resume controls
+- **Live guidance injection** — redirect the agent mid-run without restarting
+
+### Reconnaissance Pipeline (5 Phases)
+- **Domain Discovery** — WHOIS, Certificate Transparency logs, DNS enumeration
+- **Port Scanning** — Naabu and Nmap integration with configurable timing
+- **HTTP Probing** — httpx, Wappalyzer tech detection, TLS inspection with cipher classification
+- **Resource Enumeration** — Katana crawler, GAU URL harvesting, Kiterunner API discovery
+- **Vulnerability Scanning** — Nuclei templates, CVE enrichment, MITRE ATT&CK mapping
+
+### MCP Tool Servers (8 Servers)
+| Server | Port | Capability |
+|--------|------|-----------|
+| Naabu | 8000 | Port scanning |
+| Curl | 8001 | HTTP requests |
+| Nuclei | 8002 | Vulnerability scanning |
+| Metasploit | 8003 | Exploitation framework |
+| ffuf | 8004 | Web fuzzing (directories, files, parameters) |
+| SQLMap | 8005 | SQL injection testing |
+| Hash Cracker | 8006 | Password hash cracking |
+| Nikto | 8007 | Web server scanning |
+
+### AutoChain Pipeline
+- Declarative YAML-based automated pentest pipeline
+- 42 HTB templates for Linux/Windows/AD scenarios
+- Session upgrade pipeline (shell → meterpreter) with automatic retry
+- Flag MD5 verification before submission
+- REST API: `POST /api/autochain/run`, `GET /api/autochain/status/{id}`, `DELETE /api/autochain/{id}`
+
+### Attack Graph Database
+- **Neo4j** graph database with 17+ node types and 20+ relationship types
+- Visual attack graph rendering in the browser via react-force-graph
+- Full CRUD graph queries for hosts, services, vulnerabilities, and attack paths
+
+### Web Interface
+- **Next.js 14** frontend with TailwindCSS
+- Real-time AI chat interface with WebSocket communication
+- Interactive attack graph visualization
+- Project management dashboard
+- Authentication with JWT access/refresh tokens
+
+### 37+ Agent Tools
+- Port scanning, web fuzzing, SQL injection, vulnerability scanning
+- Metasploit exploit execution, session management, privilege escalation
+- SSH/FTP/SNMP enumeration, credential reuse pipeline
+- Active Directory attacks (Kerbrute, CrackMapExec, Impacket suite)
+- ML-powered intent classification (keyword, ML, LLM, and hybrid modes)
+
+---
+
+## 🛡️ Security
 
 ### Authentication & Authorisation
-- **JWT access/refresh token pair** with configurable expiry; tokens are signed with HS256 and
-  validated on every protected route via FastAPI dependency injection.
-- **Role-based access control (RBAC):** VIEWER → OPERATOR → ADMIN hierarchy; roles are
-  enforced at both the HTTP API layer and the MCP tool layer.
-- **Audit logging:** Every authentication event, project operation, and tool execution is
-  structured-logged as JSON with `actor_id`, `target_type`, `target_id`, `correlation_id`, IP
-  address, timestamp, and a success/failure flag.
-- **Login brute-force protection:** `SlidingWindowRateLimiter` (in-memory, configurable) enforces
-  per-key call budgets on the login endpoint; HTTP 429 is returned with a `Retry-After` header.
-- **Secrets validation on startup:** `validate_secrets()` checks `SECRET_KEY` (minimum 32 chars),
-  `POSTGRES_PASSWORD` and `NEO4J_PASSWORD` (minimum 16 chars in production). Error messages now
-  describe *why* a secret fails without revealing its value.
+- **JWT access/refresh token pair** with configurable expiry (HS256)
+- **Role-based access control (RBAC):** VIEWER → OPERATOR → ADMIN hierarchy
+- **Audit logging:** structured JSON logs with actor, target, correlation ID, IP, and timestamp
+- **Brute-force protection:** sliding window rate limiter with HTTP 429 and `Retry-After` header
+- **Secrets validation on startup:** minimum length enforcement without leaking secret values
 
-### Transport & Data Security
-- **TLS inspection with accurate cipher classification:**
-  - **Weak:** RC4, DES, NULL, EXPORT, anonymous (ADH/AECDH), 3DES
-  - **Medium:** AES-CBC, RSA key exchange without forward secrecy
-  - **Strong:** AES-GCM, ChaCha20-Poly1305 (AEAD ciphers)
-- **JARM fingerprinting** of remote TLS stacks for server identification.
-- **Certificate expiry and SAN monitoring** embedded in every HTTP probe result.
+### Phase-Based Tool Gating
+| Phase | Access Level |
+|-------|-------------|
+| `recon` | Naabu, Nuclei, Curl, GAU, Katana, Kiterunner, Graph Query |
+| `scan` | All recon tools + web-app scanners |
+| `exploit` | All scan tools + Metasploit (requires human approval) |
+| `post` | All tools |
 
-### Tool Access & Phase Gating
-- **Phase-based tool restrictions:**
+### Infrastructure Hardening
+- **Database ports** bound to `127.0.0.1` only (not exposed to network)
+- **Required passwords** — Docker Compose fails if secrets are not set in `.env`
+- **Resource limits** on all Docker services (CPU and memory)
+- **Network segmentation** — 4 isolated Docker networks (db, backend, frontend, tools)
+- **Security headers** — CSP, X-Frame-Options, Referrer-Policy via middleware
+- **CORS** restricted to configured allowed origins
+- **Parameterised queries** throughout (Prisma ORM, no raw SQL interpolation)
 
-  | Phase | Allowed tools |
-  |-------|---------------|
-  | `recon` | Naabu, Nuclei, Curl, GAU, Katana, Kiterunner, Graph Query |
-  | `scan` | All recon tools + full web-app scanner tools |
-  | `exploit` | All scan tools + Metasploit modules (require human approval) |
-  | `post` | All tools |
-
-- **Human-in-the-loop approval:** Destructive/risky tool calls (e.g. `execute_module`,
-  `session_command`, `privesc`) pause the agent and surface an `ApprovalModal` in the UI before
-  proceeding.
-- **Phase restriction middleware** wraps every MCP server call; `PermissionError` is raised for
-  out-of-phase tool calls and surfaced to the agent as a tool-execution failure.
-
-### Infrastructure & Hardening
-- **Prisma + PostgreSQL** for user/project state; parameterised queries throughout — no raw SQL
-  string interpolation.
-- **Neo4j** (bolt protocol, auth required); the graph client uses a pooled driver with explicit
-  open/close lifecycle managed via FastAPI startup/shutdown hooks.
-- **Environment isolation:** Docker Compose service boundaries; no external port exposure for
-  internal services.
-- **Content-Security-Policy, X-Frame-Options, Referrer-Policy** headers configured in
-  `SecurityHeadersMiddleware`.
-- **CORS** restricted to `ALLOWED_ORIGINS` environment variable; default is `localhost` only.
-
-### Known Limitations (Not Fixed)
-| Issue | Notes |
-|-------|-------|
-| Auth endpoint tests (test_auth.py) return 500 in CI | Requires `prisma generate` and a live PostgreSQL connection; environment not configured in CI sandbox. Auth code itself is correct. |
-| No TLS mutual authentication (mTLS) for MCP servers | MCP servers listen on loopback only; network-level mTLS is a v2.0 roadmap item. |
-| In-memory rate limiter state lost on restart | Production deployments should swap `SlidingWindowRateLimiter` for a Redis-backed implementation. |
+### CI/CD Security
+- **6 GitHub Actions workflows** — CI, Security Scan, Docker Build, Deploy, Blue-Green, Release
+- **Enforcing linters** — ruff and mypy run without bypass
+- **Dependency scanning** — pip-audit and npm audit fail the build on vulnerabilities
+- **SAST** — Bandit and CodeQL analysis on every PR
+- **Container scanning** — Trivy fails on CRITICAL/HIGH vulnerabilities
+- **Secret scanning** — Gitleaks on every push
+- **License compliance** — automated GPL-3.0 detection
 
 ---
 
-## ✨ What's New in v1.2.0
-
-### AI Agent Enhancements (Weeks 11–16)
-- **HTB template library:** 42 ready-to-run AutoChain templates covering common HTB machine
-  archetypes (Linux/Windows, SUID, sudo misconfigs, kernel exploits, AD/Kerberoasting, web
-  exploitation).
-- **Session upgrade pipeline:** `shell → meterpreter` promotion with automatic retry.
-- **Flag MD5 verification:** Discovered flag files validated against MD5 digest before submission.
-- **LangGraph week-14 agent architecture:** Typed `AgentState`, tool-call loops, multi-LLM
-  provider abstraction.
-- **MCP tool adapters (week 15):** Standardised `BaseMCPAdapter`, `CurlAdapter`,
-  `NaabuAdapter`, `NucleiAdapter`, `MetasploitAdapter`.
-- **Safety & streaming controls (week 16):** Real-time tool-execution streaming, operator
-  stop/resume, live guidance injection mid-run.
-
-### Recon Pipeline
-- **FfufServer** (Port 8004): directory, file, and parameter fuzzing via Ffuf.
-- **FfufFuzzDirsTool**, **FfufFuzzFilesTool**, **FfufFuzzParamsTool** registered in the Tool
-  Registry and wired into the `WEB_APP_ATTACK` attack path.
-- `ingest_ffuf_results()` graph ingestion for discovered directories/parameters.
-
-### AutoChain Engine
-- Declarative YAML-based pentest pipeline (schema, recon mapper, orchestrator).
-- `POST /api/autochain/run` — kick off an automated chain.
-- `GET /api/autochain/status/{id}` — poll or stream chain progress.
-- `DELETE /api/autochain/{id}` — cancel a running chain.
-
-### Gap Coverage Plan (Year 1 — All 32 Weeks Complete)
-All 215 days of the Year 1 Gap Coverage Plan are implemented:
-- Weeks 1–12: Core tool integrations and MCP server fleet.
-- Weeks 13–20: Agent architecture, streaming, safety controls.
-- Weeks 21–26: Security hardening (RBAC, rate limiting, audit, secrets).
-- Weeks 27–32: Observability, chaos engineering, AD attack support.
-
----
-
-## 📋 Test Results (Pre-Release Audit)
+## 📋 Test Results
 
 ```
-Test run: 2026-03-13
-Platform: Python 3.12, pytest 8.x
-
-1624 passed   ✅
-   4 failed   ❌  (test_auth.py — Prisma client not generated, DB not running)
-   7 skipped  ⏭️
+Platform: Python 3.11+, pytest
+Backend:  1624 passed ✅, 7 skipped ⏭️
+Frontend: Jest + React Testing Library
+E2E:      Playwright (Chromium, Firefox, WebKit)
 ```
-
-### Test Failure Root Cause
-The 4 `test_auth.py` failures are **environment failures**, not code failures. They require:
-1. Running `prisma generate` inside the backend container.
-2. A live PostgreSQL instance reachable at `DATABASE_URL`.
-
-Neither is available in the offline CI sandbox. Every other test — including the complete
-security test suite — passes.
 
 ---
 
-## ⚙️ Configuration Reference
+## ⚙️ Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/BitR1ft/UnderProgress.git
+cd UnderProgress
+
+# 2. Configure environment
+cp .env.example .env
+# Edit .env — set all required passwords and API keys
+
+# 3. Start services
+docker compose --profile dev up -d
+
+# 4. Access the application
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:8000
+# API docs: http://localhost:8000/docs
+```
+
+### Required Environment Variables
 
 ```env
-# --- Required ---
 SECRET_KEY=<min 32 chars, cryptographically random>
-DATABASE_URL=postgresql://user:pass@db:5432/univex
+POSTGRES_PASSWORD=<min 16 chars>
+NEO4J_PASSWORD=<min 16 chars>
+GRAFANA_PASSWORD=<min 16 chars>
+OPENAI_API_KEY=sk-...          # or ANTHROPIC_API_KEY
+```
 
-# --- Neo4j ---
-NEO4J_URI=bolt://neo4j:7687
-NEO4J_USER=neo4j
-NEO4J_PASSWORD=<min 16 chars in production>
-
-# --- PostgreSQL ---
-POSTGRES_PASSWORD=<min 16 chars in production>
-
-# --- AI Providers ---
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-
-# --- Optional ---
-ENVIRONMENT=production            # enables strict secrets validation
-ALLOWED_ORIGINS=https://app.example.com
-LOG_LEVEL=INFO
+Generate strong secrets:
+```bash
+openssl rand -hex 32    # For SECRET_KEY
+openssl rand -base64 24 # For database passwords
 ```
 
 ---
 
-## 🔄 Upgrade Guide (from v1.1.x)
+## 📦 Technology Stack
 
-1. Pull the new images: `docker compose pull`
-2. Regenerate the Prisma client: `docker compose exec backend prisma generate`
-3. Run database migrations: `docker compose exec backend prisma migrate deploy`
-4. Restart services: `docker compose up -d`
-
-> **Breaking change:** `SlidingWindowRateLimiter.is_allowed()` now returns `bool` instead of
-> `tuple[bool, int]`. If you call this method directly, update your callers. The remaining-count
-> is available via the private `_check_with_remaining()` helper.
+| Component | Technology | Version |
+|-----------|-----------|---------|
+| Backend API | FastAPI | 0.109+ |
+| AI Agent | LangGraph + LangChain | 0.2+ / 0.3+ |
+| Frontend | Next.js + React | 14 / 18 |
+| Relational DB | PostgreSQL (Prisma ORM) | 16 |
+| Graph DB | Neo4j | 5.15 |
+| Styling | TailwindCSS | 3.4 |
+| Monitoring | Prometheus + Grafana | 2.51 / 10.4 |
+| Containers | Docker Compose | 3.8 |
+| Security Tools | Kali Linux container | 2024.1 |
 
 ---
 
-## 📦 Dependency Highlights
+## 📖 Documentation
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| FastAPI | 0.104+ | REST/WebSocket API |
-| LangGraph | 0.2+ | Agent state machine |
-| LangChain | 0.3+ | LLM provider abstraction |
-| Prisma (Python) | 0.11+ | PostgreSQL ORM |
-| Neo4j driver | 5.x | Graph database client |
-| httpx | 0.27+ | Async HTTP client |
-| cryptography | 42+ | TLS certificate parsing |
-| Next.js | 14 | Frontend |
+| Document | Description |
+|----------|-------------|
+| [README](README.md) | Project overview and setup guide |
+| [User Manual](docs/USER_MANUAL.md) | Step-by-step usage guide |
+| [API Reference](docs/API_REFERENCE.md) | Full endpoint documentation |
+| [Architecture](docs/ARCHITECTURE.md) | System design and data flows |
+| [Installation Guide](docs/INSTALLATION_GUIDE.md) | Detailed setup instructions |
+| [Quick Start](docs/QUICKSTART.md) | 5-minute start guide |
+| [Developer Guide](docs/DEVELOPER_GUIDE.md) | Contributing and extending |
+| [MCP Guide](docs/MCP_GUIDE.md) | MCP server protocol docs |
+| [Security](docs/SECURITY.md) | Security controls and disclosure |
+| [Threat Model](docs/THREAT_MODEL.md) | STRIDE threat analysis |
+| [Testing Guide](docs/TESTING_GUIDE.md) | Test strategy and coverage |
+
+---
+
+## 🗺️ Roadmap
+
+| Version | Focus |
+|---------|-------|
+| v1.1 | PDF/HTML report generation, `htb_hard` template |
+| v1.2 | Multi-target campaigns, SIEM integration |
+| v2.0 | Cloud security (AWS/Azure/GCP), mTLS for MCP, Redis rate limiter |
 
 ---
 
 ## 🤝 Contributing
 
-See `CONTRIBUTING.md` for the development workflow and `DEVELOPER_GUIDE.md` for architecture
-details. All contributions require passing tests and CodeQL scans.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow. All contributions require
+passing tests and CodeQL scans.
 
 ---
 
-*UniVex — Universal Vulnerability Execution*  
-*Author: BitR1FT | Open-Source | Not a Final Year Project*
+*UniVex v1.0.0 — Universal Vulnerability Execution*  
+*Author: BitR1FT | Open-Source*

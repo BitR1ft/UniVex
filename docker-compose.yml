@@ -1,8 +1,8 @@
 version: '3.8'
 
 # ==============================================================================
-# UniVex - Month 2 Docker Compose Configuration
-# UniVex — Professional Open-Source Security Platform with Network Segmentation & Service Isolation
+# UniVex — Docker Compose Configuration
+# Professional Open-Source Security Platform with Network Segmentation & Service Isolation
 # ==============================================================================
 
 services:

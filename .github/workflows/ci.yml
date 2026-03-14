@@ -1,5 +1,5 @@
 # =============================================================================
-# Day 181-183: CI Pipeline — Backend, Frontend & Integration Tests
+# CI Pipeline — Backend, Frontend & Integration Tests
 #
 # Triggers on every push and pull request to main/develop branches.
 # =============================================================================
