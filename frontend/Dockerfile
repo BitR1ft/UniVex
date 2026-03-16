@@ -47,8 +47,11 @@ RUN addgroup --system --gid 1001 nodejs && \
 
 # Copy built application
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/package.json /app/package-lock.json* ./
+
+# Install production dependencies only
+RUN npm ci --only=production --ignore-scripts
 
 # Set ownership
 RUN chown -R nextjs:nodejs /app
@@ -72,4 +75,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Start the application
-CMD ["node", "server.js"]
+CMD ["npm", "run", "start"]
