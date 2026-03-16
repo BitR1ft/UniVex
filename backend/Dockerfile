@@ -92,7 +92,8 @@ RUN mkdir -p /var/log/univex /cache
 # ==============================================================================
 # Create non-root user for running the application
 RUN useradd -m -u 1000 univex && \
-    chown -R univex:univex /app /var/log/univex /cache
+    chown -R univex:univex /app /var/log/univex /cache && \
+    chmod +x /app/entrypoint.sh
 
 # ==============================================================================
 # EXPOSE PORTS
@@ -111,5 +112,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 # Switch to non-root user
 USER univex
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*"]
+# Run migrations then start the application
+CMD ["/app/entrypoint.sh"]
