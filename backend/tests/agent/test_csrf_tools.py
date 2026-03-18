@@ -353,13 +353,14 @@ class TestCsrfExploitTool:
 
     @pytest.mark.asyncio
     async def test_xss_safe_field_values(self):
+        import html as html_mod
         tool = CSRFExploitTool()
         result = await tool.execute(
             endpoint="http://example.com/",
             fields={"comment": '<script>alert(1)</script>'},
         )
-        # Value should be HTML-escaped
-        assert 'value="<script>' not in result
+        # Value should be HTML-escaped in the output
+        assert html_mod.escape('<script>alert(1)</script>', quote=True) in result
 
 
 # ===========================================================================

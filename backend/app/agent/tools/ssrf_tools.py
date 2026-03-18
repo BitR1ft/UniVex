@@ -279,9 +279,7 @@ class SSRFProbeTool(BaseTool):
         include_bypasses: bool = True,
         **kwargs: Any,
     ) -> str:
-        protocols = [p for p in (protocols or ["http"]) if p in _PROTOCOL_PAYLOADS]
-        if not protocols:
-            protocols = ["http"]
+        protocols = [p for p in (protocols or ["http"]) if p in _PROTOCOL_PAYLOADS] or ["http"]
 
         # Build payload list
         payloads: List[str] = []

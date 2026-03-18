@@ -347,6 +347,8 @@ class CSRFDetectTool(BaseTool):
         token_reuse: bool,
     ) -> str:
         risk = analysis["risk"]
+        token = analysis.get("token_value") or "N/A"
+        token_display = token[:32] + ("..." if len(token) > 32 else "")
         lines = [
             f"[csrf_detect] CSRF Analysis: {url}",
             f"  Action endpoint:  {action_url} [{method}]",
@@ -354,7 +356,7 @@ class CSRFDetectTool(BaseTool):
             "── Token Analysis ────────────────────────",
             f"  CSRF token found: {'YES' if analysis['found'] else 'NO ⚠'}",
             f"  Token field:      {analysis.get('token_field') or 'N/A'}",
-            f"  Token value:      {(analysis.get('token_value') or 'N/A')[:32]}{'...' if (analysis.get('token_value') or '') and len(analysis.get('token_value',''))>32 else ''}",
+            f"  Token value:      {token_display}",
             f"  Token reuse:      {'YES — static token detected ⚠' if token_reuse else 'Not detected'}",
             "",
             "── Cookie Analysis ───────────────────────",

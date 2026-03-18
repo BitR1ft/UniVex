@@ -385,9 +385,9 @@ class XSSServer(MCPServer):
             rc, stdout, _ = await _run_cmd(read_cmd, timeout=15)
 
             if rc == 0 and payload in stdout:
-                # Check it's not HTML-encoded
                 import html as html_mod
-                if html_mod.escape(payload) not in stdout or payload in stdout:
+                # Only flag as vulnerable when the payload is reflected unencoded
+                if html_mod.escape(payload) not in stdout:
                     findings.append({
                         "field": field_name,
                         "payload": payload,
@@ -451,7 +451,15 @@ async def main():
         for payload in payloads:
             page = await browser.new_page()
             alerts = []
-            page.on('dialog', lambda d: (alerts.append(d.message), asyncio.ensure_future(d.dismiss())))
+
+            async def handle_dialog(dialog):
+                alerts.append(dialog.message)
+                try:
+                    await dialog.dismiss()
+                except Exception:
+                    pass
+
+            page.on('dialog', handle_dialog)
             try:
                 await page.goto('{safe_url}#' + payload, timeout=8000)
                 await page.wait_for_timeout(2000)
@@ -465,7 +473,6 @@ async def main():
 
 asyncio.run(main())
 """
-
 
 if __name__ == "__main__":
     server = XSSServer()
