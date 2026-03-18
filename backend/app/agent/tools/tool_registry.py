@@ -208,6 +208,16 @@ def create_default_registry() -> ToolRegistry:
         PassTheHashTool,
         LDAPEnumTool,
         CrackMapExecTool,
+        # PLAN.md Day 1 — XSS tools
+        ReflectedXSSTool,
+        StoredXSSTool,
+        DOMXSSTool,
+        # PLAN.md Day 2 — CSRF / SSRF / Open Redirect tools
+        CSRFDetectTool,
+        CSRFExploitTool,
+        SSRFProbeTool,
+        SSRFBlindTool,
+        OpenRedirectTool,
     )
     
     registry = ToolRegistry()
@@ -410,6 +420,42 @@ def create_default_registry() -> ToolRegistry:
     registry.register_tool(
         CrackMapExecTool(),
         allowed_phases=[Phase.EXPLOITATION, Phase.POST_EXPLOITATION]
+    )
+
+    # PLAN.md Day 1 — XSS Detection & Exploitation Engine
+    registry.register_tool(
+        ReflectedXSSTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        StoredXSSTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        DOMXSSTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+
+    # PLAN.md Day 2 — CSRF, SSRF & Request Forgery Toolkit
+    registry.register_tool(
+        CSRFDetectTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        CSRFExploitTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        SSRFProbeTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        SSRFBlindTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        OpenRedirectTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
     )
 
     logger.info(f"Created default tool registry with {len(registry.list_all_tools())} tools")
