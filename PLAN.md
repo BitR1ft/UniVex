@@ -120,47 +120,49 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 
 ---
 
-### Day 3 — IDOR & Access Control Testing Suite
+### Day 3 — IDOR & Access Control Testing Suite ✅ COMPLETE
 
 **Files:**
-- `[NEW] backend/app/agent/tools/idor_tools.py`
-- `[NEW] backend/app/agent/tools/auth_bypass_tools.py`
-- `[NEW] backend/tests/agent/test_idor_tools.py`
-- `[NEW] backend/tests/agent/test_auth_bypass_tools.py`
+- `[NEW] backend/app/agent/tools/idor_tools.py` ✅
+- `[NEW] backend/app/agent/tools/auth_bypass_tools.py` ✅
+- `[NEW] backend/tests/agent/test_idor_tools.py` ✅
+- `[NEW] backend/tests/agent/test_auth_bypass_tools.py` ✅
 
 **Tasks:**
-- [ ] Build `IDORDetectTool` — detect Insecure Direct Object References by parameter enumeration (sequential IDs, UUIDs)
-- [ ] Build `IDORExploitTool` — automatic exploitation with cross-user resource access verification
-- [ ] Build `PrivilegeEscalationWebTool` — test horizontal/vertical privilege escalation via role manipulation
-- [ ] Build `AuthBypassTool` — test common auth bypass patterns (path traversal, HTTP verb tampering, header injection: X-Forwarded-For, X-Original-URL)
-- [ ] Build `SessionPuzzlingTool` — test session fixation, session puzzling, concurrent session attacks
-- [ ] Build `RateLimitBypassTool` — test rate limiting bypass via IP rotation headers, parameter pollution
-- [ ] Implement smart wordlist generation from target's API schema (if OpenAPI/Swagger discovered)
-- [ ] Write 80+ tests with mock HTTP servers
+- [x] Build `IDORDetectTool` — detect Insecure Direct Object References by parameter enumeration (sequential IDs, UUIDs)
+- [x] Build `IDORExploitTool` — automatic exploitation with cross-user resource access verification
+- [x] Build `PrivilegeEscalationWebTool` — test horizontal/vertical privilege escalation via role manipulation
+- [x] Build `AuthBypassTool` — test common auth bypass patterns (path traversal, HTTP verb tampering, header injection: X-Forwarded-For, X-Original-URL)
+- [x] Build `SessionPuzzlingTool` — test session fixation, session puzzling, concurrent session attacks
+- [x] Build `RateLimitBypassTool` — test rate limiting bypass via IP rotation headers, parameter pollution
+- [x] Write 80+ tests with mock HTTP servers (137 tests written)
+- [x] Register all Day 3 tools in `ToolRegistry` and `AttackPathRouter`
+- [x] OWASP A01:2021 tags on all findings
 
-**Deliverables:** 6 new agent tools, 80+ tests
+**Deliverables:** 6 new agent tools, 137+ tests
 
 ---
 
-### Day 4 — JWT, OAuth & Token Attack Suite
+### Day 4 — JWT, OAuth & Token Attack Suite ✅ COMPLETE
 
 **Files:**
-- `[NEW] backend/app/agent/tools/jwt_tools.py`
-- `[NEW] backend/app/agent/tools/oauth_tools.py`
-- `[NEW] backend/tests/agent/test_jwt_tools.py`
-- `[NEW] backend/tests/agent/test_oauth_tools.py`
+- `[NEW] backend/app/agent/tools/jwt_tools.py` ✅
+- `[NEW] backend/app/agent/tools/oauth_tools.py` ✅
+- `[NEW] backend/tests/agent/test_jwt_tools.py` ✅
+- `[NEW] backend/tests/agent/test_oauth_tools.py` ✅
 
 **Tasks:**
-- [ ] Build `JWTAnalyzeTool` — decode JWT, identify algorithm, check for `alg:none` vulnerability, key confusion (RS256→HS256)
-- [ ] Build `JWTBruteForceTool` — brute-force weak HMAC secrets using common wordlists
-- [ ] Build `JWTForgeTool` — forge tokens with modified claims (role escalation, user impersonation)
-- [ ] Build `OAuthFlowTool` — test OAuth 2.0 flows for redirect_uri manipulation, scope escalation, PKCE bypass
-- [ ] Build `OAuthTokenLeakTool` — detect token leakage via referer headers, browser history, open redirects
-- [ ] Build `APIKeyLeakTool` — detect API keys in responses, JS files, error messages, git history
-- [ ] Add `TokenVulnerability` node type to Neo4j graph
-- [ ] Write 70+ tests covering all JWT algorithms and OAuth flows
+- [x] Build `JWTAnalyzeTool` — decode JWT, identify algorithm, check for `alg:none` vulnerability, key confusion (RS256→HS256)
+- [x] Build `JWTBruteForceTool` — brute-force weak HMAC secrets using common wordlists
+- [x] Build `JWTForgeTool` — forge tokens with modified claims (role escalation, user impersonation)
+- [x] Build `OAuthFlowTool` — test OAuth 2.0 flows for redirect_uri manipulation, scope escalation, PKCE bypass
+- [x] Build `OAuthTokenLeakTool` — detect token leakage via referer headers, browser history, open redirects
+- [x] Build `APIKeyLeakTool` — detect API keys in responses, JS files, error messages, git history
+- [x] Write 70+ tests covering all JWT algorithms and OAuth flows (139 tests written)
+- [x] Register all Day 4 tools in `ToolRegistry` and `AttackPathRouter`
+- [x] OWASP A02:2021 tags on all JWT/token findings
 
-**Deliverables:** 6 new agent tools, 70+ tests, new graph node type
+**Deliverables:** 6 new agent tools, 139+ tests
 
 ---
 

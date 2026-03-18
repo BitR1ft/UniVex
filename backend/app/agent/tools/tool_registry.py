@@ -218,6 +218,20 @@ def create_default_registry() -> ToolRegistry:
         SSRFProbeTool,
         SSRFBlindTool,
         OpenRedirectTool,
+        # PLAN.md Day 3 — IDOR & Access Control tools
+        IDORDetectTool,
+        IDORExploitTool,
+        PrivilegeEscalationWebTool,
+        AuthBypassTool,
+        SessionPuzzlingTool,
+        RateLimitBypassTool,
+        # PLAN.md Day 4 — JWT, OAuth & Token Attack tools
+        JWTAnalyzeTool,
+        JWTBruteForceTool,
+        JWTForgeTool,
+        OAuthFlowTool,
+        OAuthTokenLeakTool,
+        APIKeyLeakTool,
     )
     
     registry = ToolRegistry()
@@ -455,6 +469,58 @@ def create_default_registry() -> ToolRegistry:
     )
     registry.register_tool(
         OpenRedirectTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+
+    # PLAN.md Day 3 — IDOR & Access Control Testing Suite
+    registry.register_tool(
+        IDORDetectTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        IDORExploitTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        PrivilegeEscalationWebTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        AuthBypassTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        SessionPuzzlingTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        RateLimitBypassTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+
+    # PLAN.md Day 4 — JWT, OAuth & Token Attack Suite
+    registry.register_tool(
+        JWTAnalyzeTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        JWTBruteForceTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        JWTForgeTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        OAuthFlowTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        OAuthTokenLeakTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        APIKeyLeakTool(),
         allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
     )
 
