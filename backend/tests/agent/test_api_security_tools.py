@@ -332,12 +332,9 @@ class TestCheckCorsHeaders:
     def test_non_matching_origin_not_flagged_as_reflected(self):
         headers = {"access-control-allow-origin": "https://trusted.com"}
         result = _check_cors_headers(headers, "https://evil.com")
-        # trusted.com != evil.com, not a reflected arbitrary origin
-        reflected_findings = [
-            f for f in result["findings"]
-            if "reflected" in f.lower() and f.endswith("https://evil.com") or "https://evil.com)" in f
-        ]
-        assert len(reflected_findings) == 0
+        # trusted.com != evil.com → no reflected origin finding for evil.com
+        # A non-matching origin should not produce reflected-origin findings
+        assert result["vulnerable"] is False
 
     def test_patch_in_methods_flagged(self):
         headers = {
@@ -989,7 +986,7 @@ class TestCORSMisconfigTool:
         result = _run(tool.execute(url="http://target/api", extra_origins=["https://custom.evil.com"]))
         data = json.loads(result)
         origins_list: list = data["origins_to_test"]
-        assert "https://custom.evil.com" in origins_list
+        assert origins_list.count("https://custom.evil.com") == 1
 
     def test_no_duplicate_origins(self):
         tool = CORSMisconfigTool()
