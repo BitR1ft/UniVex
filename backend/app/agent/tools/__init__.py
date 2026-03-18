@@ -96,6 +96,14 @@ from .xss_tools import ReflectedXSSTool, StoredXSSTool, DOMXSSTool
 from .csrf_tools import CSRFDetectTool, CSRFExploitTool
 from .ssrf_tools import SSRFProbeTool, SSRFBlindTool, OpenRedirectTool
 
+# PLAN.md Day 3 — IDOR & Access Control Testing Suite
+from .idor_tools import IDORDetectTool, IDORExploitTool, PrivilegeEscalationWebTool
+from .auth_bypass_tools import AuthBypassTool, SessionPuzzlingTool, RateLimitBypassTool
+
+# PLAN.md Day 4 — JWT, OAuth & Token Attack Suite
+from .jwt_tools import JWTAnalyzeTool, JWTBruteForceTool, JWTForgeTool
+from .oauth_tools import OAuthFlowTool, OAuthTokenLeakTool, APIKeyLeakTool
+
 __all__ = [
     # Base
     "BaseTool",
@@ -185,4 +193,18 @@ __all__ = [
     "SSRFProbeTool",
     "SSRFBlindTool",
     "OpenRedirectTool",
+    # PLAN.md Day 3 — IDOR & Access Control tools
+    "IDORDetectTool",
+    "IDORExploitTool",
+    "PrivilegeEscalationWebTool",
+    "AuthBypassTool",
+    "SessionPuzzlingTool",
+    "RateLimitBypassTool",
+    # PLAN.md Day 4 — JWT, OAuth & Token Attack tools
+    "JWTAnalyzeTool",
+    "JWTBruteForceTool",
+    "JWTForgeTool",
+    "OAuthFlowTool",
+    "OAuthTokenLeakTool",
+    "APIKeyLeakTool",
 ]

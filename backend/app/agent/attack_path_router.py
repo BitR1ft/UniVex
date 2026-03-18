@@ -85,6 +85,16 @@ class AttackPathRouter:
             "webapp", "csrf", "ssrf", "injection", "web application",
             "directory", "fuzz", "ffuf", "gobuster", "dirb", "dirbuster",
             "hidden", "path", "endpoint discovery",
+            # Day 3 — IDOR & Access Control
+            "idor", "insecure direct object", "access control", "broken access",
+            "auth bypass", "authentication bypass", "session fixation",
+            "session puzzling", "rate limit bypass", "privilege escalation web",
+            "horizontal escalation", "vertical escalation", "role manipulation",
+            # Day 4 — JWT / OAuth / Token
+            "jwt", "json web token", "oauth", "oauth2", "token",
+            "api key", "apikey", "secret leak", "token leak",
+            "bearer token", "hmac", "rs256", "hs256", "alg none",
+            "redirect uri", "scope escalation", "pkce",
         ],
         AttackCategory.PRIVILEGE_ESCALATION: [
             "privilege escalation", "privesc", "priv esc", "root",
@@ -137,6 +147,16 @@ class AttackPathRouter:
             "sqlmap_detect", "sqlmap_databases", "sqlmap_dump",
             "nikto_scan", "wpscan", "curl",
             "ffuf_fuzz_dirs", "ffuf_fuzz_files", "ffuf_fuzz_params",
+            # Day 1 XSS tools
+            "reflected_xss", "stored_xss", "dom_xss",
+            # Day 2 CSRF/SSRF tools
+            "csrf_detect", "csrf_exploit", "ssrf_probe", "ssrf_blind", "open_redirect",
+            # Day 3 IDOR & Access Control tools
+            "idor_detect", "idor_exploit", "privilege_escalation_web",
+            "auth_bypass", "session_puzzling", "rate_limit_bypass",
+            # Day 4 JWT/OAuth tools
+            "jwt_analyze", "jwt_brute_force", "jwt_forge",
+            "oauth_flow", "oauth_token_leak", "api_key_leak",
         ],
         AttackCategory.PRIVILEGE_ESCALATION: [
             # primary tool names expected by tests
