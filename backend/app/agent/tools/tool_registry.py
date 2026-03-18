@@ -232,6 +232,23 @@ def create_default_registry() -> ToolRegistry:
         OAuthFlowTool,
         OAuthTokenLeakTool,
         APIKeyLeakTool,
+        # PLAN.md Day 5 — API Security Testing (REST, GraphQL, gRPC)
+        OpenAPIParserTool,
+        APIFuzzTool,
+        MassAssignmentTool,
+        GraphQLIntrospectionTool,
+        GraphQLInjectionTool,
+        GraphQLIDORTool,
+        APIRateLimitTool,
+        CORSMisconfigTool,
+        # PLAN.md Day 6 — Advanced Web Injection (NoSQL, SSTI, LDAP, XXE, Command Injection)
+        NoSQLInjectionTool,
+        SSTIDetectTool,
+        SSTIExploitTool,
+        LDAPInjectionTool,
+        XXETool,
+        CommandInjectionTool,
+        HeaderInjectionTool,
     )
     
     registry = ToolRegistry()
@@ -521,6 +538,70 @@ def create_default_registry() -> ToolRegistry:
     )
     registry.register_tool(
         APIKeyLeakTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+
+    # PLAN.md Day 5 — API Security Testing (REST, GraphQL, gRPC)
+    registry.register_tool(
+        OpenAPIParserTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        APIFuzzTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        MassAssignmentTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        GraphQLIntrospectionTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        GraphQLInjectionTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        GraphQLIDORTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        APIRateLimitTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        CORSMisconfigTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+
+    # PLAN.md Day 6 — Advanced Web Injection (NoSQL, SSTI, LDAP, XXE, Command Injection)
+    registry.register_tool(
+        NoSQLInjectionTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        SSTIDetectTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        SSTIExploitTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        LDAPInjectionTool(),
+        allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        XXETool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        CommandInjectionTool(),
+        allowed_phases=[Phase.EXPLOITATION]
+    )
+    registry.register_tool(
+        HeaderInjectionTool(),
         allowed_phases=[Phase.INFORMATIONAL, Phase.EXPLOITATION]
     )
 
