@@ -789,7 +789,10 @@ class InjectionServer(MCPServer):
         except ValueError as exc:
             return {"success": False, "error": str(exc), "findings": []}
 
-        payload = _build_ssti_payload(engine, command)
+        try:
+            payload = _build_ssti_payload(engine, command)
+        except ValueError as exc:
+            return {"success": False, "error": str(exc), "findings": []}
         if payload is None:
             if engine in _SSTI_PAYLOADS:
                 # Engine is known but has no exploitable RCE gadget (e.g. Pebble)
@@ -1289,8 +1292,8 @@ def _build_ssti_payload(engine: str, command: str) -> Optional[str]:
     """Return an RCE payload string for *engine* executing *command*.
 
     Returns ``None`` when the engine is unsupported or has no known RCE
-    gadget (e.g. Pebble).  The *command* string is embedded verbatim —
-    callers must supply only safe test commands.
+    gadget (e.g. Pebble).  The *command* string is validated against a
+    safe character allowlist before embedding to prevent payload breakout.
 
     For Jinja2, multiple Popen subclass indices are tried by generating
     candidate payloads for indices 200–400; the caller sends each one and
@@ -1305,6 +1308,15 @@ def _build_ssti_payload(engine: str, command: str) -> Optional[str]:
     if template is None:
         # Engine known but no exploitable gadget available
         return None
+
+    # Validate the command string: only allow safe shell characters to
+    # prevent the command argument from breaking out of the payload template.
+    if not re.match(r"^[\w\s\-./]+$", command):
+        raise ValueError(
+            f"Command {command!r} contains characters not permitted in SSTI payloads. "
+            "Use only alphanumeric characters, spaces, hyphens, dots, slashes, "
+            "and underscores."
+        )
 
     try:
         return template.replace("{cmd}", command).replace("{idx}", "258")
