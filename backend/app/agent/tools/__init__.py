@@ -104,6 +104,29 @@ from .auth_bypass_tools import AuthBypassTool, SessionPuzzlingTool, RateLimitByp
 from .jwt_tools import JWTAnalyzeTool, JWTBruteForceTool, JWTForgeTool
 from .oauth_tools import OAuthFlowTool, OAuthTokenLeakTool, APIKeyLeakTool
 
+# PLAN.md Day 5 — API Security Testing (REST, GraphQL, gRPC)
+from .api_security_tools import (
+    OpenAPIParserTool,
+    APIFuzzTool,
+    MassAssignmentTool,
+    GraphQLIntrospectionTool,
+    GraphQLInjectionTool,
+    GraphQLIDORTool,
+    APIRateLimitTool,
+    CORSMisconfigTool,
+)
+
+# PLAN.md Day 6 — Advanced Web Injection (NoSQL, SSTI, LDAP, XXE, Command Injection)
+from .injection_tools import (
+    NoSQLInjectionTool,
+    SSTIDetectTool,
+    SSTIExploitTool,
+    LDAPInjectionTool,
+    XXETool,
+    CommandInjectionTool,
+    HeaderInjectionTool,
+)
+
 __all__ = [
     # Base
     "BaseTool",
@@ -207,4 +230,21 @@ __all__ = [
     "OAuthFlowTool",
     "OAuthTokenLeakTool",
     "APIKeyLeakTool",
+    # PLAN.md Day 5 — API Security Testing
+    "OpenAPIParserTool",
+    "APIFuzzTool",
+    "MassAssignmentTool",
+    "GraphQLIntrospectionTool",
+    "GraphQLInjectionTool",
+    "GraphQLIDORTool",
+    "APIRateLimitTool",
+    "CORSMisconfigTool",
+    # PLAN.md Day 6 — Advanced Web Injection
+    "NoSQLInjectionTool",
+    "SSTIDetectTool",
+    "SSTIExploitTool",
+    "LDAPInjectionTool",
+    "XXETool",
+    "CommandInjectionTool",
+    "HeaderInjectionTool",
 ]
