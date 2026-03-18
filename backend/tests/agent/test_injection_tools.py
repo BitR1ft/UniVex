@@ -368,13 +368,17 @@ class TestFingerprintSSTIEngine:
         assert engine == "freemarker"
 
     def test_mako_from_error(self):
-        # "mako" appears in the pattern list for mako, use it directly without "python"
+        # Both Jinja2 and Mako run on Python, but "mako" is in the Mako pattern
+        # list while "python" matches Jinja2 first. Use only the engine-specific
+        # keyword to avoid ambiguity in the first-match fingerprinting logic.
         error = "mako syntaxexception on render"
         engine = _fingerprint_ssti_engine(error)
         assert engine == "mako"
 
     def test_pebble_from_error(self):
-        # "pebble" appears in the pattern list for pebble, avoid "java" which also matches freemarker
+        # Both Pebble and Freemarker run on Java, but "pebble" uniquely
+        # identifies Pebble while "java" matches Freemarker first. Use the
+        # engine-specific keyword so the first-match logic returns the right engine.
         error = "pebble template render error"
         engine = _fingerprint_ssti_engine(error)
         assert engine == "pebble"
@@ -551,7 +555,8 @@ class TestNoSQLInjectionTool:
         tool._client = _make_injection_client()
         result = asyncio.run(tool.execute(url="http://target.com/api/login"))
         data = json.loads(result)
-        assert "target.com" in data.get("url", "") or data.get("success") is True
+        url = data.get("url", "")
+        assert url == "http://target.com/api/login" or data.get("success") is True
 
     def test_offline_fallback_on_connection_error(self):
         tool = NoSQLInjectionTool()
