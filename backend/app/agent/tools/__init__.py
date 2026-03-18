@@ -89,6 +89,13 @@ from .active_directory_tools import (
     CrackMapExecTool,
 )
 
+# PLAN.md Day 1 — XSS Detection & Exploitation Engine
+from .xss_tools import ReflectedXSSTool, StoredXSSTool, DOMXSSTool
+
+# PLAN.md Day 2 — CSRF, SSRF & Request Forgery Toolkit
+from .csrf_tools import CSRFDetectTool, CSRFExploitTool
+from .ssrf_tools import SSRFProbeTool, SSRFBlindTool, OpenRedirectTool
+
 __all__ = [
     # Base
     "BaseTool",
@@ -168,4 +175,14 @@ __all__ = [
     "PassTheHashTool",
     "LDAPEnumTool",
     "CrackMapExecTool",
+    # PLAN.md Day 1 — XSS tools
+    "ReflectedXSSTool",
+    "StoredXSSTool",
+    "DOMXSSTool",
+    # PLAN.md Day 2 — CSRF / SSRF / Open Redirect tools
+    "CSRFDetectTool",
+    "CSRFExploitTool",
+    "SSRFProbeTool",
+    "SSRFBlindTool",
+    "OpenRedirectTool",
 ]
