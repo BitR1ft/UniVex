@@ -16,13 +16,18 @@ def reset_databases():
 
     These dicts are no longer used by the refactored endpoints, but test
     modules that were written against the old API may still reference them.
+    Gracefully skips when the database layer is unavailable (e.g., in
+    isolated unit-test environments without database drivers installed).
     """
-    from app.api import auth, projects
+    try:
+        from app.api import auth, projects
 
-    auth.users_db.clear()
-    projects.projects_db.clear()
+        auth.users_db.clear()
+        projects.projects_db.clear()
 
-    yield
+        yield
 
-    auth.users_db.clear()
-    projects.projects_db.clear()
+        auth.users_db.clear()
+        projects.projects_db.clear()
+    except Exception:
+        yield

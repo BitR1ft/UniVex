@@ -109,6 +109,35 @@ services:
           cpus: '0.5'
           memory: 1G
 
+  # Redis Cache & Job Queue - Day 11
+  redis:
+    image: redis:7.2-alpine
+    container_name: univex-redis
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - redis-data:/data
+    networks:
+      - db-network
+      - backend-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 768M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
   # ============================================================================
   # APPLICATION TIER - Core Services
   # ============================================================================
@@ -482,3 +511,7 @@ volumes:
   chroma-data:
     driver: local
     name: univex-chroma-data
+
+  redis-data:
+    driver: local
+    name: univex-redis-data
