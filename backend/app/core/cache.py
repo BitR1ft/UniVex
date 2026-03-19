@@ -150,6 +150,8 @@ class CacheManager:
 
         if self._redis is not None:
             try:
+                # NOTE: KEYS blocks Redis while scanning. For large key spaces,
+                # replace with SCAN (redis_client.scan_iter) to avoid latency spikes.
                 keys = await self._redis.keys(f"{full_prefix}*")
                 if keys:
                     deleted = await self._redis.delete(*keys)

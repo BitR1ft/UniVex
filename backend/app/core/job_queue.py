@@ -158,15 +158,15 @@ class JobQueue:
         return job
 
     async def dequeue(self) -> Optional[Job]:
-        """Pop the highest-priority pending job. Returns None if queue is empty."""
+        """Pop the highest-priority pending job atomically. Returns None if queue is empty."""
         if self._redis is not None:
             try:
-                # Get highest-priority job (largest score)
-                items = await self._redis.zrange(self.QUEUE_KEY, -1, -1, withscores=True)
+                # ZPOPMAX atomically removes and returns the highest-score member,
+                # eliminating the race condition between zrange + zrem.
+                items = await self._redis.zpopmax(self.QUEUE_KEY, 1)
                 if not items:
                     return None
                 job_id, _ = items[0]
-                await self._redis.zrem(self.QUEUE_KEY, job_id)
                 job = await self._load_job(job_id)
                 if job:
                     job.status = JobStatus.RUNNING

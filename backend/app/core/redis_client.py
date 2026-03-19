@@ -176,6 +176,13 @@ class RedisClient:
     async def zcard(self, name: str) -> int:
         return await self._with_retry(self._redis.zcard, name)
 
+    async def zpopmax(self, name: str, count: int = 1):
+        """Atomically pop the member(s) with the highest score(s)."""
+        return await self._with_retry(self._redis.zpopmax, name, count)
+
+    async def zrem(self, name: str, *values) -> int:
+        return await self._with_retry(self._redis.zrem, name, *values)
+
     async def lpush(self, name: str, *values) -> int:
         return await self._with_retry(self._redis.lpush, name, *values)
 

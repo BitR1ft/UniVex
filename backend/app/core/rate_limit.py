@@ -136,7 +136,13 @@ class RedisRateLimiter:
             return None
 
     async def _redis_check(self, key: str) -> tuple[bool, int]:
-        """Sliding-window check using Redis ZADD / ZREMRANGEBYSCORE."""
+        """
+        Atomic sliding-window check using a Redis Lua script.
+
+        The Lua script runs atomically on the Redis server, eliminating the
+        race condition that would arise from a pipeline-based check-then-add
+        approach when multiple workers share the same rate-limit key.
+        """
         client = await self._get_redis()
         if client is None:
             allowed, remaining = self._fallback._check_with_remaining(key)
@@ -145,23 +151,43 @@ class RedisRateLimiter:
         redis_key = f"ratelimit:{self.name}:{key}"
         now = time.time()
         window_start = now - self.window_seconds
-        pipe = client.pipeline()
-        # Remove timestamps outside the window
-        pipe.zremrangebyscore(redis_key, "-inf", window_start)
-        # Count current timestamps
-        pipe.zcard(redis_key)
-        # Add current timestamp
-        pipe.zadd(redis_key, {str(now): now})
-        # Set expiry so keys auto-clean
-        pipe.expire(redis_key, self.window_seconds + 1)
-        results = await pipe.execute()
-        count_before_add = results[1]
-        if count_before_add >= self.max_calls:
-            # Undo the zadd — we're over limit
-            await client.zremrangebyscore(redis_key, now, now)
-            return False, 0
-        remaining = max(0, self.max_calls - count_before_add - 1)
-        return True, remaining
+
+        # Lua script: atomically prune old entries, check count, and conditionally add.
+        # Returns: [allowed (0/1), remaining_slots]
+        _LUA_SCRIPT = """
+local key        = KEYS[1]
+local now        = tonumber(ARGV[1])
+local window_st  = tonumber(ARGV[2])
+local max_calls  = tonumber(ARGV[3])
+local ttl        = tonumber(ARGV[4])
+local unique_id  = ARGV[5]
+
+redis.call('ZREMRANGEBYSCORE', key, '-inf', window_st)
+local count = redis.call('ZCARD', key)
+
+if count >= max_calls then
+    return {0, 0}
+end
+
+redis.call('ZADD', key, now, unique_id)
+redis.call('EXPIRE', key, ttl)
+return {1, max_calls - count - 1}
+"""
+        import uuid as _uuid
+        unique_id = f"{now}:{_uuid.uuid4()}"
+        results = await client.eval(
+            _LUA_SCRIPT,
+            1,
+            redis_key,
+            now,
+            window_start,
+            self.max_calls,
+            self.window_seconds + 1,
+            unique_id,
+        )
+        allowed = bool(results[0])
+        remaining = int(results[1])
+        return allowed, remaining
 
     def _sync_check(self, key: str) -> tuple[bool, int]:
         """Synchronous check — delegates to in-memory fallback."""
