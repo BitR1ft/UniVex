@@ -259,7 +259,7 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 
 ---
 
-### Day 8 — RAG Knowledge Base & Exploit Intelligence
+### Day 8 — RAG Knowledge Base & Exploit Intelligence ✅ COMPLETE
 
 **Files:**
 - `[NEW] backend/app/agent/knowledge/`
@@ -272,20 +272,20 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] backend/tests/agent/test_rag_engine.py`
 
 **Tasks:**
-- [ ] Deploy ChromaDB vector store as new Docker service
-- [ ] Build document ingestion pipeline: security advisories, CVE descriptions, exploit writeups, tool docs
-- [ ] Build `RAGEngine` — retrieve relevant context from knowledge base for agent decision-making
-- [ ] Integrate RAG context into agent prompts (inject top-K relevant excerpts before tool selection)
-- [ ] Build auto-ingest pipeline: new CVEs from NVD feed → embeddings → ChromaDB
-- [ ] Build tool documentation embedder: all 72+ tools documented and searchable
-- [ ] Build historical attack pattern retriever: learn from past engagement results
-- [ ] Write 60+ tests
+- [x] Deploy ChromaDB vector store as new Docker service
+- [x] Build document ingestion pipeline: security advisories, CVE descriptions, exploit writeups, tool docs
+- [x] Build `RAGEngine` — retrieve relevant context from knowledge base for agent decision-making
+- [x] Integrate RAG context into agent prompts (inject top-K relevant excerpts before tool selection)
+- [x] Build auto-ingest pipeline: new CVEs from NVD feed → embeddings → ChromaDB
+- [x] Build tool documentation embedder: all 72+ tools documented and searchable
+- [x] Build historical attack pattern retriever: learn from past engagement results
+- [x] Write 60+ tests (133 tests written and passing)
 
-**Deliverables:** RAG knowledge engine, ChromaDB integration, auto-ingest pipeline, 60+ tests
+**Deliverables:** RAG knowledge engine, ChromaDB integration, auto-ingest pipeline, 133 tests ✅
 
 ---
 
-### Day 9 — Advanced AI Planning & Chain-of-Thought
+### Day 9 — Advanced AI Planning & Chain-of-Thought ✅ COMPLETE
 
 **Files:**
 - `[MODIFY] backend/app/agent/core/`
@@ -296,16 +296,16 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] backend/tests/agent/test_planning.py`
 
 **Tasks:**
-- [ ] Build `AttackPlanner` — generates structured attack plans with dependency graphs before execution
-- [ ] Implement tree-of-thought reasoning: explore multiple attack paths, prune unlikely branches
-- [ ] Build backtracking engine: when an attack path fails, automatically try alternatives
-- [ ] Implement cost-benefit analysis for tool selection (time, risk, likelihood of success)
-- [ ] Add "attack strategy" mode: agent explains plan before executing, user can modify
-- [ ] Implement plan visualization (Mermaid diagram generation for attack plan)
-- [ ] Add plan persistence to PostgreSQL (resume plans across sessions)
-- [ ] Write 70+ tests
+- [x] Build `AttackPlanner` — generates structured attack plans with dependency graphs before execution
+- [x] Implement tree-of-thought reasoning: explore multiple attack paths, prune unlikely branches
+- [x] Build backtracking engine: when an attack path fails, automatically try alternatives
+- [x] Implement cost-benefit analysis for tool selection (time, risk, likelihood of success)
+- [x] Add "attack strategy" mode: agent explains plan before executing, user can modify
+- [x] Implement plan visualization (Mermaid diagram generation for attack plan)
+- [x] Add plan persistence to PostgreSQL (resume plans across sessions)
+- [x] Write 70+ tests (86 tests written and passing)
 
-**Deliverables:** Attack planning engine, tree-of-thought reasoning, backtracking, 70+ tests
+**Deliverables:** Attack planning engine, tree-of-thought reasoning, backtracking, 86 tests ✅
 
 ---
 

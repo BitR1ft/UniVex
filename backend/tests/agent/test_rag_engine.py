@@ -117,10 +117,10 @@ class TestTFIDFEmbeddingProviderBasics:
         assert provider.vocab_size >= 3
 
     def test_different_texts_different_vectors(self):
+        # Use embed_batch so both texts share the same final vocabulary,
+        # ensuring "apple" and "orange" each map to a unique dimension.
         provider = TFIDFEmbeddingProvider()
-        provider.update_vocabulary("apple orange banana cherry")
-        v1 = provider.embed_text("apple")
-        v2 = provider.embed_text("orange")
+        v1, v2 = provider.embed_batch(["apple banana cherry", "orange mango grape"])
         assert v1 != v2
 
     def test_repeated_text_same_vector_shape(self):

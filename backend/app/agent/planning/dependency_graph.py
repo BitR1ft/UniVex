@@ -10,7 +10,12 @@ from __future__ import annotations
 import uuid
 from collections import deque
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
+
+
+def _utc_now_naive() -> datetime:
+    """Return a naive UTC datetime (timezone info stripped for DB compatibility)."""
+    return datetime.now(timezone.utc).replace(tzinfo=None)
 from enum import Enum
 from typing import Dict, List, Optional
 
@@ -259,19 +264,19 @@ class DependencyGraph:
     def mark_step_running(self, step_id: str) -> None:
         step = self._get_or_raise(step_id)
         step.status = StepStatus.RUNNING
-        step.started_at = datetime.utcnow()
+        step.started_at = datetime.now(timezone.utc).replace(tzinfo=None)
 
     def mark_step_completed(self, step_id: str, result: str) -> None:
         step = self._get_or_raise(step_id)
         step.status = StepStatus.COMPLETED
         step.result = result
-        step.completed_at = datetime.utcnow()
+        step.completed_at = datetime.now(timezone.utc).replace(tzinfo=None)
 
     def mark_step_failed(self, step_id: str, error: str) -> None:
         step = self._get_or_raise(step_id)
         step.status = StepStatus.FAILED
         step.error = error
-        step.completed_at = datetime.utcnow()
+        step.completed_at = datetime.now(timezone.utc).replace(tzinfo=None)
         # Mark dependents as BLOCKED
         self._propagate_blocked(step_id)
 

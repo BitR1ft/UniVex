@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
@@ -405,7 +405,7 @@ class AttackPlanner:
         3. select_best_path()
         4. build_dependency_graph()
         """
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
         plan_id = str(uuid.uuid4())
 
         branches = self.generate_thought_branches(objective, recon_data)
@@ -641,7 +641,7 @@ class AttackPlanner:
     def update_plan(self, plan: AttackPlan, user_feedback: str) -> AttackPlan:
         """Apply modifications based on textual feedback keywords."""
         feedback_lower = user_feedback.lower()
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
 
         if "pause" in feedback_lower:
             plan.metadata.status = PlanStatus.PAUSED
@@ -674,5 +674,5 @@ class AttackPlanner:
         """Update plan with current graph state (for cross-session resumption)."""
         plan.graph = graph
         plan.metadata.status = PlanStatus.ACTIVE
-        plan.metadata.updated_at = datetime.utcnow()
+        plan.metadata.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
         return plan
