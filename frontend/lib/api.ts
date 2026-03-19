@@ -262,4 +262,203 @@ export const reportsApi = {
     apiClient.delete(`/reports/${id}`),
 };
 
+// ---------------------------------------------------------------------------
+// Campaign Types
+// ---------------------------------------------------------------------------
+
+export type CampaignStatus =
+  | 'draft'
+  | 'scheduled'
+  | 'running'
+  | 'paused'
+  | 'completed'
+  | 'failed'
+  | 'cancelled';
+
+export type TargetStatus = 'pending' | 'scanning' | 'completed' | 'failed' | 'skipped';
+export type ScanProfile = 'quick' | 'standard' | 'thorough' | 'stealth';
+
+export interface CampaignTarget {
+  id: string;
+  host: string;
+  port: number | null;
+  protocol: string;
+  status: TargetStatus;
+  scope_notes: string;
+  tags: string[];
+  finding_count: number;
+  risk_score: number;
+  started_at: string | null;
+  completed_at: string | null;
+  error_message: string | null;
+}
+
+export interface CampaignSummary {
+  id: string;
+  name: string;
+  description: string;
+  status: CampaignStatus;
+  target_count: number;
+  completed_targets: number;
+  failed_targets: number;
+  progress_percent: number;
+  total_findings: number;
+  critical_findings: number;
+  high_findings: number;
+  medium_findings: number;
+  low_findings: number;
+  info_findings: number;
+  risk_score: number;
+  risk_level: string;
+  created_at: string;
+  started_at: string | null;
+  completed_at: string | null;
+  created_by: string;
+}
+
+export interface CampaignDetail extends CampaignSummary {
+  targets: CampaignTarget[];
+}
+
+export interface CampaignFinding {
+  id: string;
+  target_id: string;
+  title: string;
+  description: string;
+  severity: string;
+  cvss_score: number;
+  cve_id: string | null;
+  cwe_id: string | null;
+  owasp_category: string | null;
+  affected_component: string;
+  remediation: string;
+  evidence: string | null;
+  discovered_at: string;
+}
+
+export interface CorrelationGroup {
+  id: string;
+  fingerprint: string;
+  title: string;
+  severity: string;
+  cvss_score: number;
+  cve_id: string | null;
+  owasp_category: string | null;
+  affected_hosts: string[];
+  host_count: number;
+  finding_ids: string[];
+  first_seen: string;
+  last_seen: string;
+  remediation: string;
+}
+
+export interface CampaignAggregateReport {
+  campaign_id: string;
+  campaign_name: string;
+  total_targets: number;
+  scanned_targets: number;
+  total_findings: number;
+  unique_findings: number;
+  duplicate_count: number;
+  deduplication_ratio: number;
+  severity_breakdown: Record<string, number>;
+  owasp_coverage: Record<string, number>;
+  risk_score: number;
+  risk_level: string;
+  highest_risk_target: string | null;
+  most_common_severity: string;
+  generated_at: string;
+  correlation_groups: CorrelationGroup[];
+}
+
+export interface CreateCampaignDto {
+  name: string;
+  description?: string;
+  created_by?: string;
+  config?: {
+    max_concurrent_targets?: number;
+    scan_timeout_seconds?: number;
+    retry_failed_targets?: boolean;
+    max_retries?: number;
+    enable_correlation?: boolean;
+    rate_limit_rps?: number;
+    tags?: string[];
+    scan_profile?: ScanProfile;
+  };
+}
+
+export interface AddTargetDto {
+  host: string;
+  port?: number;
+  protocol?: string;
+  scope_notes?: string;
+  tags?: string[];
+}
+
+export interface ImportTargetsDto {
+  content: string;
+  format?: 'auto' | 'csv' | 'json' | 'text';
+  scope_whitelist?: string[];
+  scope_blacklist?: string[];
+}
+
+export interface ImportResult {
+  success_count: number;
+  error_count: number;
+  duplicates_removed: number;
+  errors: string[];
+  added_to_campaign: number;
+}
+
+export const campaignsApi = {
+  getAll: (params?: { status?: CampaignStatus; limit?: number; offset?: number }) =>
+    apiClient.get<CampaignSummary[]>('/campaigns', { params }),
+
+  getById: (id: string) =>
+    apiClient.get<CampaignDetail>(`/campaigns/${id}`),
+
+  create: (data: CreateCampaignDto) =>
+    apiClient.post<CampaignSummary>('/campaigns', data),
+
+  update: (id: string, data: { name?: string; description?: string }) =>
+    apiClient.patch<CampaignSummary>(`/campaigns/${id}`, data),
+
+  delete: (id: string) =>
+    apiClient.delete(`/campaigns/${id}`),
+
+  addTarget: (id: string, data: AddTargetDto) =>
+    apiClient.post<CampaignTarget>(`/campaigns/${id}/targets`, data),
+
+  removeTarget: (id: string, targetId: string) =>
+    apiClient.delete(`/campaigns/${id}/targets/${targetId}`),
+
+  importTargets: (id: string, data: ImportTargetsDto) =>
+    apiClient.post<ImportResult>(`/campaigns/${id}/targets/import`, data),
+
+  start: (id: string) =>
+    apiClient.post<CampaignSummary>(`/campaigns/${id}/start`),
+
+  pause: (id: string) =>
+    apiClient.post<CampaignSummary>(`/campaigns/${id}/pause`),
+
+  cancel: (id: string) =>
+    apiClient.post<CampaignSummary>(`/campaigns/${id}/cancel`),
+
+  getSummary: (id: string) =>
+    apiClient.get<Record<string, unknown>>(`/campaigns/${id}/summary`),
+
+  getAggregate: (id: string) =>
+    apiClient.get<CampaignAggregateReport>(`/campaigns/${id}/aggregate`),
+
+  getCorrelations: (id: string, minHosts?: number) =>
+    apiClient.get<CorrelationGroup[]>(`/campaigns/${id}/correlations`, {
+      params: minHosts ? { min_hosts: minHosts } : undefined,
+    }),
+
+  getTargetFindings: (id: string, targetId: string, severity?: string) =>
+    apiClient.get<CampaignFinding[]>(`/campaigns/${id}/targets/${targetId}/findings`, {
+      params: severity ? { severity } : undefined,
+    }),
+};
+
 export default apiClient;
