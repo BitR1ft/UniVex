@@ -11,6 +11,7 @@ from datetime import datetime
 from app.core.config import settings
 from app.api import auth, projects, graph, agent
 from app.api import autochain as autochain_api
+from app.api import plugins as plugins_api
 from app.api import recon as recon_api
 from app.api import port_scan as port_scan_api
 from app.api import http_probe as http_probe_api
@@ -200,6 +201,7 @@ app.include_router(cve_enrichment_api.router, tags=["CVE Enrichment"])
 app.include_router(enrichment_cwe_api.router, tags=["CWE/CAPEC Enrichment"])
 app.include_router(agent.router, prefix="/api", tags=["AI Agent"])
 app.include_router(autochain_api.router, tags=["AutoChain"])
+app.include_router(plugins_api.router, tags=["Plugins"])
 app.include_router(sse_router, prefix="/api/sse", tags=["Server-Sent Events"])
 app.include_router(ws_router, tags=["WebSocket"])
 app.include_router(metrics_router, tags=["Observability"])
