@@ -20,6 +20,7 @@ from app.api import scans_nuclei as scans_nuclei_api
 from app.api import discovery_urls as discovery_urls_api
 from app.api import cve_enrichment as cve_enrichment_api
 from app.api import enrichment_api as enrichment_cwe_api
+from app.api import reports as reports_api
 from app.api.sse import router as sse_router
 from app.api.metrics import router as metrics_router
 from app.websocket import router as ws_router
@@ -205,6 +206,7 @@ app.include_router(plugins_api.router, tags=["Plugins"])
 app.include_router(sse_router, prefix="/api/sse", tags=["Server-Sent Events"])
 app.include_router(ws_router, tags=["WebSocket"])
 app.include_router(metrics_router, tags=["Observability"])
+app.include_router(reports_api.router, tags=["Reports"])
 
 
 # Exception handlers
