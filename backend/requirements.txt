@@ -76,3 +76,7 @@ opentelemetry-exporter-otlp-proto-grpc==1.24.0
 # Day 8 — RAG Knowledge Base
 chromadb>=1.5.5
 langchain-chroma>=1.1.0
+
+# Day 11 — Redis Infrastructure & Job Queue
+redis>=5.0.0
+fakeredis>=2.21.0
