@@ -115,3 +115,50 @@ export const nucleiConfigSchema = z.object({
 });
 
 export type NucleiConfigData = z.infer<typeof nucleiConfigSchema>;
+
+// Campaign validation schemas
+export const campaignConfigSchema = z.object({
+  max_concurrent_targets: z.number().min(1).max(20).default(3),
+  scan_timeout_seconds: z.number().min(60).max(86400).default(3600),
+  retry_failed_targets: z.boolean().default(true),
+  max_retries: z.number().min(0).max(5).default(2),
+  enable_correlation: z.boolean().default(true),
+  rate_limit_rps: z.number().min(0.1).max(100).default(10),
+  tags: z.array(z.string()).default([]),
+  scan_profile: z.enum(['quick', 'standard', 'thorough', 'stealth']).default('standard'),
+});
+
+export type CampaignConfigData = z.infer<typeof campaignConfigSchema>;
+
+export const campaignSchema = z.object({
+  name: z
+    .string()
+    .min(3, 'Campaign name must be at least 3 characters')
+    .max(200, 'Campaign name must be less than 200 characters'),
+  description: z
+    .string()
+    .max(2000, 'Description must be less than 2000 characters')
+    .optional()
+    .default(''),
+  config: campaignConfigSchema.optional().default({}),
+});
+
+export type CampaignFormData = z.infer<typeof campaignSchema>;
+
+export const addTargetSchema = z.object({
+  host: z
+    .string()
+    .min(1, 'Host is required')
+    .refine((val) => {
+      const domainRegex = /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+      const ipRegex = /^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/;
+      const wildcardRegex = /^\*\.[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
+      return domainRegex.test(val) || ipRegex.test(val) || wildcardRegex.test(val);
+    }, 'Must be a valid domain, IP, or CIDR range'),
+  port: z.number().min(1).max(65535).optional(),
+  protocol: z.enum(['http', 'https']).default('https'),
+  scope_notes: z.string().max(500).optional().default(''),
+  tags: z.array(z.string()).default([]),
+});
+
+export type AddTargetFormData = z.infer<typeof addTargetSchema>;
