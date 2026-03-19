@@ -5,11 +5,14 @@ High-level interface for the AI agent.
 """
 
 import uuid
-from typing import Optional, Dict, Any, AsyncIterator
+from typing import TYPE_CHECKING, Optional, Dict, Any, AsyncIterator
 from langchain_core.messages import HumanMessage
 
 from ..state.agent_state import AgentState, Phase
 from .graph import create_agent_graph
+
+if TYPE_CHECKING:
+    from ..planning import AttackPlanner, AttackPlan
 
 
 class Agent:
@@ -23,7 +26,8 @@ class Agent:
         self,
         model_provider: str = "openai",
         model_name: str = "gpt-4",
-        enable_memory: bool = True
+        enable_memory: bool = True,
+        enable_planning: bool = False,
     ):
         """
         Initialize the agent.
@@ -32,6 +36,7 @@ class Agent:
             model_provider: "openai" or "anthropic"
             model_name: Model identifier
             enable_memory: Whether to enable state persistence
+            enable_planning: Whether to enable the attack planner
         """
         self.model_provider = model_provider
         self.model_name = model_name
@@ -40,6 +45,10 @@ class Agent:
             model_name=model_name,
             enable_memory=enable_memory
         )
+        self.planner: Optional["AttackPlanner"] = None
+        if enable_planning:
+            from ..planning import AttackPlanner
+            self.planner = AttackPlanner()
     
     def create_initial_state(
         self,
@@ -140,3 +149,29 @@ class Agent:
         # Stream the graph execution
         async for chunk in self.graph.astream(state, config=config):
             yield chunk
+
+    # ------------------------------------------------------------------
+    # Planning methods
+    # ------------------------------------------------------------------
+
+    def create_plan(
+        self,
+        target: str,
+        objective: str,
+        recon_data: dict,
+        session_id: Optional[str] = None,
+    ) -> "AttackPlan":
+        """Create an attack plan using the planner."""
+        if self.planner is None:
+            raise RuntimeError("Planning is not enabled. Pass enable_planning=True.")
+        return self.planner.create_plan(target, objective, recon_data, session_id)
+
+    def explain_plan(self, plan: "AttackPlan") -> str:
+        """Return a human-readable explanation of the plan."""
+        if self.planner is None:
+            raise RuntimeError("Planning is not enabled. Pass enable_planning=True.")
+        return self.planner.explain_plan(plan)
+
+    def get_plan_diagram(self, plan: "AttackPlan") -> str:
+        """Return the Mermaid diagram for the plan."""
+        return plan.to_mermaid()
