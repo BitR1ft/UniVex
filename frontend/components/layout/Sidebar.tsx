@@ -15,6 +15,7 @@ import {
   X,
   Crosshair,
   FileText,
+  Bug,
 } from 'lucide-react';
 import { useCurrentUser, useLogout } from '@/hooks/useAuth';
 
@@ -22,6 +23,7 @@ const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/projects', label: 'Projects', icon: FolderKanban },
   { href: '/campaigns', label: 'Campaigns', icon: Crosshair },
+  { href: '/findings', label: 'Findings', icon: Bug },
   { href: '/graph', label: 'Graph Explorer', icon: Network },
   { href: '/reports', label: 'Reports', icon: FileText },
   { href: '/chat', label: 'AI Agent', icon: MessageSquare },

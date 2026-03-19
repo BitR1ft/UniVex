@@ -22,6 +22,7 @@ from app.api import cve_enrichment as cve_enrichment_api
 from app.api import enrichment_api as enrichment_cwe_api
 from app.api import reports as reports_api
 from app.api import campaigns as campaigns_api
+from app.api import findings as findings_api
 from app.api.sse import router as sse_router
 from app.api.metrics import router as metrics_router
 from app.websocket import router as ws_router
@@ -209,6 +210,7 @@ app.include_router(ws_router, tags=["WebSocket"])
 app.include_router(metrics_router, tags=["Observability"])
 app.include_router(reports_api.router, tags=["Reports"])
 app.include_router(campaigns_api.router, tags=["Campaigns"])
+app.include_router(findings_api.router, tags=["Findings"])
 
 
 # Exception handlers
