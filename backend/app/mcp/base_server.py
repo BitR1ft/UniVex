@@ -204,6 +204,10 @@ class MCPServer(ABC):
         port: int,
         api_key: Optional[str] = None,
         rate_limit: int = 60,
+        mtls_enabled: bool = False,
+        cert_path: Optional[str] = None,
+        key_path: Optional[str] = None,
+        ca_cert_path: Optional[str] = None,
     ):
         """
         Initialise MCP Server.
@@ -215,15 +219,25 @@ class MCPServer(ABC):
             api_key: Optional bearer token required in ``Authorization`` header.
                      When *None* authentication is disabled.
             rate_limit: Max requests per 60-second window per client IP.
+            mtls_enabled: When True, enforce mutual TLS via middleware.
+            cert_path: Path to the server TLS certificate (PEM).
+            key_path: Path to the server TLS private key (PEM).
+            ca_cert_path: Path to the CA certificate used to verify clients (PEM).
         """
         self.name = name
         self.description = description
         self.port = port
         self._api_key: Optional[str] = api_key
         self._rate_limiter = _RateLimiter(max_requests=rate_limit)
+        self._mtls_enabled = mtls_enabled
+        self._cert_path = cert_path
+        self._key_path = key_path
+        self._ca_cert_path = ca_cert_path
         # Day 108: build registry from subclass-provided tools
         self._registry = ToolRegistry()
         self.app = FastAPI(title=f"{name} MCP Server")
+        if mtls_enabled:
+            self._add_mtls_middleware()
         self._setup_routes()
 
     # ------------------------------------------------------------------
@@ -239,6 +253,39 @@ class MCPServer(ABC):
     async def execute_tool(self, tool_name: str, params: Dict[str, Any]) -> Dict[str, Any]:
         """Execute *tool_name* with *params*. Return a result dict."""
         pass
+
+    # ------------------------------------------------------------------
+    # Day 12: mTLS middleware
+    # ------------------------------------------------------------------
+
+    def _add_mtls_middleware(self) -> None:
+        """
+        Register middleware that enforces mTLS client certificate verification.
+
+        In production, a reverse proxy (nginx) sets the ``X-Client-Cert-CN``
+        header after verifying the client certificate.  In development mode the
+        middleware checks for the header directly.
+
+        Returns HTTP 403 when the header is absent or empty.
+        """
+        from fastapi import Request
+        from starlette.middleware.base import BaseHTTPMiddleware
+        from starlette.responses import JSONResponse as StarletteJSONResponse
+
+        class MTLSMiddleware(BaseHTTPMiddleware):
+            async def dispatch(self, request: Request, call_next):
+                # Health endpoint is exempt from mTLS check
+                if request.url.path == "/health":
+                    return await call_next(request)
+                cn = request.headers.get("X-Client-Cert-CN", "").strip()
+                if not cn:
+                    return StarletteJSONResponse(
+                        {"error": "mTLS required: missing client certificate"},
+                        status_code=403,
+                    )
+                return await call_next(request)
+
+        self.app.add_middleware(MTLSMiddleware)
 
     # ------------------------------------------------------------------
     # Day 111: Security helpers
