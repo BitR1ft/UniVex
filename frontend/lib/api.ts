@@ -183,4 +183,83 @@ export const graphApi = {
     apiClient.get('/graph/health'),
 };
 
+// ---------------------------------------------------------------------------
+// Reports API
+// ---------------------------------------------------------------------------
+
+export type ReportTemplate = 'technical_report' | 'executive_summary' | 'compliance_report';
+export type ReportFormat = 'html' | 'pdf';
+export type Severity = 'critical' | 'high' | 'medium' | 'low' | 'info';
+
+export interface FindingDto {
+  title: string;
+  description?: string;
+  severity: Severity;
+  cvss_score?: number;
+  cve_id?: string;
+  cwe_id?: string;
+  owasp_category?: string;
+  nist_controls?: string[];
+  pci_dss_requirements?: string[];
+  reproduction_steps?: string[];
+  evidence?: string;
+  remediation?: string;
+  affected_component?: string;
+  likelihood?: string;
+  business_impact?: string;
+}
+
+export interface ScanResultDto {
+  target: string;
+  scan_type?: string;
+  findings: FindingDto[];
+  metadata?: Record<string, unknown>;
+}
+
+export interface GenerateReportDto {
+  project_name: string;
+  author: string;
+  client_name?: string;
+  title: string;
+  template: ReportTemplate;
+  format: ReportFormat;
+  include_charts?: boolean;
+  include_toc?: boolean;
+  scan_results: ScanResultDto[];
+  confidentiality?: string;
+}
+
+export interface ReportSummary {
+  id: string;
+  project_name: string;
+  title: string;
+  template: string;
+  format: string;
+  finding_count: number;
+  risk_level: string;
+  risk_score: number;
+  created_at: string;
+  author: string;
+}
+
+export const reportsApi = {
+  generate: (data: GenerateReportDto) =>
+    apiClient.post<ReportSummary>('/reports/generate', data),
+
+  getAll: (params?: { limit?: number; offset?: number }) =>
+    apiClient.get<ReportSummary[]>('/reports', { params }),
+
+  getById: (id: string) =>
+    apiClient.get<ReportSummary>(`/reports/${id}`),
+
+  download: (id: string, format?: ReportFormat) =>
+    apiClient.get(`/reports/${id}/download`, {
+      params: format ? { format } : undefined,
+      responseType: 'blob',
+    }),
+
+  delete: (id: string) =>
+    apiClient.delete(`/reports/${id}`),
+};
+
 export default apiClient;
