@@ -72,3 +72,7 @@ opentelemetry-sdk==1.24.0
 # where X matches the api/sdk minor version — this is stable, not a pre-release).
 opentelemetry-instrumentation-fastapi==0.45b0
 opentelemetry-exporter-otlp-proto-grpc==1.24.0
+
+# Day 8 — RAG Knowledge Base
+chromadb>=1.5.5
+langchain-chroma>=1.1.0
