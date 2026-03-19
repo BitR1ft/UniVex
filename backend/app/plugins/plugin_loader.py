@@ -101,7 +101,10 @@ class PluginLoader:
         Dynamically import the plugin package and call its get_plugin() factory.
         """
         manifest = self.load_manifest(plugin_path)
-        package_name = f"_univex_plugin_{manifest.name}_{manifest.version.replace('.', '_')}"
+        # Sanitize plugin name to a valid Python identifier (replace hyphens, dots, etc.)
+        safe_name = "".join(c if c.isalnum() or c == "_" else "_" for c in manifest.name)
+        safe_version = manifest.version.replace(".", "_")
+        package_name = f"_univex_plugin_{safe_name}_{safe_version}"
 
         init_file = plugin_path / "__init__.py"
         spec = importlib.util.spec_from_file_location(package_name, init_file)

@@ -14,6 +14,7 @@ Plugins REST API — Day 10
 from __future__ import annotations
 
 import logging
+import threading
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException
@@ -31,12 +32,15 @@ router = APIRouter(prefix="/api/plugins", tags=["Plugins"])
 # ---------------------------------------------------------------------------
 
 _plugin_manager: Optional[PluginManager] = None
+_plugin_manager_lock = threading.Lock()
 
 
 def _get_manager() -> PluginManager:
     global _plugin_manager
     if _plugin_manager is None:
-        _plugin_manager = PluginManager()
+        with _plugin_manager_lock:
+            if _plugin_manager is None:
+                _plugin_manager = PluginManager()
     return _plugin_manager
 
 

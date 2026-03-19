@@ -711,8 +711,9 @@ class TestExamplePlugins:
     def test_censys_tool_execute(self):
         from app.plugins.examples.censys_plugin import CensysCertsTool
         tool = CensysCertsTool()
-        result = asyncio.run(tool.execute(domain="example.com"))
-        assert "example.com" in result
+        test_domain = "example.com"
+        result = asyncio.run(tool.execute(domain=test_domain))
+        assert test_domain in result
 
 
 # ---------------------------------------------------------------------------

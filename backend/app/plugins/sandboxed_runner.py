@@ -57,7 +57,7 @@ class ExecutionResult:
 class SandboxedRunner:
     """Executes callables with resource tracking and security auditing."""
 
-    def __init__(self, config: SandboxConfig = None) -> None:
+    def __init__(self, config: Optional[SandboxConfig] = None) -> None:
         self.config = config or SandboxConfig()
         self._audit_events: List[Dict[str, Any]] = []
         self._lock = threading.Lock()
