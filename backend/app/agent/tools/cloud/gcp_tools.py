@@ -60,6 +60,9 @@ _PRIMITIVE_ROLES = {"roles/owner", "roles/editor", "roles/viewer"}
 # Members that represent public/anonymous access
 _PUBLIC_MEMBERS = {"allUsers", "allAuthenticatedUsers"}
 
+# Maximum port range size to expand inline (larger ranges are sampled)
+_MAX_PORT_RANGE_EXPANSION = 100
+
 # Permissions that can be chained for privilege escalation
 _PRIVESC_PERMISSIONS = {
     "iam.roles.update",
@@ -293,13 +296,15 @@ class GCSBucketEnumTool(BaseTool):
         try:
             iam_config = bucket.iam_configuration
             pap = getattr(iam_config, "public_access_prevention", None)
-            if pap not in ("enforced", "inherited"):
-                issues.append(
-                    f"Public access prevention is '{pap}' — set to 'enforced' to block all public access"
-                )
+            if pap is None:
+                issues.append("Cannot determine public access prevention status — missing iam_configuration attribute")
             elif pap == "inherited":
                 issues.append(
                     "Public access prevention is 'inherited' — depends on org-level policy; consider enforcing explicitly"
+                )
+            elif pap != "enforced":
+                issues.append(
+                    f"Public access prevention is '{pap}' — set to 'enforced' to block all public access"
                 )
         except Exception:
             issues.append("Cannot determine public access prevention status")
@@ -557,11 +562,15 @@ class GCPIAMTool(BaseTool):
     def _extract_project_from_sa(member: str) -> Optional[str]:
         """Extract project ID from a service account member string."""
         # Format: serviceAccount:<sa-name>@<project-id>.iam.gserviceaccount.com
+        _PREFIX = "serviceAccount:"
+        _SUFFIX = ".iam.gserviceaccount.com"
         try:
-            email = member.removeprefix("serviceAccount:")
+            if not member.startswith(_PREFIX):
+                return None
+            email = member[len(_PREFIX):]
             domain = email.split("@", 1)[1]
-            if domain.endswith(".iam.gserviceaccount.com"):
-                return domain.removesuffix(".iam.gserviceaccount.com")
+            if domain.endswith(_SUFFIX):
+                return domain[: -len(_SUFFIX)]
         except (IndexError, AttributeError):
             pass
         return None
@@ -891,7 +900,7 @@ class GCPFirewallAuditTool(BaseTool):
                 start, end = port_spec.split("-", 1)
                 start_int, end_int = int(start), int(end)
                 # Only expand small ranges to avoid memory issues
-                if end_int - start_int <= 100:
+                if end_int - start_int <= _MAX_PORT_RANGE_EXPANSION:
                     ports.extend(range(start_int, end_int + 1))
                 else:
                     # For large ranges, check if any dangerous port falls within
