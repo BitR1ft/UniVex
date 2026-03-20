@@ -9,7 +9,7 @@ Coverage:
   TestK8sSecretScanTool      (8 tests)
   TestHelmChartAuditTool     (8 tests)
 
-Total: 63 tests — all using unittest.mock for external dependencies
+Total: 64 tests — all using unittest.mock for external dependencies
 """
 from __future__ import annotations
 
