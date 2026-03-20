@@ -234,6 +234,8 @@ class SyslogForwarder:
     def _send_tls(self, raw: bytes) -> bool:
         """TLS-encrypted TCP with octet-count framing (RFC 5425)."""
         context = ssl.create_default_context()
+        # Enforce TLS 1.2 as the minimum — TLS 1.0/1.1 are insecure and deprecated
+        context.minimum_version = ssl.TLSVersion.TLSv1_2
         if self.tls_ca_cert:
             context.load_verify_locations(self.tls_ca_cert)
         if not self.tls_verify:
