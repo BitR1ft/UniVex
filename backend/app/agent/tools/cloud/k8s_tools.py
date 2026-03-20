@@ -435,10 +435,7 @@ class K8sAuditTool(BaseTool):
             if ns_name in ("kube-system", "kube-public", "kube-node-lease"):
                 continue
             try:
-                if namespace:
-                    policies = net.list_namespaced_network_policy(ns_name)
-                else:
-                    policies = net.list_namespaced_network_policy(ns_name)
+                policies = net.list_namespaced_network_policy(ns_name)
                 if not policies.items:
                     findings.append(K8sFinding(
                         resource_kind="Namespace",
@@ -967,15 +964,21 @@ class HelmChartAuditTool(BaseTool):
             lower = line.lower()
 
             # Hardcoded secrets / tokens
-            if _SECRET_PATTERN.search(line):
-                # Look for patterns like: password: "somevalue" (not a template variable)
-                if re.search(r':\s*["\']?[A-Za-z0-9+/=]{8,}["\']?\s*$', line):
-                    if "{{" not in line:
+            # Match lines like `password: "s3cr3tV@lue"` that are not template variables,
+            # not empty/null, and not common non-secret words (true, false, null, none).
+            if _SECRET_PATTERN.search(line) and "{{" not in line:
+                _secret_val_re = re.search(
+                    r':\s*["\']?([A-Za-z0-9+/=@!#$%^&*_\-]{8,})["\']?\s*$', line
+                )
+                if _secret_val_re:
+                    candidate = _secret_val_re.group(1).lower()
+                    _non_secrets = {"true", "false", "null", "none", "enabled", "disabled", "default"}
+                    if candidate not in _non_secrets and not candidate.startswith("{{"):
                         findings.append(HelmFinding(
                             chart_name=chart_name,
                             file_path=file_path,
                             issue=(
-                                f"Possible hardcoded secret on line — "
+                                "Possible hardcoded secret value in template — "
                                 "use '{{ .Values.<key> }}' or a Kubernetes Secret reference"
                             ),
                             severity=CloudFindingSeverity.CRITICAL,

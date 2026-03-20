@@ -483,9 +483,9 @@ class DockerfileLintTool(BaseTool):
                         severity=sev,
                     ))
 
-                # apt-get install without pinned versions
+                # apt-get install without pinned versions (package=1.2.3 syntax)
                 if re.search(r"apt-get\s+install\b", run_body, re.IGNORECASE):
-                    if not re.search(r"=\S+", run_body):
+                    if not re.search(r"\w+=[\w.\-]+", run_body):
                         findings.append(DockerfileFinding(
                             line_number=lineno,
                             instruction="RUN",
