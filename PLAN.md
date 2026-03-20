@@ -691,14 +691,14 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] backend/tests/test_integrations.py`
 
 **Tasks:**
-- [ ] Build `SIEMExporter` — export findings in CEF, LEEF, and JSON formats
-- [ ] Build Splunk integration (HEC — HTTP Event Collector)
-- [ ] Build ELK integration (Elasticsearch bulk API)
-- [ ] Build `SyslogForwarder` — RFC 5424 syslog output (UDP/TCP/TLS)
-- [ ] Build `WebhookManager` — configurable webhooks for scan events (Slack, Teams, Discord, PagerDuty)
-- [ ] Build Jira integration — auto-create tickets for findings above severity threshold
-- [ ] API endpoints: `POST /api/integrations/configure`, `GET /api/integrations/test`
-- [ ] Write 50+ tests
+- [x] Build `SIEMExporter` — export findings in CEF, LEEF, and JSON formats
+- [x] Build Splunk integration (HEC — HTTP Event Collector)
+- [x] Build ELK integration (Elasticsearch bulk API)
+- [x] Build `SyslogForwarder` — RFC 5424 syslog output (UDP/TCP/TLS)
+- [x] Build `WebhookManager` — configurable webhooks for scan events (Slack, Teams, Discord, PagerDuty)
+- [x] Build Jira integration — auto-create tickets for findings above severity threshold
+- [x] API endpoints: `POST /api/integrations/configure`, `GET /api/integrations/test`
+- [x] Write 50+ tests (95 tests written)
 
 **Deliverables:** SIEM/webhook integration system, 50+ tests
 
@@ -717,13 +717,13 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] frontend/hooks/useNotifications.ts`
 
 **Tasks:**
-- [ ] Build Integrations page — card-based UI for each integration (SIEM, webhook, Jira)
-- [ ] Build webhook builder — visual webhook configuration with payload preview
-- [ ] Build Compliance dashboard — framework selector, coverage matrix, gap analysis chart
-- [ ] Build notification center — in-app notification bell with scan events, completion alerts, approval requests
-- [ ] Build notification preferences page (per-event-type channel selection)
-- [ ] Real-time notification delivery via WebSocket
-- [ ] Write 25+ frontend tests
+- [x] Build Integrations page — card-based UI for each integration (SIEM, webhook, Jira)
+- [x] Build webhook builder — visual webhook configuration with payload preview
+- [x] Build Compliance dashboard — framework selector, coverage matrix, gap analysis chart
+- [x] Build notification center — in-app notification bell with scan events, completion alerts, approval requests
+- [x] Build notification preferences page (per-event-type channel selection)
+- [x] Real-time notification delivery via WebSocket
+- [x] Write 25+ frontend tests (67 tests written)
 
 **Deliverables:** 3 new frontend pages, 7 new components, 25+ tests
 
