@@ -612,7 +612,7 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 
 ---
 
-### Day 20 — Azure & GCP Security Scanners
+### Day 20 — Azure & GCP Security Scanners ✅ COMPLETE
 
 **Files:**
 - `[NEW] backend/app/agent/tools/cloud/azure_tools.py`
@@ -621,20 +621,20 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] backend/tests/agent/test_gcp_tools.py`
 
 **Tasks:**
-- [ ] Build `AzureBlobEnumTool` — discover public Azure Blob Storage containers
-- [ ] Build `AzureADTool` — enumerate Azure AD users, groups, applications
-- [ ] Build `AzureNSGAuditTool` — check Network Security Groups for misconfigurations
-- [ ] Build `GCSBucketEnumTool` — discover public/misconfigured GCS buckets
-- [ ] Build `GCPIAMTool` — analyze GCP IAM bindings for privilege escalation paths
-- [ ] Build `GCPFirewallAuditTool` — check VPC firewall rules
-- [ ] Build unified `CloudSummaryTool` — cross-cloud risk summary and comparison
-- [ ] Write 60+ tests
+- [x] Build `AzureBlobEnumTool` — discover public Azure Blob Storage containers
+- [x] Build `AzureADTool` — enumerate Azure AD users, groups, applications
+- [x] Build `AzureNSGAuditTool` — check Network Security Groups for misconfigurations
+- [x] Build `GCSBucketEnumTool` — discover public/misconfigured GCS buckets
+- [x] Build `GCPIAMTool` — analyze GCP IAM bindings for privilege escalation paths
+- [x] Build `GCPFirewallAuditTool` — check VPC firewall rules
+- [x] Build unified `CloudSummaryTool` — cross-cloud risk summary and comparison
+- [x] Write 60+ tests (70 tests written: 35 Azure + 35 GCP)
 
-**Deliverables:** 7 cloud tools, 60+ tests
+**Deliverables:** 7 cloud tools, 70 tests ✅ COMPLETE
 
 ---
 
-### Day 21 — Container & Kubernetes Security
+### Day 21 — Container & Kubernetes Security ✅ COMPLETE
 
 **Files:**
 - `[NEW] backend/app/agent/tools/cloud/container_tools.py`
@@ -642,19 +642,19 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] backend/tests/agent/test_container_tools.py`
 
 **Tasks:**
-- [ ] Build `DockerImageScanTool` — scan Docker images for CVEs (Trivy integration)
-- [ ] Build `DockerfileLintTool` — audit Dockerfiles for security best practices
-- [ ] Build `K8sAuditTool` — check Kubernetes RBAC, pod security standards, network policies
-- [ ] Build `K8sSecretScanTool` — detect secrets mounted in pods, check etcd encryption
-- [ ] Build `ContainerEscapeTool` — test container escape vectors (privileged mode, host PID/network)
-- [ ] Build `HelmChartAuditTool` — scan Helm charts for security misconfigurations
-- [ ] Write 50+ tests
+- [x] Build `DockerImageScanTool` — scan Docker images for CVEs (Trivy integration)
+- [x] Build `DockerfileLintTool` — audit Dockerfiles for security best practices
+- [x] Build `K8sAuditTool` — check Kubernetes RBAC, pod security standards, network policies
+- [x] Build `K8sSecretScanTool` — detect secrets mounted in pods, check etcd encryption
+- [x] Build `ContainerEscapeTool` — test container escape vectors (privileged mode, host PID/network)
+- [x] Build `HelmChartAuditTool` — scan Helm charts for security misconfigurations
+- [x] Write 50+ tests (64 tests written)
 
-**Deliverables:** 6 container/K8s tools, 50+ tests
+**Deliverables:** 6 container/K8s tools, 64 tests ✅ COMPLETE
 
 ---
 
-### Day 22 — OWASP Top 10 & Compliance Mapping Engine
+### Day 22 — OWASP Top 10 & Compliance Mapping Engine ✅ COMPLETE
 
 **Files:**
 - `[NEW] backend/app/compliance/`
@@ -667,16 +667,16 @@ UniVex v1.0 delivers a solid kill-chain from recon to flag capture, primarily ta
 - `[NEW] backend/tests/test_compliance.py`
 
 **Tasks:**
-- [ ] Build `ComplianceMapper` — map findings to compliance framework controls
-- [ ] Implement OWASP Top 10 (2021) mapping: A01 Broken Access Control → A10 SSRF
-- [ ] Implement PCI-DSS v4.0 mapping: Requirements 1–12
-- [ ] Implement NIST 800-53 mapping: AC, AT, AU, CA, CM, CP, IA, IR, MA, MP, PE, PL, PM, PS, RA, SA, SC, SI
-- [ ] Implement CIS Benchmarks mapping for common platforms
-- [ ] Build compliance gap analysis (tested vs. untested controls)
-- [ ] API endpoints: `GET /api/compliance/report/{framework}`, `GET /api/compliance/gaps`
-- [ ] Write 50+ tests
+- [x] Build `ComplianceMapper` — map findings to compliance framework controls
+- [x] Implement OWASP Top 10 (2021) mapping: A01 Broken Access Control → A10 SSRF
+- [x] Implement PCI-DSS v4.0 mapping: Requirements 1–12
+- [x] Implement NIST 800-53 mapping: AC, AT, AU, CA, CM, CP, IA, IR, MA, MP, PE, PL, PM, PS, RA, SA, SC, SI
+- [x] Implement CIS Benchmarks mapping for common platforms
+- [x] Build compliance gap analysis (tested vs. untested controls)
+- [x] API endpoints: `POST /api/compliance/map`, `POST /api/compliance/gaps`, `GET /api/compliance/frameworks`, `GET /api/compliance/controls/{framework}`, `POST /api/compliance/map-all`
+- [x] Write 50+ tests (65 tests written)
 
-**Deliverables:** Compliance engine with 4 frameworks, 50+ tests
+**Deliverables:** Compliance engine with 4 frameworks, 65 tests ✅ COMPLETE
 
 ---
 
