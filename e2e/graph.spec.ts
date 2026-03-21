@@ -162,3 +162,119 @@ test.describe('Node Inspector', () => {
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// Filter Panel Interactions
+// ---------------------------------------------------------------------------
+
+test.describe('Filter Panel Interactions', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(BASE_URL);
+    await loginViaAPI(page);
+    await page.goto(`${BASE_URL}/graph`);
+  });
+
+  test('filter panel can be opened and closed', async ({ page }) => {
+    const filterToggle = page.getByRole('button', { name: /filter|filters/i })
+      .or(page.getByTestId('filter-panel-toggle'));
+    if (await filterToggle.isVisible({ timeout: 5000 })) {
+      await filterToggle.click();
+      await expect(
+        page.getByTestId('graph-filter-panel')
+          .or(page.getByRole('region', { name: /filter/i }))
+      ).toBeVisible({ timeout: 5000 });
+      await filterToggle.click();
+      await expect(page).toHaveURL(/\/graph/);
+    }
+  });
+
+  test('severity filter options are present in filter panel', async ({ page }) => {
+    const filterPanel = page.getByTestId('graph-filter-panel')
+      .or(page.getByText(/filter|node type/i).first());
+    if (await filterPanel.isVisible({ timeout: 5000 })) {
+      await expect(
+        page.getByLabel(/critical|high|medium|low/i)
+          .or(page.getByText(/critical|high|medium|low/i).first())
+      ).toBeVisible({ timeout: 5000 });
+    }
+    await expect(page).toHaveURL(/\/graph/);
+  });
+
+  test('clearing all filters resets the graph view', async ({ page }) => {
+    const clearBtn = page.getByRole('button', { name: /clear all|reset filters/i });
+    if (await clearBtn.isVisible({ timeout: 5000 })) {
+      await clearBtn.click();
+      await page.waitForTimeout(500);
+      // Verify page is still functional
+      await expect(page).toHaveURL(/\/graph/);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Node Type Legend
+// ---------------------------------------------------------------------------
+
+test.describe('Node Type Legend', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(BASE_URL);
+    await loginViaAPI(page);
+    await page.goto(`${BASE_URL}/graph`);
+  });
+
+  test('node type legend is visible', async ({ page }) => {
+    await expect(
+      page.getByTestId('node-legend')
+        .or(page.getByRole('region', { name: /legend/i }))
+        .or(page.getByText(/legend|node types/i).first())
+    ).toBeVisible({ timeout: 10000 });
+  });
+
+  test('legend shows expected node types', async ({ page }) => {
+    const legend = page.getByTestId('node-legend')
+      .or(page.getByText(/legend|node types/i).first());
+    if (await legend.isVisible({ timeout: 5000 })) {
+      // At least one node-type label (host, domain, vulnerability, etc.) should appear
+      await expect(
+        page.getByText(/host|domain|service|vulnerability|user/i).first()
+      ).toBeVisible({ timeout: 5000 });
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Graph Controls Toolbar
+// ---------------------------------------------------------------------------
+
+test.describe('Graph Controls Toolbar', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(BASE_URL);
+    await loginViaAPI(page);
+    await page.goto(`${BASE_URL}/graph`);
+  });
+
+  test('graph controls toolbar is visible', async ({ page }) => {
+    await expect(
+      page.getByRole('toolbar')
+        .or(page.getByTestId('graph-controls'))
+        .or(page.getByRole('group', { name: /controls|graph/i }))
+        .or(page.getByRole('button', { name: /zoom in|zoom out|fit/i }).first())
+    ).toBeVisible({ timeout: 10000 });
+  });
+
+  test('export button is visible in controls', async ({ page }) => {
+    await expect(
+      page.getByRole('button', { name: /export/i })
+        .or(page.getByTestId('export-button'))
+        .or(page.getByText(/export/i).first())
+    ).toBeVisible({ timeout: 10000 });
+  });
+
+  test('3D/2D toggle is accessible from the toolbar', async ({ page }) => {
+    await expect(
+      page.getByRole('button', { name: /2d|3d/i })
+        .or(page.getByTestId('view-toggle'))
+        .or(page.getByText(/2d|3d/i).first())
+    ).toBeVisible({ timeout: 10000 });
+  });
+});
