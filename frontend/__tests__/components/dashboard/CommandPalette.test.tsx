@@ -9,12 +9,10 @@ jest.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }));
 
-// Mock navigation
-const mockHref = jest.fn();
-Object.defineProperty(window, 'location', {
-  value: { href: '' },
-  writable: true,
-});
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: mockPush }),
+}));
 
 describe('CommandPalette', () => {
   it('renders when open', () => {

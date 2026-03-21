@@ -25,6 +25,7 @@ function AnimatedCounter({ target, duration = 1200, suffix = '' }: AnimatedCount
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
+    setCurrent(0);
     if (target === 0) return;
     let start = 0;
     const increment = target / (duration / 16);

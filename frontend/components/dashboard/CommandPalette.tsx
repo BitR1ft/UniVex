@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Terminal, FolderOpen, Shield, Settings, FileText, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -15,14 +16,17 @@ interface Command {
   category: string;
 }
 
-const useCommands = (): Command[] => [
-  { id: 'new-project',   label: 'New Project',        description: 'Start a new pentest project', icon: <FolderOpen className="w-4 h-4" />, shortcut: 'N', action: () => { window.location.href = '/projects/new'; }, category: 'Projects' },
-  { id: 'view-projects', label: 'View Projects',       description: 'See all projects',           icon: <FolderOpen className="w-4 h-4" />, action: () => { window.location.href = '/projects'; }, category: 'Projects' },
-  { id: 'findings',      label: 'All Findings',        description: 'Browse vulnerabilities',     icon: <Shield    className="w-4 h-4" />, action: () => { window.location.href = '/findings'; }, category: 'Security' },
-  { id: 'reports',       label: 'Generate Report',     description: 'Create a new report',        icon: <FileText  className="w-4 h-4" />, action: () => { window.location.href = '/reports'; }, category: 'Reports' },
-  { id: 'terminal',      label: 'Open Terminal',        description: 'Launch agent terminal',      icon: <Terminal  className="w-4 h-4" />, action: () => { window.location.href = '/chat'; }, category: 'Tools' },
-  { id: 'settings',      label: 'Settings',             description: 'Manage your account',        icon: <Settings  className="w-4 h-4" />, action: () => { window.location.href = '/settings'; }, category: 'System' },
-];
+const useCommands = (): Command[] => {
+  const router = useRouter();
+  return [
+    { id: 'new-project',   label: 'New Project',    description: 'Start a new pentest project', icon: <FolderOpen className="w-4 h-4" />, shortcut: 'N', action: () => router.push('/projects/new'), category: 'Projects' },
+    { id: 'view-projects', label: 'View Projects',  description: 'See all projects',           icon: <FolderOpen className="w-4 h-4" />, action: () => router.push('/projects'),     category: 'Projects' },
+    { id: 'findings',      label: 'All Findings',   description: 'Browse vulnerabilities',     icon: <Shield    className="w-4 h-4" />, action: () => router.push('/findings'),     category: 'Security' },
+    { id: 'reports',       label: 'Generate Report', description: 'Create a new report',       icon: <FileText  className="w-4 h-4" />, action: () => router.push('/reports'),      category: 'Reports' },
+    { id: 'terminal',      label: 'Open Terminal',  description: 'Launch agent terminal',      icon: <Terminal  className="w-4 h-4" />, action: () => router.push('/chat'),         category: 'Tools' },
+    { id: 'settings',      label: 'Settings',       description: 'Manage your account',        icon: <Settings  className="w-4 h-4" />, action: () => router.push('/settings'),     category: 'System' },
+  ];
+};
 
 interface CommandPaletteProps {
   open: boolean;
