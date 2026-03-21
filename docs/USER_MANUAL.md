@@ -896,3 +896,77 @@ reduce visual clutter. Tap the **Filters** button to expand.
 *UniVex v1.0.0 — User Manual*
 *Last updated: March 2026*
 *© 2026 BitR1FT. All rights reserved.*
+
+---
+
+## 21. v2.0 New Features Guide
+
+> **Day 30: v2.0 user manual additions**
+
+### Two-Factor Authentication (2FA)
+
+1. Navigate to **Settings → Security → Two-Factor Authentication**
+2. Click **Enable 2FA**
+3. Scan the QR code with Google Authenticator, Authy, or 1Password
+4. Enter the 6-digit code to confirm enrollment
+5. **Save your backup codes** — you'll need these if you lose your device
+
+On login, you'll be prompted for your TOTP code after entering your password.
+
+### Compliance Scanning
+
+1. Open a project and click **Compliance** in the sidebar
+2. Select frameworks to assess: OWASP Top 10, PCI-DSS, NIST 800-53, CIS Controls
+3. Click **Run Assessment** — UniVex maps existing findings to each framework
+4. View the **Compliance Scorecard** with pass/fail per control
+5. Download a **Compliance PDF Report** from the Reports page
+
+### Campaign Management
+
+1. Navigate to **Campaigns → New Campaign**
+2. Step 1: Add targets (URLs, domains, IPs)
+3. Step 2: Select tools (web scan, API scan, cloud scan)
+4. Step 3: Set schedule (one-time or recurring)
+5. Click **Launch** — campaign runs in parallel across all targets
+6. Monitor progress in real-time on the campaign dashboard
+
+### Findings Triage
+
+1. Navigate to **Findings** to see all findings across projects
+2. Filter by severity (Critical/High/Medium/Low/Info), status, project
+3. Click a finding to open the detail view:
+   - Set **Status**: Open → In Review → Resolved / Won't Fix
+   - Assign to a team member
+   - Mark as **False Positive**
+   - Attach evidence or notes
+4. Click **Create Ticket** to create a Jira/ServiceNow ticket automatically
+
+### Cloud Security Scans
+
+1. Navigate to **Settings → Integrations → Cloud Providers**
+2. Configure AWS (IAM user keys), Azure (service principal), or GCP (service account JSON)
+3. In the agent chat, type: `Scan my AWS environment for security issues`
+4. Review cloud findings in the **Findings** page with provider/region filters
+5. Generate a **Cloud Security Report** from the Reports page
+
+### Plugin Marketplace
+
+1. Navigate to **Settings → Plugins**
+2. Browse available plugins
+3. Click **Install** on any plugin
+4. Configure plugin settings in the plugin detail view
+5. Enable/disable plugins without uninstalling
+
+### Command Palette (Ctrl+K)
+
+Press `Ctrl+K` (or `⌘K` on Mac) to open the command palette:
+- Navigate to any page instantly
+- Start a new scan by typing the target
+- Search findings by title or CVE
+- Run compliance assessment
+
+---
+
+*UniVex v2.0.0 "Supernova" — User Manual*  
+*Last updated: March 2026*  
+*© 2026 BitR1FT. All rights reserved.*

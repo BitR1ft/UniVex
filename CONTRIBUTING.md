@@ -289,3 +289,65 @@ Open an issue with the `question` label or contact the maintainers.
 ---
 
 **Thank you for contributing to UniVex!** 🎉
+
+---
+
+## 🆕 v2.0 Contribution Areas
+
+> **Day 30: Updated contribution guidelines for v2.0**
+
+### New Subsystems (High Impact Areas)
+
+| Area | Files | Priority |
+|------|-------|----------|
+| **TOTP 2FA** | `backend/app/core/totp.py`, `backend/app/api/auth_v2.py` | High |
+| **Compliance Engine** | `backend/app/compliance/` | High |
+| **Cloud Scanners** | `backend/app/agent/tools/cloud/` | High |
+| **Plugin System** | `backend/app/plugins/` | Medium |
+| **Campaign Engine** | `backend/app/campaigns/` | Medium |
+| **Report Templates** | `backend/app/reports/templates/` | Medium |
+
+### Writing Tests for v2.0 Features
+
+Security tests belong in `backend/tests/security/`:
+
+```bash
+# Run only security tests
+cd backend && pytest tests/security/ -v
+
+# Run all v2.0 tests
+cd backend && pytest tests/security/ tests/test_compliance.py tests/test_campaigns.py -v
+```
+
+### Plugin Development
+
+See `docs/PLUGIN_GUIDE.md` for the full plugin development guide.
+
+Quick start:
+
+```python
+# backend/app/plugins/my_plugin.py
+from app.plugins.base import BasePlugin, PluginResult
+
+class MyPlugin(BasePlugin):
+    name = "my-plugin"
+    version = "1.0.0"
+    description = "My custom UniVex plugin"
+
+    async def execute(self, context: dict) -> PluginResult:
+        # Your plugin logic here
+        return PluginResult(success=True, data={"result": "..."})
+```
+
+### Cloud Scanner Contributions
+
+New cloud tools must:
+1. Extend `CloudBaseTool` from `backend/app/agent/tools/cloud/base.py`
+2. Return findings in the standard `CloudFinding` schema
+3. Include at least 5 unit tests
+4. Map findings to CIS Benchmark controls where applicable
+5. Document required IAM permissions
+
+---
+
+*CONTRIBUTING.md — Updated for UniVex v2.0 "Supernova" | BitR1FT*
