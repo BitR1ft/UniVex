@@ -2,6 +2,16 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { ThemeProvider, useTheme } from '@/components/ui/ThemeProvider';
 
+/* jsdom does not implement matchMedia — stub it globally for this suite */
+const matchMediaStub = (query: string) => ({
+  matches: false,
+  media: query,
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+  dispatchEvent: jest.fn(),
+});
+Object.defineProperty(window, 'matchMedia', { writable: true, value: matchMediaStub });
+
 function ThemeConsumer() {
   const { resolvedTheme, toggleTheme, setTheme, theme } = useTheme();
   return (

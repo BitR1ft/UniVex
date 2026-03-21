@@ -36,7 +36,7 @@ export function DataTable<T extends Record<string, any>>({
   keyExtractor,
   pageSize = 10,
   searchable = false,
-  searchPlaceholder = 'Search\u2026',
+  searchPlaceholder = 'Search…',
   searchKeys = [],
   emptyMessage = 'No data found.',
   className,
@@ -176,7 +176,7 @@ export function DataTable<T extends Record<string, any>>({
                         >
                           {col.render
                             ? col.render(row, rowIdx)
-                            : String(row[col.key as string] ?? '\u2014')}
+                            : String(row[col.key as string] ?? '—')}
                         </td>
                       ))}
                     </motion.tr>

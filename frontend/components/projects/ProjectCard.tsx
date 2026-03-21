@@ -121,7 +121,7 @@ export function ProjectCard({ project, onDelete, isDeleting }: ProjectCardProps)
               aria-label={`Status: ${project.status}`}
             >
               <span className={cn('w-1.5 h-1.5 rounded-full', cfg.dot)} aria-hidden="true" />
-              {project.status}
+              {project.status.toUpperCase()}
             </span>
           </div>
 
