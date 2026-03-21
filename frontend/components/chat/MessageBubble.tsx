@@ -107,10 +107,14 @@ function renderInline(text: string): React.ReactNode[] {
   return nodes;
 }
 
+function isTableSeparatorRow(line: string): boolean {
+  return /^\s*\|?[\s:-]+\|/.test(line) && line.replace(/[-:\s|]/g, "") === "";
+}
+
 /** Parse a pipe-delimited markdown table string into a React table element. */
 function renderTable(tableLines: string[], key: number): React.ReactNode {
   const rows = tableLines
-    .filter((l) => !/^\s*\|?[\s:-]+\|/.test(l) || l.replace(/[-:\s|]/g, "") !== "")
+    .filter((l) => !isTableSeparatorRow(l))
     .map((l) =>
       l
         .replace(/^\|/, "")
@@ -119,7 +123,7 @@ function renderTable(tableLines: string[], key: number): React.ReactNode {
         .map((cell) => cell.trim())
     );
 
-  // Detect separator row (e.g., | --- | --- |)
+  // Detect separator rows to split header from body
   const sepIndex = rows.findIndex((row) => row.every((c) => /^[-:]+$/.test(c)));
   const headerRows = sepIndex > 0 ? rows.slice(0, sepIndex) : [];
   const bodyRows = sepIndex >= 0 ? rows.slice(sepIndex + 1) : rows;

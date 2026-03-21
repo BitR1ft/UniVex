@@ -164,7 +164,7 @@ export function ToolExecutionCard({
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <pre className="px-3 py-2 text-[10px] text-gray-400 bg-gray-950 border-t border-gray-800 overflow-x-auto whitespace-pre-wrap break-all">
+                <pre className="px-3 py-2 text-[10px] text-gray-400 bg-gray-950 border-t border-gray-800 overflow-x-auto whitespace-pre-wrap">
                   {JSON.stringify(input, null, 2)}
                 </pre>
               </motion.div>

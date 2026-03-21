@@ -140,7 +140,7 @@ export function ApprovalDialog({
     timerRef.current = setInterval(() => {
       setTimeLeft((t) => {
         if (t <= 1) {
-          clearInterval(timerRef.current!);
+          clearInterval(timerRef.current ?? undefined);
           onReject();
           return 0;
         }
