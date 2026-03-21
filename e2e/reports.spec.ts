@@ -1,5 +1,5 @@
 /**
- * Day 27-28: E2E tests for the UniVex reports feature.
+ * Day 28: E2E tests for the UniVex reports feature.
  *
  * Playwright end-to-end tests for: report listing, creation,
  * generation, PDF downloads, and report detail views.

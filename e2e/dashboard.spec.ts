@@ -1,4 +1,4 @@
-/** Day 27-28: E2E tests for the UniVex dashboard. */
+/** Day 28: E2E tests for the UniVex dashboard. */
 
 import { test, expect, Page } from '@playwright/test';
 

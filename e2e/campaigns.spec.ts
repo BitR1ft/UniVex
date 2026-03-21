@@ -1,5 +1,5 @@
 /**
- * Day 27-28: E2E tests for the UniVex campaigns feature.
+ * Day 28: E2E tests for the UniVex campaigns feature.
  *
  * Playwright end-to-end tests for: campaign listing, creation,
  * form validation, status badges, detail views, and launching.

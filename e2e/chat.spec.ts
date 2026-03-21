@@ -1,5 +1,5 @@
 /**
- * Day 27-28: E2E tests for the UniVex AI agent chat feature.
+ * Day 28: E2E tests for the UniVex AI agent chat feature.
  *
  * Playwright end-to-end tests for: chat page load, message input,
  * sending messages, message history, tool execution cards, approval
