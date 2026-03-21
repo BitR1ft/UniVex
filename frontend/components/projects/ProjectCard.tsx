@@ -1,8 +1,11 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Calendar, Target, Trash2, Eye, Activity, Shield } from 'lucide-react';
 import type { Project } from '@/lib/api';
-import { Calendar, Target, Trash2, Eye } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ProjectCardProps {
   project: Project;
@@ -10,64 +13,138 @@ interface ProjectCardProps {
   isDeleting?: boolean;
 }
 
-const STATUS_CONFIG: Record<string, { color: string; dot: string }> = {
-  draft:     { color: 'bg-gray-500/20 text-gray-400 border-gray-600',    dot: 'bg-gray-500' },
-  queued:    { color: 'bg-yellow-500/20 text-yellow-400 border-yellow-700', dot: 'bg-yellow-500' },
-  running:   { color: 'bg-blue-500/20 text-blue-400 border-blue-700',    dot: 'bg-blue-500 animate-pulse' },
-  completed: { color: 'bg-green-500/20 text-green-400 border-green-700', dot: 'bg-green-500' },
-  failed:    { color: 'bg-red-500/20 text-red-400 border-red-700',       dot: 'bg-red-500' },
-  paused:    { color: 'bg-orange-500/20 text-orange-400 border-orange-700', dot: 'bg-orange-500' },
+const STATUS_CONFIG: Record<string, {
+  badge: string;
+  dot: string;
+  ring: string;
+  glow: string;
+}> = {
+  draft:     { badge: 'bg-gray-500/15 text-gray-400 border-gray-600/50',       dot: 'bg-gray-500',               ring: 'border-gray-700',           glow: '' },
+  queued:    { badge: 'bg-yellow-500/15 text-yellow-400 border-yellow-700/50',  dot: 'bg-yellow-500',             ring: 'border-yellow-900/50',       glow: '' },
+  running:   { badge: 'bg-cyan-500/15 text-cyan-400 border-cyan-700/50',        dot: 'bg-cyan-500 animate-pulse', ring: 'border-cyan-700/40',         glow: 'shadow-[0_0_20px_rgba(0,212,255,0.1)]' },
+  completed: { badge: 'bg-green-500/15 text-green-400 border-green-700/50',     dot: 'bg-green-500',              ring: 'border-green-700/40',        glow: '' },
+  failed:    { badge: 'bg-red-500/15 text-red-400 border-red-700/50',           dot: 'bg-red-500',                ring: 'border-red-900/40',          glow: '' },
+  paused:    { badge: 'bg-orange-500/15 text-orange-400 border-orange-700/50',  dot: 'bg-orange-500',             ring: 'border-orange-900/40',       glow: '' },
+};
+
+/* Simple circular progress ring */
+function ProgressRing({ progress, color }: { progress: number; color: string }) {
+  const r = 18;
+  const circ = 2 * Math.PI * r;
+  const dash = circ * (progress / 100);
+
+  return (
+    <svg width="44" height="44" className="flex-shrink-0 -rotate-90">
+      <circle cx="22" cy="22" r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="3" />
+      <circle
+        cx="22" cy="22" r={r} fill="none"
+        stroke={color}
+        strokeWidth="3"
+        strokeDasharray={`${dash} ${circ}`}
+        strokeLinecap="round"
+        style={{ transition: 'stroke-dasharray 0.6s ease' }}
+      />
+      <text
+        x="22" y="22"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        className="fill-current"
+        style={{ fontSize: 8, fill: color, transform: 'rotate(90deg)', transformOrigin: '22px 22px' }}
+      >
+        {progress}%
+      </text>
+    </svg>
+  );
+}
+
+const MODULE_LABELS: Record<string, string> = {
+  enable_subdomain_enum: 'Subdomains',
+  enable_port_scan:      'Ports',
+  enable_web_crawl:      'Crawl',
+  enable_tech_detection: 'Tech',
+  enable_vuln_scan:      'Vulns',
+  enable_nuclei:         'Nuclei',
+  enable_auto_exploit:   'Exploit',
 };
 
 export function ProjectCard({ project, onDelete, isDeleting }: ProjectCardProps) {
-  const statusCfg = STATUS_CONFIG[project.status] ?? STATUS_CONFIG.draft;
-  const enabledModules = [
-    project.enable_subdomain_enum && 'Subdomains',
-    project.enable_port_scan && 'Ports',
-    project.enable_web_crawl && 'Crawl',
-    project.enable_tech_detection && 'Tech',
-    project.enable_vuln_scan && 'Vulns',
-    project.enable_nuclei && 'Nuclei',
-    project.enable_auto_exploit && 'Exploit',
-  ].filter(Boolean) as string[];
+  const cfg = STATUS_CONFIG[project.status] ?? STATUS_CONFIG.draft;
+
+  const enabledModules = Object.entries(MODULE_LABELS)
+    .filter(([key]) => (project as any)[key])
+    .map(([, label]) => label);
+
+  /* Fake progress for visual — real impl would use project.progress */
+  const progress = project.status === 'completed' ? 100
+    : project.status === 'running' ? 60
+    : project.status === 'failed' ? 40
+    : project.status === 'paused' ? 30
+    : 0;
+
+  const ringColor = project.status === 'running' ? '#00D4FF'
+    : project.status === 'completed' ? '#39FF14'
+    : project.status === 'failed' ? '#EF4444'
+    : '#6B7280';
 
   return (
-    <article
-      className="bg-gray-800 border border-gray-700 rounded-lg p-5 hover:border-gray-600 transition-colors"
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      whileHover={{ y: -2 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      className={cn(
+        'relative rounded-xl border bg-gray-900/80 backdrop-blur-sm p-5',
+        'hover:bg-gray-900 transition-colors duration-300 group overflow-hidden',
+        cfg.ring,
+        cfg.glow,
+      )}
       aria-label={`Project: ${project.name}`}
     >
-      <div className="flex justify-between items-start gap-4">
+      {/* Shimmer border on hover */}
+      <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-white/5 transition-colors pointer-events-none" />
+
+      <div className="flex items-start gap-4">
+        {/* Progress ring */}
+        <ProgressRing progress={progress} color={ringColor} />
+
         <div className="flex-1 min-w-0">
-          {/* Header row */}
+          {/* Header */}
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <h3 className="text-lg font-semibold text-white truncate">{project.name}</h3>
+            <h3 className="text-base font-semibold text-white truncate">{project.name}</h3>
             <span
-              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border ${statusCfg.color}`}
+              className={cn(
+                'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase border',
+                cfg.badge,
+              )}
               aria-label={`Status: ${project.status}`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full ${statusCfg.dot}`} aria-hidden="true" />
-              {project.status.toUpperCase()}
+              <span className={cn('w-1.5 h-1.5 rounded-full', cfg.dot)} aria-hidden="true" />
+              {project.status}
             </span>
           </div>
 
           {/* Target */}
-          <div className="flex items-center gap-1.5 text-sm mb-1">
-            <Target className="w-3.5 h-3.5 text-gray-500 flex-shrink-0" aria-hidden="true" />
-            <span className="text-blue-400 truncate">{project.target}</span>
+          <div className="flex items-center gap-1.5 text-xs mb-1">
+            <Target className="w-3 h-3 text-gray-600 flex-shrink-0" />
+            <span className="text-cyan-500 font-mono truncate">{project.target}</span>
           </div>
 
           {/* Description */}
           {project.description && (
-            <p className="text-gray-500 text-sm mt-1 line-clamp-2">{project.description}</p>
+            <p className="text-gray-500 text-xs mt-1.5 line-clamp-2 leading-relaxed">
+              {project.description}
+            </p>
           )}
 
-          {/* Modules chips */}
+          {/* Module chips */}
           {enabledModules.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3" aria-label="Enabled modules">
+            <div className="flex flex-wrap gap-1 mt-3">
               {enabledModules.map((mod) => (
                 <span
                   key={mod}
-                  className="px-2 py-0.5 bg-gray-700 text-gray-300 rounded text-xs"
+                  className="px-1.5 py-0.5 bg-gray-800 border border-gray-700/50 text-gray-400 rounded text-[10px] font-medium"
                 >
                   {mod}
                 </span>
@@ -75,36 +152,38 @@ export function ProjectCard({ project, onDelete, isDeleting }: ProjectCardProps)
             </div>
           )}
 
-          {/* Date */}
-          <div className="flex items-center gap-1.5 mt-3 text-xs text-gray-600">
-            <Calendar className="w-3 h-3" aria-hidden="true" />
-            <time dateTime={project.created_at}>
-              {new Date(project.created_at).toLocaleDateString()}
-            </time>
+          {/* Footer row */}
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center gap-1.5 text-xs text-gray-600">
+              <Calendar className="w-3 h-3" />
+              <time dateTime={project.created_at}>
+                {new Date(project.created_at).toLocaleDateString()}
+              </time>
+            </div>
+
+            {/* Quick action overlay */}
+            <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+              <Link
+                href={`/projects/${project.id}`}
+                className="flex items-center gap-1 px-2.5 py-1 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 rounded-lg transition-all text-xs font-medium"
+                aria-label={`View project ${project.name}`}
+              >
+                <Eye className="w-3 h-3" />
+                View
+              </Link>
+              <button
+                onClick={() => onDelete(project.id)}
+                disabled={isDeleting}
+                className="flex items-center gap-1 px-2.5 py-1 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg transition-all text-xs font-medium disabled:opacity-40"
+                aria-label={`Delete project ${project.name}`}
+              >
+                <Trash2 className="w-3 h-3" />
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* Actions */}
-        <div className="flex flex-col gap-2 flex-shrink-0">
-          <Link
-            href={`/projects/${project.id}`}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm"
-            aria-label={`View project ${project.name}`}
-          >
-            <Eye className="w-3.5 h-3.5" aria-hidden="true" />
-            View
-          </Link>
-          <button
-            onClick={() => onDelete(project.id)}
-            disabled={isDeleting}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600/80 hover:bg-red-700 disabled:opacity-50 text-white rounded-lg transition-colors text-sm"
-            aria-label={`Delete project ${project.name}`}
-          >
-            <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
-            Delete
-          </button>
-        </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
