@@ -26,10 +26,8 @@ export const options = {
   thresholds: {
     // At least 80% of scans must complete successfully.
     scan_completion_rate: ['rate>0.80'],
-    // 95th percentile scan wall-clock duration < 120 s.
-    scan_duration: ['p(95)<120000'],
-    // 99th percentile scan wall-clock duration < 180 s.
-    scan_duration: ['p(99)<180000'],
+    // p95 scan wall-clock duration < 120 s; p99 < 180 s.
+    scan_duration: ['p(95)<120000', 'p(99)<180000'],
   },
 };
 

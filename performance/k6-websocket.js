@@ -27,12 +27,10 @@ export const options = {
     { duration: '30s', target: 0  },   // Phase 5: Ramp down to 0
   ],
   thresholds: {
-    // At least 95% of WebSocket connections must succeed
+    // At least 95% of WebSocket connections must succeed (i.e. error rate < 5%)
     ws_success_rate: ['rate>0.95'],
     // 95th-percentile message round-trip latency must be under 2 seconds
     ws_message_latency: ['p(95)<2000'],
-    // WebSocket connection error rate must stay below 5%
-    ws_connection_errors: ['count<5'],
   },
 };
 

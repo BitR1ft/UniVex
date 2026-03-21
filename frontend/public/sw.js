@@ -3,8 +3,8 @@
 const CACHE_NAME = 'univex-v1';
 const OFFLINE_PAGE = '/offline';
 
-/** Routes to pre-cache on service worker install. */
-const PRECACHE_ROUTES = ['/', '/dashboard', '/projects', '/manifest.json', '/favicon.ico'];
+/** Routes to pre-cache on service worker install (includes offline fallback page). */
+const PRECACHE_ROUTES = ['/', '/dashboard', '/projects', '/manifest.json', '/favicon.ico', OFFLINE_PAGE];
 
 // ---------------------------------------------------------------------------
 // Install: pre-cache shell routes and skip waiting to activate immediately.
