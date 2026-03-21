@@ -421,3 +421,132 @@ docker compose logs backend --since=24h \
 ---
 
 *Updated: Week 29, Day 195 — Phase J: CI/CD & Releases Complete* ✅
+
+---
+
+## 🔐 v2.0 Security Operations
+
+> **Day 29: Security Hardening additions**
+
+### Health Checks
+
+```bash
+# Run full health check for all services
+./scripts/health-check.sh
+
+# JSON output for monitoring integration
+./scripts/health-check.sh --json
+
+# Single service check
+curl -sf http://localhost:8000/health | jq
+```
+
+### Database Backups
+
+```bash
+# Manual backup to default directory (/backups)
+./scripts/backup-databases.sh
+
+# Custom destination and 14-day retention
+./scripts/backup-databases.sh --dest /mnt/nas/backups --retention 14
+
+# Verify backup integrity
+gzip -t /backups/univex-backup-*.tar.gz && echo "Backup OK"
+```
+
+### Secret Rotation
+
+```bash
+# Preview rotation (no changes)
+./scripts/rotate-secrets.sh --dry-run --env-file .env.production
+
+# Execute rotation
+./scripts/rotate-secrets.sh --env-file .env.production
+
+# Post-rotation: verify all services healthy
+./scripts/health-check.sh
+```
+
+### 2FA Administration
+
+```bash
+# List users with 2FA enabled (direct DB query)
+docker compose exec postgres psql -U univex -d univex \
+  -c "SELECT email, totp_enabled, created_at FROM users WHERE totp_enabled=true;"
+
+# Disable 2FA for a user (emergency recovery)
+curl -X DELETE http://localhost:8000/api/auth/2fa/disable \
+  -H "Authorization: Bearer <admin-token>" \
+  -d '{"user_id": "<user-id>"}'
+```
+
+### Account Lockout Management
+
+```bash
+# Check if account is locked (Python console)
+docker compose exec backend python3 -c "
+from app.core.lockout import account_lockout
+locked, retry = account_lockout.is_locked('user@example.com')
+print(f'Locked: {locked}, Retry after: {retry:.0f}s')
+"
+
+# Unlock account (emergency)
+docker compose exec backend python3 -c "
+from app.core.lockout import account_lockout
+account_lockout.reset('user@example.com')
+print('Account unlocked')
+"
+```
+
+### IP Allow-List Management
+
+```bash
+# View current admin IP allowlist
+docker compose exec backend python3 -c "
+from app.core.ip_allowlist import admin_ip_allowlist
+for cidr in admin_ip_allowlist.list_cidrs():
+    print(cidr)
+"
+
+# Temporarily add IP (runtime only, not persisted)
+docker compose exec backend python3 -c "
+from app.core.ip_allowlist import admin_ip_allowlist
+admin_ip_allowlist.add_cidr('203.0.113.42/32')
+print('Added')
+"
+
+# For permanent changes: update ADMIN_IP_ALLOWLIST env var and restart
+```
+
+### Container Security Scans
+
+```bash
+# Manual Trivy scan (requires Trivy installed)
+trivy image --severity CRITICAL,HIGH univex-backend:latest
+
+# Scan all images
+for img in univex-backend univex-frontend; do
+    echo "=== Scanning $img ==="
+    trivy image --severity CRITICAL,HIGH ${img}:latest
+done
+```
+
+### Nginx Operations
+
+```bash
+# Reload Nginx config without downtime
+docker compose exec nginx nginx -s reload
+
+# Test Nginx config
+docker compose exec nginx nginx -t
+
+# View Nginx access logs (JSON format)
+docker compose exec nginx tail -f /var/log/nginx/access.log | jq
+
+# View rate limit hits
+docker compose exec nginx grep "limiting" /var/log/nginx/error.log | tail -20
+```
+
+---
+
+*v2.0 additions — Day 29: Security Hardening & Production Readiness | BitR1FT*

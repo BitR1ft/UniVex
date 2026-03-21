@@ -1,19 +1,21 @@
-# UniVex (underdevelopment)
+# UniVex v2.0 — "Supernova"
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/version-2.0.0-cyan?style=flat-square">
   <img alt="Python" src="https://img.shields.io/badge/python-3.11+-green?style=flat-square&logo=python">
   <img alt="Node" src="https://img.shields.io/badge/node-20+-green?style=flat-square&logo=nodedotjs">
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.109-teal?style=flat-square&logo=fastapi">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=nextdotjs">
   <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-blue?style=flat-square&logo=docker">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-3200%2B-brightgreen?style=flat-square">
+  <img alt="Tools" src="https://img.shields.io/badge/agent_tools-72%2B-orange?style=flat-square">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square">
 </p>
 
-> **AI-powered, fully-autonomous penetration testing platform.**  
+> **AI-powered, fully-autonomous penetration testing platform — v2.0 "Supernova"**  
 > **BitR1FT** — Founder & Lead Developer  
-> One target → full kill chain: recon → exploitation → post-exploitation → Command and Control.  
-> Release 1.0.0 
+> One target → full kill chain: recon → exploitation → post-exploitation → compliance reporting.  
+> 72+ agent tools · Multi-agent orchestration · Cloud security · Compliance mapping · Cyberpunk UI
 
 ---
 
@@ -91,6 +93,30 @@ The AI agent uses the **ReAct (Reasoning + Acting)** pattern powered by GPT-4 / 
 ---
 
 ## 2. Key Features
+
+### 🎯 v2.0 Feature Matrix
+
+| Category | Features | Status |
+|----------|----------|--------|
+| **Agent Tools** | 72+ tools across web, cloud, network, AD, containers | ✅ v2.0 |
+| **Multi-Agent** | Planner, Recon, Exploit, Validator, Reporting agents | ✅ v2.0 |
+| **RAG Knowledge Base** | ChromaDB vector store with CVE/OWASP embeddings | ✅ v2.0 |
+| **Plugin System** | Python plugins with Docker sandbox isolation | ✅ v2.0 |
+| **Cloud Security** | AWS/Azure/GCP misconfiguration detection (19 tools) | ✅ v2.0 |
+| **Compliance** | OWASP Top 10, PCI-DSS 4.0, NIST 800-53, CIS v8 | ✅ v2.0 |
+| **PDF Reports** | Executive, Technical, Compliance with charts | ✅ v2.0 |
+| **Campaigns** | Multi-target parallel scanning (up to 10 targets) | ✅ v2.0 |
+| **Findings** | Triage, deduplication, Jira/ServiceNow integration | ✅ v2.0 |
+| **SIEM** | Splunk, Elastic, Sentinel, Datadog, Sumo Logic | ✅ v2.0 |
+| **2FA / TOTP** | RFC 6238 TOTP with backup codes | ✅ v2.0 |
+| **mTLS** | Mutual TLS between backend and all MCP servers | ✅ v2.0 |
+| **Redis** | Job queue, distributed cache, rate limiting | ✅ v2.0 |
+| **Nginx** | TLS 1.3, HTTP/2, security headers, WebSocket | ✅ v2.0 |
+| **E2E Tests** | 54+ Playwright E2E tests | ✅ v2.0 |
+| **Backend Tests** | 3,200+ pytest tests | ✅ v2.0 |
+| **Cyberpunk UI** | Dark mode design system, animations, PWA | ✅ v2.0 |
+
+---
 
 ### 🤖 AI Agent (LangGraph ReAct)
 - GPT-4 / Claude-3 powered reasoning and planning

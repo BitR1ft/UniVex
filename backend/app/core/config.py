@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     
     # Project Information
     PROJECT_NAME: str = "UniVex"
-    VERSION: str = "1.0.2"
+    VERSION: str = "2.0.0"
     DESCRIPTION: str = "AI-Powered Penetration Testing Framework"
     ENVIRONMENT: str = "development"
     

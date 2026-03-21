@@ -367,3 +367,301 @@ X-RateLimit-Reset: 1704067260
 ---
 
 *Updated: Week 30, Day 196 — Phase K: API Documentation Complete* ✅
+
+---
+
+## v2.0 New Endpoints
+
+> **Day 30: v2.0 API additions** — all new endpoints added in v2.0
+
+### 🔐 Authentication v2 — Two-Factor Authentication
+
+#### `POST /api/auth/2fa/setup`
+
+Begin 2FA enrollment for the current user.
+
+**Response:**
+```json
+{
+  "secret": "BASE32SECRET",
+  "provisioning_uri": "otpauth://totp/UniVex:user@example.com?...",
+  "backup_codes": ["ABCDE12345", "..."],
+  "qr_code_url": "data:image/png;base64,..."
+}
+```
+
+> **Note:** Store `secret` encrypted. Show `provisioning_uri` as a QR code. Show backup codes once — they cannot be retrieved again.
+
+#### `POST /api/auth/2fa/confirm`
+
+Confirm enrollment by verifying the first TOTP token.
+
+**Body:**
+```json
+{"token": "123456"}
+```
+
+#### `POST /api/auth/2fa/verify`
+
+Verify TOTP token during login (step 2 of 2FA login flow).
+
+**Body:**
+```json
+{"token": "123456", "session_token": "temp-session-from-step-1"}
+```
+
+#### `DELETE /api/auth/2fa/disable`
+
+Disable 2FA for a user account (admin or self).
+
+---
+
+### 📊 Compliance
+
+#### `POST /api/compliance/{project_id}/run`
+
+Run a compliance assessment against one or more frameworks.
+
+**Body:**
+```json
+{
+  "frameworks": ["owasp", "pci_dss", "nist", "cis"],
+  "include_recommendations": true
+}
+```
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "project_id": "uuid",
+  "status": "running",
+  "frameworks": ["owasp", "pci_dss"]
+}
+```
+
+#### `GET /api/compliance/{project_id}/results`
+
+Get compliance assessment results for a project.
+
+**Response:**
+```json
+{
+  "project_id": "uuid",
+  "overall_score": 76.0,
+  "frameworks": {
+    "owasp": {"score": 80.0, "status": "partial", "categories": {...}},
+    "pci_dss": {"score": 72.0, "status": "partial", "requirements": {...}}
+  },
+  "generated_at": "2026-03-21T11:00:00Z"
+}
+```
+
+---
+
+### 🎯 Campaigns
+
+#### `GET /api/campaigns`
+
+List all campaigns for the authenticated user.
+
+**Query params:** `?status=running&page=1&page_size=20`
+
+#### `POST /api/campaigns`
+
+Create a new campaign.
+
+**Body:**
+```json
+{
+  "name": "Q1 Web App Audit",
+  "type": "web_app",
+  "targets": [
+    {"url": "https://target1.example.com"},
+    {"url": "https://target2.example.com"}
+  ],
+  "tools": ["nuclei", "naabu", "ffuf"],
+  "schedule": {"type": "once"},
+  "notifications": {"slack_webhook": "https://hooks.slack.com/..."}
+}
+```
+
+#### `GET /api/campaigns/{id}`
+
+Get campaign details and current status.
+
+#### `POST /api/campaigns/{id}/start`
+
+Start a campaign (launches parallel scan workers).
+
+#### `GET /api/campaigns/{id}/status`
+
+Real-time status of all campaign targets.
+
+**Response:**
+```json
+{
+  "campaign_id": "uuid",
+  "status": "running",
+  "progress": 45,
+  "targets": [
+    {"url": "https://target1.example.com", "status": "completed", "findings": 3},
+    {"url": "https://target2.example.com", "status": "running", "findings": 1}
+  ]
+}
+```
+
+#### `DELETE /api/campaigns/{id}`
+
+Delete a campaign and its results.
+
+---
+
+### 🔍 Findings Management
+
+#### `GET /api/findings`
+
+List all findings, with filtering.
+
+**Query params:** `?severity=critical&status=open&project_id=uuid&page=1`
+
+#### `POST /api/findings`
+
+Create a manual finding.
+
+**Body:**
+```json
+{
+  "project_id": "uuid",
+  "title": "SQL Injection in /api/users",
+  "severity": "critical",
+  "description": "...",
+  "evidence": {"request": "...", "response": "..."},
+  "cwe": "CWE-89",
+  "cvss_score": 9.8
+}
+```
+
+#### `PATCH /api/findings/{id}`
+
+Update finding status (triage).
+
+**Body:**
+```json
+{
+  "status": "in_review",
+  "assignee_id": "uuid",
+  "notes": "Confirmed SQL injection in production",
+  "false_positive": false
+}
+```
+
+#### `DELETE /api/findings/{id}`
+
+Delete a finding.
+
+---
+
+### 🔗 Integrations
+
+#### `GET /api/integrations`
+
+List configured integrations (SIEM, notifications, ticketing).
+
+#### `POST /api/integrations`
+
+Configure a new integration.
+
+**Supported types:** `splunk`, `elasticsearch`, `sentinel`, `slack`, `teams`, `pagerduty`, `jira`, `servicenow`, `datadog`
+
+**Body:**
+```json
+{
+  "type": "slack",
+  "config": {
+    "webhook_url": "https://hooks.slack.com/services/...",
+    "channel": "#security-alerts",
+    "notify_on": ["critical", "high"]
+  },
+  "enabled": true
+}
+```
+
+#### `PUT /api/integrations/{id}`
+
+Update an existing integration.
+
+#### `POST /api/integrations/{id}/test`
+
+Send a test notification/event to verify the integration.
+
+#### `DELETE /api/integrations/{id}`
+
+Remove an integration.
+
+---
+
+### 🧩 Plugins
+
+#### `GET /api/plugins`
+
+List all installed and available plugins.
+
+#### `POST /api/plugins/{name}/install`
+
+Install a plugin by name.
+
+**Body:**
+```json
+{
+  "version": "1.0.0",
+  "config": {"key": "value"}
+}
+```
+
+#### `POST /api/plugins/{name}/enable`
+
+Enable an installed plugin.
+
+#### `POST /api/plugins/{name}/disable`
+
+Disable a plugin without uninstalling.
+
+#### `DELETE /api/plugins/{name}`
+
+Uninstall a plugin.
+
+---
+
+### 📋 Reports v2
+
+#### `POST /api/reports/generate`
+
+Generate a report from project findings.
+
+**Body:**
+```json
+{
+  "project_id": "uuid",
+  "type": "technical",
+  "template": "standard",
+  "include_charts": true,
+  "include_evidence": true,
+  "include_remediation": true,
+  "compliance_framework": "pci_dss"
+}
+```
+
+#### `GET /api/reports/{id}/pdf`
+
+Download the generated PDF report.
+
+**Response:** `Content-Type: application/pdf`
+
+#### `GET /api/reports/{id}/html`
+
+Download the report as HTML.
+
+---
+
+*v2.0 API additions — Day 30 | UniVex "Supernova" | BitR1FT*
